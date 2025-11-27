@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="337.0" prefWidth="424.0" spacing="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="org.biblioteca_gruppo_05.HelloController">
+<VBox alignment="CENTER" prefHeight="337.0" prefWidth="424.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -15,12 +15,12 @@
       <font>
          <Font size="41.0" />
       </font></Label>
-   <Label text="Giulio's Library">
+   <Label fx:id="Wlcomtext2" text="Giulio's Library">
       <font>
          <Font size="41.0" />
       </font>
    </Label>
-    <Button alignment="CENTER" contentDisplay="CENTER" onAction="#onHelloButtonClick" prefHeight="43.0" prefWidth="73.0" text="Hello!">
+    <Button fx:id="apriButton" alignment="CENTER" contentDisplay="CENTER" onAction="#onApriButton" prefHeight="43.0" prefWidth="73.0" text="APRI">
       <VBox.margin>
          <Insets top="30.0" />
       </VBox.margin></Button>
