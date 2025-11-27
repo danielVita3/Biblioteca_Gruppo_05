@@ -52,7 +52,7 @@
                                 </HBox>
                                 <HBox alignment="CENTER" prefHeight="60.0" prefWidth="601.0" spacing="20.0">
                                     <children>
-                                        <Button mnemonicParsing="false" text="Aggiungi" />
+                                        <Button mnemonicParsing="false" text="Registra Prestito" />
                                         <Button mnemonicParsing="false" text="Cancel" />
                                         <Button mnemonicParsing="false" text="Annulla" />
                                     </children>
