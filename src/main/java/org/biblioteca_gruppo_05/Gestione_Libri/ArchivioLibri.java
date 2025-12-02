@@ -15,11 +15,11 @@ public class ArchivioLibri implements Serializable {
     public void rimuoviLibro(Libro l){};
     public void modificaLibro(String ISBN){};
     public Libro ricercaLibroPerISBN(String ISBN){};
-    public List<Libro> ricercaLibriPerTitolo(String titoloParziale){};
+    public List<Libro> ricercaLibriPerTitolo(String titolo){};
     public List<Libro> ricercaLibriPerAutore(String autore){};
     public void visualizzaLibri(){};
-    public void salvaSuFile() throws IOException {};
-    public void leggiDaFile() throws IOException{};
+    private void salvaSuFile() {};
+    private void leggiDaFile() {};
     @Override
     public String toString(){};
 }

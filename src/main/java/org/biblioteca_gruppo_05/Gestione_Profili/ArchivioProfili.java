@@ -18,7 +18,7 @@ public class ArchivioProfili implements Serializable {
     public void aggiungiProfilo(Profilo p){};
     public void rimuoviProfilo(Profilo p){};
     public void modificaProfilo(String matricola){};
-    public Libro ricercaProfiloPerMatricola(String matrciola){};
+    public Libro ricercaProfiloPerMatricola(String matricola){};
     public List<Libro> ricercaProfiloPerNome(String nome){};
     public List<Libro> ricercaProfiloPerCognome(String cognome){};
     public void visualizzaProfili(){};

@@ -1,8 +1,11 @@
 package org.biblioteca_gruppo_05.Gestione_Profili;
 
-import java.io.Serializable;
+import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.Prestito;
 
-public class Profilo implements Serializable {
+import java.io.Serializable;
+import java.lang.Comparable;
+public class Profilo implements Serializable, Comparable<Profilo> {
     private String nome;
     private String cognome;
     private String matricola;
@@ -13,7 +16,7 @@ public class Profilo implements Serializable {
         this.cognome=cognome;
         this.matricola=matricola;
         this.mail=mail;
-        this.numeroPrestiti=numeroPrestiti;
+        this.numeroPrestiti=0;
     }
     public String getNome(){};
     public String getCognome(){};
@@ -24,7 +27,19 @@ public class Profilo implements Serializable {
     public void setCognome(String cognome){};
     public void setMatricola(String matricola){};
     public void setMail(String mail){};
-    public void setNumeroPrestiti(int numeroPrestiti){};
+    public void setNumeroPrestiti(int prestito){};
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int compareTo(Libro l1, Libro l2){};
+
+    @Override
+    public int hashCode(){};
+
     @Override
     public String toString(){};
 }

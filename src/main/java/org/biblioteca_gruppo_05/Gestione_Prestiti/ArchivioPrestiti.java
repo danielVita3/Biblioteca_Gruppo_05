@@ -9,20 +9,20 @@ import java.util.*;
 
 
 public class ArchivioPrestiti implements Serializable {
-    private List <Prestito> prestiti;
+    private Map <Integer,Prestito> prestiti;
     private final String fileName;
     public ArchivioPrestiti(String fileName){
-        this.prestiti=new ArrayList<>();
+        this.prestiti=new LinkedHashMap<>();
         this.fileName=fileName;
     }
     public void registraPrestito(Prestito p){};
     public void restituzionPrestito(Prestito p{};
     public Prestito ricercaPrestitoPerISBN(Libro l){};
-    public List<Prestito> ricercaPrestitoPerMatricola(Profilo p){};
-    public List<Prestito> ricercaProfiloPerCognome(String cognome){};
+    public List<Prestito> ricercaPrestitoPerMatricola(String matricola){};
+    public List<Prestito> ricercaPrestitoPerISBN(String ISBN){};
     public void visualizzaPrestiti(){};
-    public void salvaSuFile() throws IOException {};
-    public void leggiDaFile() throws IOException{};
+    private void salvaSuFile()  {};
+    private void leggiDaFile() {};
     @Override
     public String toString(){};
 }

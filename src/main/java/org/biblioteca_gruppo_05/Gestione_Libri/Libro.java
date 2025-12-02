@@ -2,8 +2,9 @@ package org.biblioteca_gruppo_05.Gestione_Libri;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.lang.Comparable;
 
-public class Libro implements Serializable {
+public class Libro implements Serializable,Comparable <Libro> {
     private String titolo;
     private String autore;
     private String ISBN;
@@ -24,8 +25,20 @@ public class Libro implements Serializable {
     public void setTitolo(String titolo){};
     public void setAutore(String autore){};
     public void setISBN(String ISBN){};
-    public void setNumeroCopie(String titolo){};
+    public void setNumeroCopie(int numeroCopie){};
     public void setDataPubblicazione(String dataPubblicazione){};
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public int compareTo(Libro l1, Libro l2){};
+
+    @Override
+    public int hashCode(){};
+
     @Override
     public String toString(){};
 }
