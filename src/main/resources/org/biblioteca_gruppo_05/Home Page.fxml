@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<StackPane prefHeight="460.0" prefWidth="750.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.HomeController">
+<StackPane prefHeight="460.0" prefWidth="750.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Application.HomeController">
     <children>
 
         <Region style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 100.0%, #5d4037 0.0%, #1a0f0a 100.0%);" />

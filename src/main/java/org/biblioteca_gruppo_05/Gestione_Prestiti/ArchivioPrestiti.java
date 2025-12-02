@@ -1,4 +1,7 @@
-package org.biblioteca_gruppo_05;
+package org.biblioteca_gruppo_05.Gestione_Prestiti;
+
+import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
+import org.biblioteca_gruppo_05.Gestione_Profili.Profilo;
 
 import java.io.IOException;
 import java.io.Serializable;

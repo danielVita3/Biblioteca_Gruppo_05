@@ -1,4 +1,6 @@
-package org.biblioteca_gruppo_05;
+package org.biblioteca_gruppo_05.Gestione_Profili;
+
+import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -7,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ArchivioProfili implements Serializable {
-    private Map<String,Profilo> profilo;
+    private Map<String, Profilo> profilo;
     private final String fileName;
     public ArchivioProfili(String fileName){
         this.profilo=new LinkedHashMap<>();

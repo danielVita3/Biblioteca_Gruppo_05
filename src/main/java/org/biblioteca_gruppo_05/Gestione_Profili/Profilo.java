@@ -1,7 +1,6 @@
-package org.biblioteca_gruppo_05;
+package org.biblioteca_gruppo_05.Gestione_Profili;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 public class Profilo implements Serializable {
     private String nome;
