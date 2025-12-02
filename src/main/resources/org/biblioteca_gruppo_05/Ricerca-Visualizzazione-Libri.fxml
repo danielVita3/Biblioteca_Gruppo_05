@@ -41,7 +41,7 @@
         <TableView fx:id="tableLibri" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);">
             <columns>
                 <TableColumn text="Titolo" sortable="true" prefWidth="250.0" />
-                <TableColumn text="Autore"sortable="true"  prefWidth="200.0" />
+                <TableColumn text="Autore" sortable="true" prefWidth="200.0" />
                 <TableColumn text="Anno" sortable="true" prefWidth="80.0" />
                 <TableColumn text="ISBN" sortable="true" prefWidth="150.0" />
                 <TableColumn text="Copie Disp." sortable="true" prefWidth="100.0" />
