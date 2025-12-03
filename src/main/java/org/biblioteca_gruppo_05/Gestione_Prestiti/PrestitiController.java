@@ -9,9 +9,8 @@ import org.biblioteca_gruppo_05.Gestione_Libri.*;
 import org.biblioteca_gruppo_05.Gestione_Profili.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.time.LocalDate;
 
-public class PrestitoController implements Initializable {
+public class PrestitiController implements Initializable {
 
     private final ArchivioPrestiti archivioPrestiti;
     private final ArchivioLibri archivioLibri;
@@ -29,7 +28,7 @@ public class PrestitoController implements Initializable {
     @FXML private TextField searchVisualizzazioneField;
     @FXML private TableView tableVisualizzazione;
 
-    public PrestitoController(ArchivioPrestiti archivioPrestiti, ArchivioLibri archivioLibri, ArchivioProfili archivioProfili) {
+    public PrestitiController(ArchivioPrestiti archivioPrestiti, ArchivioLibri archivioLibri, ArchivioProfili archivioProfili) {
         this.archivioPrestiti = archivioPrestiti;
         this.archivioLibri = archivioLibri;
         this.archivioProfili = archivioProfili;

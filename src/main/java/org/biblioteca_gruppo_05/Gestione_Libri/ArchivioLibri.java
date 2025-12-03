@@ -13,8 +13,7 @@ public class ArchivioLibri implements Serializable {
     }
     public void aggiungiLibro(Libro l){};
     public void rimuoviLibro(Libro l){};
-    public void modificaLibro(String ISBN){};
-    public Libro ricercaLibroPerISBN(String ISBN){};
+    public Libro ricercaLibroPerISBN(int ISBN){};
     public List<Libro> ricercaLibriPerTitolo(String titolo){};
     public List<Libro> ricercaLibriPerAutore(String autore){};
     public void visualizzaLibri(){};

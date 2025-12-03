@@ -12,29 +12,29 @@ public class Prestito implements Serializable, Comparable<Prestito> {
     private int id;
     private LocalDate dataPrestito;
     private LocalDate dataScadenza;
-    private Profilo profilo;
-    private Libro libro;
+    private String profilo;
+    private int libro;
     private int costoPenale;
 
 
-    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,Profilo profilo, Libro libro){
+    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, int ISBN){
         this.dataPrestito=dataPrestito;
         this.dataScadenza=dataScadenza;
-        this.profilo=profilo;
-        this.libro=libro;
+        this.profilo=matricola;
+        this.libro=ISBN;
         this.id=cont++;
         this.costoPenale= calcolaPenale();
     }
     
     public LocalDate getDataPrestito(){}
     public LocalDate getDataScadenza(){}
-    public Profilo getProfilo(){}
-    public Libro getLibro(){}
-    public int getId( ){}
-    public boolean controlloLibro(){}
-    public boolean controlloProfilo(){}
+    public String getProfilo(){}
+    public int getLibro(){}
+    public boolean controlloMatricola(){};
+    public boolean controlloISBN(){};
+    public int getId(){}
     public int calcolaPenale(){}
-    public void setLibro(Libro libro){}
+
 
     @Override
     public boolean equals(Object obj) {

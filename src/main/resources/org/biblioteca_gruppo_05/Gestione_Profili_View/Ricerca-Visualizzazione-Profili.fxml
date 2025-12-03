@@ -43,6 +43,8 @@
                 <TableColumn text="Nome" sortable="true" prefWidth="150.0" />
                 <TableColumn text="Cognome" sortable="true" prefWidth="150.0" />
                 <TableColumn text="Email" sortable="true" prefWidth="200.0" />
+                <!-- NUOVA COLONNA AGGIUNTA QUI SOTTO -->
+                <TableColumn text="Numero copie" sortable="true" prefWidth="120.0" />
             </columns>
             <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
         </TableView>

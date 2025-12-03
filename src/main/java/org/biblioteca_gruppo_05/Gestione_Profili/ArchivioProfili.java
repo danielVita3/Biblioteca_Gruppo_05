@@ -15,15 +15,14 @@ public class ArchivioProfili implements Serializable {
         this.profilo=new LinkedHashMap<>();
         this.fileName=fileName;
     }
-    public void aggiungiProfilo(Profilo p){};
-    public void rimuoviProfilo(Profilo p){};
-    public void modificaProfilo(String matricola){};
-    public Libro ricercaProfiloPerMatricola(String matricola){};
-    public List<Libro> ricercaProfiloPerNome(String nome){};
-    public List<Libro> ricercaProfiloPerCognome(String cognome){};
+    public void aggiungiProfilo(Profilo p){}
+    public void rimuoviProfilo(Profilo p){}
+    public Libro ricercaProfiloPerMatricola(String matricola){}
+    public List<Libro> ricercaProfiloPerNome(String nome){}
+    public List<Libro> ricercaProfiloPerCognome(String cognome){}
     public void visualizzaProfili(){};
-    public void salvaSuFile() throws IOException {};
-    public void leggiDaFile() throws IOException{};
+    public void salvaSuFile() throws IOException {}
+    public void leggiDaFile() throws IOException{}
     @Override
-    public String toString(){};
+    public String toString(){}
 }

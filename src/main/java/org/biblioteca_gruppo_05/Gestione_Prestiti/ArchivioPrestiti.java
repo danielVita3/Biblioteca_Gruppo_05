@@ -15,14 +15,13 @@ public class ArchivioPrestiti implements Serializable {
         this.prestiti=new LinkedHashMap<>();
         this.fileName=fileName;
     }
-    public void registraPrestito(Prestito p){};
-    public void restituzionPrestito(Prestito p{};
-    public Prestito ricercaPrestitoPerISBN(Libro l){};
-    public List<Prestito> ricercaPrestitoPerMatricola(String matricola){};
-    public List<Prestito> ricercaPrestitoPerISBN(String ISBN){};
-    public void visualizzaPrestiti(){};
-    private void salvaSuFile()  {};
-    private void leggiDaFile() {};
+    public void registraPrestito(Prestito p){}
+    public void restituzionPrestito(Prestito p){}
+    public List<Prestito> ricercaPrestitoPerMatricola(String matricola){}
+    public List<Prestito> ricercaPrestitoPerISBN(int ISBN){}
+    public void visualizzaPrestiti(){}
+    private void salvaSuFile()  {}
+    private void leggiDaFile() {}
     @Override
-    public String toString(){};
+    public String toString(){}
 }

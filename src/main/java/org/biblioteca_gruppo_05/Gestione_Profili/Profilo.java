@@ -11,13 +11,14 @@ public class Profilo implements Serializable, Comparable<Profilo> {
     private String matricola;
     private String mail;
     private int numeroPrestiti;
-    public  Profilo(String nome,String cognome,String matricola,String mail,int numeroPrestiti){
+    public  Profilo(String nome,String cognome,String matricola,String mail){
         this.nome=nome;
         this.cognome=cognome;
         this.matricola=matricola;
         this.mail=mail;
         this.numeroPrestiti=0;
     }
+    public boolean controlloMatricola(){}
     public String getNome(){}
     public String getCognome(){}
     public String getMatricola(){}
