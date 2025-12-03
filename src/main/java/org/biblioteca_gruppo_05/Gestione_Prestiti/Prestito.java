@@ -26,15 +26,15 @@ public class Prestito implements Serializable, Comparable<Prestito> {
         this.costoPenale= calcolaPenale();
     }
     
-    public LocalDate getDataPrestito(){};
-    public LocalDate getDataScadenza(){};
-    public Profilo getProfilo(){};
-    public Libro getLibro(){};
-    public int getId( ){};
-    public boolean controlloLibro(){};
-    public boolean controlloProfilo(){};
-    public int calcolaPenale(){};
-    public void setLibro(Libro libro){};
+    public LocalDate getDataPrestito(){}
+    public LocalDate getDataScadenza(){}
+    public Profilo getProfilo(){}
+    public Libro getLibro(){}
+    public int getId( ){}
+    public boolean controlloLibro(){}
+    public boolean controlloProfilo(){}
+    public int calcolaPenale(){}
+    public void setLibro(Libro libro){}
 
     @Override
     public boolean equals(Object obj) {
@@ -42,12 +42,16 @@ public class Prestito implements Serializable, Comparable<Prestito> {
     }
 
     @Override
-    public int compareTo(Libro l1, Libro l2){};
+    public int compareTo(Prestito p1){
+        return 0;
+    }
 
     @Override
-    public int hashCode(){};
+    public int hashCode(){
+        return 0;
+    };
     @Override
-    public String toString(){};
+    public String toString(){}
 
 
 

@@ -17,16 +17,16 @@ public class Libro implements Serializable,Comparable <Libro> {
         this.numeroCopie=numeroCopie;
         this.dataPubblicazione=dataPubblicazione;
     }
-    public String getTitolo(){};
-    public String getAutore(){};
-    public String getISBN(){};
-    public int getNumeroCopie(){};
-    public LocalDate getDataPubblicazione(){};
-    public void setTitolo(String titolo){};
-    public void setAutore(String autore){};
-    public void setISBN(String ISBN){};
-    public void setNumeroCopie(int numeroCopie){};
-    public void setDataPubblicazione(String dataPubblicazione){};
+    public String getTitolo(){}
+    public String getAutore(){}
+    public String getISBN(){}
+    public int getNumeroCopie(){}
+    public LocalDate getDataPubblicazione(){}
+    public void setTitolo(String titolo){}
+    public void setAutore(String autore){}
+    public void setISBN(String ISBN){}
+    public void setNumeroCopie(int numeroCopie){}
+    public void setDataPubblicazione(String dataPubblicazione){}
 
     @Override
     public boolean equals(Object obj) {
@@ -34,11 +34,15 @@ public class Libro implements Serializable,Comparable <Libro> {
     }
 
     @Override
-    public int compareTo(Libro l1, Libro l2){};
+    public int compareTo(Libro l1){
+        return 0;
+    }
 
     @Override
-    public int hashCode(){};
+    public int hashCode(){
+        return 0;
+    }
 
     @Override
-    public String toString(){};
+    public String toString(){}
 }

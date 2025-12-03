@@ -18,16 +18,16 @@ public class Profilo implements Serializable, Comparable<Profilo> {
         this.mail=mail;
         this.numeroPrestiti=0;
     }
-    public String getNome(){};
-    public String getCognome(){};
-    public String getMatricola(){};
-    public String getMail(){};
+    public String getNome(){}
+    public String getCognome(){}
+    public String getMatricola(){}
+    public String getMail(){}
     public int getNumeroPrestiti(){}
-    public void setNome(String nome){};
-    public void setCognome(String cognome){};
-    public void setMatricola(String matricola){};
-    public void setMail(String mail){};
-    public void setNumeroPrestiti(int prestito){};
+    public void setNome(String nome){}
+    public void setCognome(String cognome){}
+    public void setMatricola(String matricola){}
+    public void setMail(String mail){}
+    public void setNumeroPrestiti(int prestito){}
 
     @Override
     public boolean equals(Object obj) {
@@ -35,11 +35,15 @@ public class Profilo implements Serializable, Comparable<Profilo> {
     }
 
     @Override
-    public int compareTo(Libro l1, Libro l2){};
+    public int compareTo(Profilo p1){
+        return 0;
+    }
 
     @Override
-    public int hashCode(){};
+    public int hashCode(){
+        return 0;
+    }
 
     @Override
-    public String toString(){};
+    public String toString(){}
 }
