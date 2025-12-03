@@ -127,10 +127,14 @@
 
                                 <TableView fx:id="tablePrestitiAttivi" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: #fafafa; -fx-border-color: #ecf0f1;">
                                     <columns>
-                                        <TableColumn prefWidth="150.0" text="Utente (Matricola)" />
-                                        <TableColumn prefWidth="150.0" text="Libro (ISBN)" />
-                                        <TableColumn prefWidth="120.0" text="Data Inizio" />
-                                        <TableColumn prefWidth="120.0" text="Scadenza" />
+                                        <!-- NUOVA COLONNA PER LA CHECKBOX -->
+                                        <TableColumn fx:id="colSelezione" prefWidth="50.0" text="✔" style="-fx-alignment: CENTER;"/>
+
+                                        <!-- Colonne esistenti con fx:id aggiunti per comodità -->
+                                        <TableColumn fx:id="colMatricola" prefWidth="150.0" text="Utente (Matricola)" />
+                                        <TableColumn fx:id="colIsbn" prefWidth="150.0" text="Libro (ISBN)" />
+                                        <TableColumn fx:id="colDataInizio" prefWidth="120.0" text="Data Inizio" />
+                                        <TableColumn fx:id="colScadenza" prefWidth="120.0" text="Scadenza" />
                                     </columns>
                                     <columnResizePolicy>
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
