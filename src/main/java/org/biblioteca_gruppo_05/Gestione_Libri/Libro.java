@@ -10,11 +10,11 @@ public class Libro implements Serializable,Comparable <Libro> {
     private String ISBN;
     private int numeroCopie;
     private LocalDate dataPubblicazione;
-    public Libro(String titolo,String autore,String ISBN,int numeroCopie,LocalDate dataPubblicazione){
+    public Libro(String titolo,String autore,String ISBN,LocalDate dataPubblicazione){
         this.titolo=titolo;
         this.autore=autore;
         this.ISBN=ISBN;
-        this.numeroCopie=numeroCopie;
+        this.numeroCopie=1;
         this.dataPubblicazione=dataPubblicazione;
     }
     public String getTitolo(){}
