@@ -72,6 +72,42 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.soebes.maven.plugins</groupId>
+                <artifactId>doxygen-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <!-- Nome del progetto che apparirà nella documentazione -->
+                    <projectName>Biblioteca Gruppo 05</projectName>
+                    <projectNumber>1.0</projectNumber>
+
+                    <!-- Cartella dove si trova il codice sorgente -->
+                    <input>src/main/java</input>
+
+                    <!-- Cerca ricorsivamente nelle sottocartelle -->
+                    <recursive>true</recursive>
+
+                    <!-- Cartella di output per la documentazione -->
+                    <outputDirectory>${project.build.directory}/doxygen</outputDirectory>
+
+                    <!-- Generare i diagrammi UML (Richiede Graphviz installato) -->
+                    <haveDot>true</haveDot>
+                    <umlLook>true</umlLook>
+                    <callGraph>true</callGraph>
+                    <callerGraph>true</callerGraph>
+
+                    <!-- Lingua della documentazione -->
+                    <outputLanguage>Italian</outputLanguage>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
