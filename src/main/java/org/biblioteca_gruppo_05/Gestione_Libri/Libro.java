@@ -1,5 +1,7 @@
 package org.biblioteca_gruppo_05.Gestione_Libri;
 
+import org.biblioteca_gruppo_05.Eccezioni.ErroreISBNException;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.lang.Comparable;
@@ -18,7 +20,7 @@ public class Libro implements Serializable,Comparable <Libro> {
         this.numeroCopie=1;
         this.dataPubblicazione=dataPubblicazione;
     }
-    public boolean controllaISBN(){}
+    public static boolean controllaISBN()throws ErroreISBNException {}
     public String getTitolo(){}
     public String getAutore(){}
     public String getISBN(){}

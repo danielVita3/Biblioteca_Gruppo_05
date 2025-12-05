@@ -1,7 +1,6 @@
 package org.biblioteca_gruppo_05.Gestione_Profili;
 
-import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
-import org.biblioteca_gruppo_05.Gestione_Prestiti.Prestito;
+import org.biblioteca_gruppo_05.Eccezioni.ErroreMatricolaException;
 
 import java.io.Serializable;
 import java.lang.Comparable;
@@ -60,7 +59,7 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      * @pre La matricola deve essere stata inizializzata (non null).
      * @post Restituisce l'esito della validazione senza modificare lo stato dell'oggetto.
      */
-    public boolean controlloMatricola(){
+    public static boolean controlloMatricola()throws ErroreMatricolaException {
         // Logica di validazione (omessa)
         return true;
     }
@@ -68,35 +67,35 @@ public class Profilo implements Serializable, Comparable<Profilo> {
     /**
      * @brief Restituisce il nome dell'utente.
      * @return Stringa rappresentante il nome.
-     * @post Lo stato dell'oggetto rimane invariato.
+     * @post Restituisce l'attributo richiesto
      */
     public String getNome(){ return nome; }
 
     /**
      * @brief Restituisce il cognome dell'utente.
      * @return Stringa rappresentante il cognome.
-     * @post Lo stato dell'oggetto rimane invariato.
+     * @post Restituisce l'attributo richiesto
      */
     public String getCognome(){ return cognome; }
 
     /**
      * @brief Restituisce la matricola dell'utente.
      * @return Stringa univoca della matricola.
-     * @post Lo stato dell'oggetto rimane invariato.
+     * @post Restituisce l'attributo richiesto
      */
     public String getMatricola(){ return matricola; }
 
     /**
      * @brief Restituisce l'email dell'utente.
      * @return Stringa contenente l'indirizzo email.
-     * @post Lo stato dell'oggetto rimane invariato.
+     * @post Restituisce l'attributo richiesto
      */
     public String getMail(){ return mail; }
 
     /**
      * @brief Restituisce il numero di prestiti associati all'utente.
      * @return Intero rappresentante il conteggio dei prestiti.
-     * @post Lo stato dell'oggetto rimane invariato.
+     * @post Restituisce l'attributo richiesto
      */
     public int getNumeroPrestiti(){ return numeroPrestiti; }
 

@@ -14,4 +14,6 @@ module gruppo_05.biblioteca_gruppo_05 {
     opens org.biblioteca_gruppo_05.Gestione_Prestiti to javafx.fxml;
     exports org.biblioteca_gruppo_05.Application;
     opens org.biblioteca_gruppo_05.Application to javafx.fxml;
+    exports org.biblioteca_gruppo_05.Eccezioni;
+    opens org.biblioteca_gruppo_05.Eccezioni to javafx.fxml;
 }
