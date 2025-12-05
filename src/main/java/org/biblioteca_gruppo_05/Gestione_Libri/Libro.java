@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.lang.Comparable;
 
 public class Libro implements Serializable,Comparable <Libro> {
+
     private String titolo;
     private String autore;
     private int ISBN;
