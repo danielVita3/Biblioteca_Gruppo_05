@@ -88,7 +88,6 @@
 
                 <HBox alignment="CENTER_RIGHT" spacing="15.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleAnnulla" style="-fx-background-color: transparent; -fx-text-fill: #7f8c8d; -fx-cursor: hand;" text="Annulla" />
 
                         <Button mnemonicParsing="false" onAction="#handleConfermaModifica" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(231,76,60,0.3), 5, 0, 0, 3);" text="SALVA MODIFICHE">
                             <font>

@@ -149,14 +149,16 @@ public class ArchivioLibri implements Serializable {
      * @post L'archivio rimane invariato.
      */
     public List<Libro> visualizzaLibri() throws LibroNonTrovatoException {
-        if(libri.isEmpty()){
-            throw new LibroNonTrovatoException("Nessun libro trovato" );
+        if (libri.isEmpty()) {
+            throw new LibroNonTrovatoException("Nessun libro trovato");
         }
-        List<Libro> results=new ArrayList<>();
-        for(Libro l: libri.values()){
+        List<Libro> results = new ArrayList<>();
+        for (Libro l : libri.values()) {
             results.add(l);
-        }
 
+
+
+        }
         return results;
     }
 

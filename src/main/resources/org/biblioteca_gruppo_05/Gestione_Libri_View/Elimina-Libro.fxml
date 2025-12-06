@@ -89,7 +89,6 @@
             <Separator />
 
             <HBox alignment="CENTER_RIGHT" spacing="20.0">
-                <Button text="Annulla" onAction="#handleAnnulla" style="-fx-background-color: transparent; -fx-cursor: hand;" textFill="#7f8c8d"/>
                 <Button text="ELIMINA DEFINITIVAMENTE" onAction="#handleConfermaElimina" prefHeight="40.0" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(192, 57, 43, 0.4), 5, 0, 0, 3);"/>
             </HBox>
         </VBox>

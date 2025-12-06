@@ -161,7 +161,7 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @post L'attributo numeroCopie viene aggiornato con il valore fornito.
      */
     public void setNumeroCopie(int numeroCopie){
-        this.numeroCopie+=numeroCopie;
+        this.numeroCopie=numeroCopie;
     }
     /**
      * @brief Aggiorna la data di pubblicazione del libro.
@@ -189,6 +189,14 @@ public class Libro implements Serializable,Comparable <Libro> {
         Libro l=(Libro) obj;
         return this.ISBN.equals(l.getISBN());
     }
+    public void incrementaNumCopie(){
+        this.numeroCopie+=1;
+    }
+
+    public void decrementaNumeroCopie(){
+        this.numeroCopie-=1;
+    }
+
     /**
      * @brief Confronta due libri per l'ordinamento.
      * @param l1 Il libro da confrontare con l'istanza corrente.

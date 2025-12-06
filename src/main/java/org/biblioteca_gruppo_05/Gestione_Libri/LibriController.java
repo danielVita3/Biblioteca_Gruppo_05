@@ -143,7 +143,39 @@ public class LibriController implements Initializable {
 
 
     }
-    @FXML private void handleCercaVisualizza(ActionEvent event){
+    @FXML private void handleCercaVisualizza(ActionEvent event)  {
+        tableLibriVisualizza.getItems().clear();
+
+        String criterio = filtroLibriCombo.getValue(); // "ISBN", "Titolo" o "Autore"
+        String query = searchLibriField.getText().trim();
+
+        if (query.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Attenzione", "Campo vuoto", "Inserisci un termine di ricerca.");
+            return;
+        }
+
+        try{
+            ObservableList<Libro> risultati= FXCollections.observableArrayList();
+            switch(criterio){
+                case "ISBN":
+                    Libro libroTrovato= archivioLibri.ricercaLibroPerISBN(query);
+                    if (libroTrovato != null) {
+                        risultati.add(libroTrovato);
+                    }
+                    break;
+                case "Titolo":
+                    risultati = FXCollections.observableArrayList( archivioLibri.ricercaLibriPerTitolo(query));
+                    break;
+                case "Autore":
+
+                    risultati = FXCollections.observableArrayList( archivioLibri.ricercaLibriPerAutore(query));
+                    break;
+            }
+            tableLibriVisualizza.setItems(risultati);
+
+        }catch(LibroNonTrovatoException e){
+            showAlert(Alert.AlertType.WARNING,"Attenzione", "Libri non trovati", e.getMessage());
+        }
 
     }
     @FXML private void handleCercaLibro(ActionEvent event) {
