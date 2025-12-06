@@ -2,6 +2,7 @@ package org.biblioteca_gruppo_05.Gestione_Prestiti;
 
 import org.biblioteca_gruppo_05.Eccezioni.ErroreLetturaFileException;
 import org.biblioteca_gruppo_05.Eccezioni.ErroreScritturaFileException;
+import org.biblioteca_gruppo_05.Eccezioni.LibroNonTrovatoException;
 import org.biblioteca_gruppo_05.Eccezioni.PrestitoNonTrovatoException;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
 import org.biblioteca_gruppo_05.Gestione_Profili.Profilo;
@@ -90,8 +91,16 @@ public class ArchivioPrestiti implements Serializable {
      * @pre ISBN deve essere valido.
      * @post Restituisce una lista senza modificare l'archivio.
      */
-    public List<Prestito> ricercaPrestitoPerISBN(int ISBN) throws PrestitoNonTrovatoException {
-        return null; // Implementazione omessa
+    public List<Prestito> ricercaPrestitoPerISBN(String ISBN) throws PrestitoNonTrovatoException {
+        List <Prestito> results=new ArrayList<>();
+        for(Prestito p:prestiti.values()){
+            if(p.getLibro().equalsIgnoreCase(ISBN))
+                results.add(p);
+        }
+        if(results.isEmpty()){
+            throw new PrestitoNonTrovatoException("Nessun libro trovato con ISBN: " + ISBN);
+        }
+        return results;
     }
 
     /**
