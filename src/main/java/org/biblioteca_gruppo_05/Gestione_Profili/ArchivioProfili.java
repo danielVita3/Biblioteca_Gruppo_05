@@ -3,7 +3,7 @@ package org.biblioteca_gruppo_05.Gestione_Profili;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro; // Mantenuto se serve per riferimenti, ma non per i return type
 import org.biblioteca_gruppo_05.Eccezioni.*;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -17,7 +17,7 @@ import java.util.*;
 public class ArchivioProfili implements Serializable {
 
     /** @brief Mappa che contiene i profili. La chiave è la matricola (univoca), il valore è l'oggetto Profilo. */
-    private Map<String, Profilo> profilo;
+    private Map<String, Profilo> profili;
 
     /** @brief Percorso o nome del file utilizzato per il salvataggio dei dati. */
     private final String fileName;
@@ -34,8 +34,13 @@ public class ArchivioProfili implements Serializable {
      * @post Viene creato un archivio vuoto pronto per l'uso.
      */
     public ArchivioProfili(String fileName){
-        this.profilo = new LinkedHashMap<>();
+        this.profili = new LinkedHashMap<>();
         this.fileName = fileName;
+        try{
+            leggiDaFile();
+        }catch(ErroreLetturaFileException e){
+            System.err.println(e.getMessage());
+        }
     }
 
     /**
@@ -47,18 +52,42 @@ public class ArchivioProfili implements Serializable {
      * @pre p non deve essere null e deve avere una matricola valida.
      * @post Il profilo viene aggiunto alla mappa.
      */
-    public void aggiungiProfilo(Profilo p) throws UtenteEsitenteException {}
+    public void aggiungiProfilo(Profilo p) throws UtenteEsitenteException {
+
+       if(this.profili.containsKey(p.getMatricola())){
+           throw new UtenteEsitenteException("Utente già esistente");
+       }else{
+           this.profili.put(p.getMatricola(),p);
+       }
+        try {
+            salvaSuFile();
+        }catch(ErroreScritturaFileException e){
+            System.err.println(e.getMessage());
+        }
+    }
 
     /**
      * @brief Rimuove un profilo esistente dall'archivio.
      *
-     * @param p L'oggetto Profilo da rimuovere.
+     * @param matricola L'oggetto matricola da rimuovere.
      * @throws UtenteNonTrovatoException Se il profilo non è presente nell'archivio.
      *
-     * @pre p non deve essere null.
+     * @pre matricola non deve essere null.
      * @post Il profilo viene rimosso dalla mappa.
      */
-    public void rimuoviProfilo(Profilo p) throws UtenteNonTrovatoException {}
+    public void rimuoviProfilo(String matricola) throws UtenteNonTrovatoException {
+        if(this.profili.containsKey(matricola)){
+            this.profili.remove(matricola);
+        }else{
+            throw new UtenteNonTrovatoException("Utente non trovato con questa matricola: " +matricola);
+        }
+        try {
+            salvaSuFile();
+        }catch(ErroreScritturaFileException e){
+            System.err.println(e.getMessage());
+        }
+
+    }
 
     /**
      * @brief Cerca un singolo profilo tramite la matricola.
@@ -71,7 +100,12 @@ public class ArchivioProfili implements Serializable {
      * @post Restituisce il profilo senza rimuoverlo o modificarlo.
      */
     public Profilo ricercaProfiloPerMatricola(String matricola) throws UtenteNonTrovatoException {
-        return null; // Implementazione omessa
+        if(this.profili.containsKey(matricola)){
+            return profili.get(matricola);
+        }else{
+            throw new UtenteNonTrovatoException("Utente non trovato con questa matricola: "+matricola);
+        }
+
     }
 
     /**
@@ -85,7 +119,16 @@ public class ArchivioProfili implements Serializable {
      * @post Restituisce una lista senza modificare l'archivio.
      */
     public List<Profilo> ricercaProfiloPerNome(String nome) throws UtenteNonTrovatoException {
-        return null; // Implementazione omessa
+        List <Profilo>listaNome= new ArrayList<>();
+        for(Profilo p: profili.values()){
+            if(p.getNome().equals(nome)){
+                listaNome.add(p);
+            }
+        }
+        if(listaNome.isEmpty()){
+            throw new UtenteNonTrovatoException("Nessun Utente trovato con questo nome: "+ nome);
+        }
+        return listaNome;
     }
 
     /**
@@ -99,7 +142,16 @@ public class ArchivioProfili implements Serializable {
      * @post Restituisce una lista senza modificare l'archivio.
      */
     public List<Profilo> ricercaProfiloPerCognome(String cognome) throws UtenteNonTrovatoException {
-        return null; // Implementazione omessa
+        List <Profilo>listaNome= new ArrayList<>();
+        for(Profilo p: profili.values()){
+            if(p.getCognome().equals(cognome)){
+                listaNome.add(p);
+            }
+        }
+        if(listaNome.isEmpty()){
+            throw new UtenteNonTrovatoException("Nessun Utente trovato con questo cognome: "+ cognome);
+        }
+        return listaNome;
     }
 
     /**
@@ -119,7 +171,13 @@ public class ArchivioProfili implements Serializable {
      * @pre Il percorso del file deve essere scrivibile.
      * @post I dati attuali sono persistiti su disco.
      */
-    public void salvaSuFile() throws ErroreScritturaFileException {}
+    public void salvaSuFile() throws ErroreScritturaFileException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(profili);
+        } catch (IOException e) {
+            throw new ErroreScritturaFileException("Errore durante il salvataggio dell'archivio libri: " + e.getMessage());
+        }
+    }
 
     /**
      * @brief Carica lo stato dell'archivio da file.
@@ -131,7 +189,21 @@ public class ArchivioProfili implements Serializable {
      * @pre Il file deve esistere e contenere dati validi.
      * @post La mappa 'profilo' viene popolata con i dati letti.
      */
-    public void leggiDaFile() throws ErroreLetturaFileException {}
+    public void leggiDaFile() throws ErroreLetturaFileException {
+        try( ObjectInputStream ob= new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)))){
+            Object data=ob.readObject();
+            if(data instanceof Map){
+               profili=(Map <String,Profilo>) data;
+            }else{
+                throw new ErroreLetturaFileException("File non contiene nulla o non mappe");
+            }
+        }catch(FileNotFoundException e){
+            throw new ErroreLetturaFileException("File Archivio non trovato");
+        }catch(IOException|ClassNotFoundException e){
+            throw new ErroreLetturaFileException("Errore di lettura o dati del file corrotti: " + e.getMessage());
+
+        }
+    }
 
     /**
      * @brief Restituisce una rappresentazione testuale dell'intero archivio.
@@ -139,6 +211,11 @@ public class ArchivioProfili implements Serializable {
      */
     @Override
     public String toString(){
-        return "";
+        StringBuffer str=new StringBuffer();
+        for(Profilo p: profili.values()){
+            str.append(p.toString());
+            str.append("\n");
+        }
+        return str.toString();
     }
 }
