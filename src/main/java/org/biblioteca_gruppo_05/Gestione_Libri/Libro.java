@@ -24,7 +24,7 @@ public class Libro implements Serializable,Comparable <Libro> {
     /** Autore del libro */
     private String autore;
     /** Codice univoco identificativo (ISBN) */
-    private int ISBN;
+    private String ISBN;
     /** Numero di copie del libro disponibili nella biblioteca */
     private int numeroCopie;
     /** Anno di pubblicazione del libro */
@@ -37,11 +37,11 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @param ISBN
      * @param dataPubblicazione
      * @pre Il parametro ISBN fornito non deve essere nullo né una stringa vuota.
-     * @pre I parametri titolo e autore non devono essere nulli, la data di pubblicazione deve essere accettabile
+     * @pre I parametri titolo,autore non devono essere nulli, la data di pubblicazione deve essere accettabile
      * @post Viene creata una nuova istanza valida della classe Libro.
      * @post Tutti gli attributi sono stati inizializzati con i valori passati.
      */
-    public Libro(String titolo,String autore,int ISBN,LocalDate dataPubblicazione){
+    public Libro(String titolo,String autore,String ISBN,LocalDate dataPubblicazione){
         this.titolo=titolo;
         this.autore=autore;
         this.ISBN=ISBN;
@@ -56,7 +56,29 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre L'ISBN deve essere stato inizializzato (non null).
      * @post Restituisce l'esito della validazione senza modificare lo stato dell'oggetto.
      */
-    public static boolean controllaISBN()throws ErroreISBNException {}
+    public static boolean controllaISBN(String ISBN) throws ErroreISBNException {
+        final String ISBN_PATTERN = "^97[89]\\d{10}$";
+
+        if (ISBN == null) {
+            throw new ErroreISBNException("L'ISBN non può essere nullo.");
+        }
+
+        if (ISBN.matches(ISBN_PATTERN)) {
+            return true;
+        } else {
+            String errorMessage;
+
+            if (ISBN.length() != 13) {
+                errorMessage = "Lunghezza non valida. L'ISBN deve essere composto da 13 cifre (trovati " + ISBN.length() + ").";
+            } else if (!ISBN.substring(0, 2).equals("97")) {
+                errorMessage = "Il prefisso non è valido. L'ISBN deve iniziare con '97'.";
+            } else {
+                errorMessage = "L'ISBN contiene caratteri non numerici o la terza cifra non è 8 o 9.";
+            }
+
+            throw new ErroreISBNException(errorMessage);
+        }
+    }
     /**
      * @brief Restituisce il titolo del libro.
      * @return Stringa rappresentante il titolo.
@@ -79,7 +101,7 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @return Stringa univoca dell'ISBN'.
      * @post Restituisce l'attributo richiesto.
      */
-    public int getISBN(){
+    public String getISBN(){
         return this.ISBN;
     }
     /**
@@ -125,7 +147,7 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre Il parametro ISBN non deve essere null e deve rispettare il formato univoco.
      * @post L'attributo ISBN viene aggiornato.
      */
-    public void setISBN(int ISBN){
+    public void setISBN(String ISBN){
         this.ISBN=ISBN;
     }
     /**
@@ -135,7 +157,9 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre Il parametro numeroCopie deve essere un intero +1, -1.
      * @post L'attributo numeroCopie viene aggiornato con il valore fornito.
      */
-    public void setNumeroCopie(int numeroCopie){}
+    public void setNumeroCopie(int numeroCopie){
+        this.numeroCopie+=numeroCopie;
+    }
     /**
      * @brief Aggiorna la data di pubblicazione del libro.
      * @param dataPubblicazione La data di pubblicazione .
@@ -160,7 +184,7 @@ public class Libro implements Serializable,Comparable <Libro> {
         if(obj==this) return true;
         if(this.getClass()!=obj.getClass()) return false;
         Libro l=(Libro) obj;
-        return this.ISBN==l.getISBN();
+        return this.ISBN.equals(l.getISBN());
     }
     /**
      * @brief Confronta due libri per l'ordinamento.
@@ -172,7 +196,7 @@ public class Libro implements Serializable,Comparable <Libro> {
      */
     @Override
     public int compareTo(Libro l1){
-        return Integer.compare(this.ISBN,l1.getISBN());
+        return this.ISBN.compareTo(l1.getISBN());
     }
     /**
      * @brief Calcola il codice hash del libro.
@@ -183,7 +207,7 @@ public class Libro implements Serializable,Comparable <Libro> {
      */
     @Override
     public int hashCode(){
-        return Integer.hashCode(this.ISBN);
+        return this.ISBN.hashCode();
     }
     /**
      * @brief Restituisce una rappresentazione testuale del plibro.
