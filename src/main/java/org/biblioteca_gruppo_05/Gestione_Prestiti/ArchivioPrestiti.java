@@ -1,12 +1,13 @@
 package org.biblioteca_gruppo_05.Gestione_Prestiti;
 
-import org.biblioteca_gruppo_05.Eccezioni.*;
-import org.biblioteca_gruppo_05.Gestione_Libri.ArchivioLibri;
+import org.biblioteca_gruppo_05.Eccezioni.ErroreLetturaFileException;
+import org.biblioteca_gruppo_05.Eccezioni.ErroreScritturaFileException;
+import org.biblioteca_gruppo_05.Eccezioni.PrestitoNonTrovatoException;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
-import org.biblioteca_gruppo_05.Gestione_Profili.ArchivioProfili;
 import org.biblioteca_gruppo_05.Gestione_Profili.Profilo;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -39,12 +40,6 @@ public class ArchivioPrestiti implements Serializable {
     public ArchivioPrestiti(String fileName){
         this.prestiti = new LinkedHashMap<>();
         this.fileName = fileName;
-        try{
-            leggiDaFile();
-        }catch(ErroreLetturaFileException e){
-            System.err.println(e.getMessage());
-        }
-
     }
 
     /**
@@ -55,36 +50,7 @@ public class ArchivioPrestiti implements Serializable {
      * @pre p non deve essere null e deve contenere riferimenti validi a Libro e Profilo.
      * @post Il prestito viene aggiunto alla mappa, l'utente incrementa il numero di prestiti attivi e il libro decrementa il numero di copie disponibili.
      */
-    public void registraPrestito(Prestito p){
-        prestiti.put(p.getId(), p);
-        ArchivioLibri l=new ArchivioLibri("ArchivioLibri.bin");
-        ArchivioProfili pro=new ArchivioProfili("ArchivioProfili.bin");
-        try {
-            l.ricercaLibroPerISBN(p.getLibro()).setNumeroCopie(-1);
-        }catch(LibroNonTrovatoException e){
-            System.err.println(e.getMessage());
-        }
-        try {
-            pro.ricercaProfiloPerMatricola(p.getProfilo()).setNumeroPrestiti(1);
-        }catch(UtenteNonTrovatoException e){
-            System.err.println(e.getMessage());
-        }
-        try{
-            l.salvaSuFile();
-        }catch(ErroreScritturaFileException e){
-            System.err.println("Errore di scrittura" +  e.getMessage());
-        }
-        try{
-            pro.salvaSuFile();
-        }catch(ErroreScritturaFileException e){
-            System.err.println("Errore di scrittura" +  e.getMessage());
-        }
-        try{
-            salvaSuFile();
-        }catch(ErroreScritturaFileException e){
-            System.err.println("Errore di scrittura" +  e.getMessage());
-        }
-    }
+    public void registraPrestito(Prestito p){}
 
     /**
      * @brief Gestisce la restituzione di un prestito (chiusura della transazione).
@@ -96,37 +62,7 @@ public class ArchivioPrestiti implements Serializable {
      * @pre p deve esistere nell'archivio.
      * @post Il prestito viene rimosso o aggiornato, l'utente decrementa il numero di prestiti attivi e il libro incrementa il numero di copie disponibili.
      */
-    public void restituzionPrestito(Prestito p){
-        prestiti.remove(p.getId());
-        ArchivioLibri l=new ArchivioLibri("ArchivioLibri.bin");
-        ArchivioProfili pro=new ArchivioProfili("ArchivioProfili.bin");
-        try {
-            l.ricercaLibroPerISBN(p.getLibro()).setNumeroCopie(1);
-        }catch(LibroNonTrovatoException e){
-            System.err.println(e.getMessage());
-        }
-        try {
-            pro.ricercaProfiloPerMatricola(p.getProfilo()).setNumeroPrestiti(-1);
-        }catch(UtenteNonTrovatoException e){
-            System.err.println(e.getMessage());
-        }
-        try{
-            l.salvaSuFile();
-        }catch(ErroreScritturaFileException e){
-            System.err.println("Errore di scrittura" +  e.getMessage());
-        }
-        try{
-            pro.salvaSuFile();
-        }catch(ErroreScritturaFileException e){
-            System.err.println("Errore di scrittura" +  e.getMessage());
-        }
-        try{
-            salvaSuFile();
-        }catch(ErroreScritturaFileException e){
-            System.err.println("Errore di scrittura" +  e.getMessage());
-        }
-
-    }
+    public void restituzionPrestito(Prestito p){}
 
     /**
      * @brief Cerca tutti i prestiti associati a una specifica matricola utente.
@@ -139,16 +75,7 @@ public class ArchivioPrestiti implements Serializable {
      * @post Restituisce una lista senza modificare l'archivio.
      */
     public List<Prestito> ricercaPrestitoPerMatricola(String matricola) throws PrestitoNonTrovatoException {
-        List <Prestito>listaMatricola= new ArrayList<>();
-        for(Prestito p: prestiti.values()){
-            if(p.getProfilo().equals(matricola)){
-                listaMatricola.add(p);
-            }
-        }
-        if(listaMatricola.isEmpty()){
-            throw new PrestitoNonTrovatoException("Nessun Utente trovato con questa matricola: "+ matricola);
-        }
-        return listaMatricola;
+        return null; // Implementazione omessa
     }
 
     /**
@@ -184,13 +111,7 @@ public class ArchivioPrestiti implements Serializable {
      * @pre Il percorso del file deve essere scrivibile.
      * @post I dati attuali sono persistiti su disco.
      */
-    private void salvaSuFile() throws ErroreScritturaFileException {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            oos.writeObject(prestiti);
-        } catch (IOException e) {
-            throw new ErroreScritturaFileException("Errore durante il salvataggio dell'archivio libri: " + e.getMessage());
-        }
-    }
+    private void salvaSuFile() throws ErroreScritturaFileException {}
 
     /**
      * @brief Carica lo stato dell'archivio da file.
@@ -202,21 +123,7 @@ public class ArchivioPrestiti implements Serializable {
      * @pre Il file deve esistere e contenere dati validi.
      * @post La mappa 'prestiti' viene popolata con i dati letti.
      */
-    private void leggiDaFile() throws ErroreLetturaFileException {
-        try( ObjectInputStream ob= new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)))){
-            Object data=ob.readObject();
-            if(data instanceof Map){
-                prestiti=(Map <Integer,Prestito>) data;
-            }else{
-                throw new ErroreLetturaFileException("File non contiene nulla o non mappe");
-            }
-        }catch(FileNotFoundException e){
-            throw new ErroreLetturaFileException("File Archivio non trovato");
-        }catch(IOException|ClassNotFoundException e){
-            throw new ErroreLetturaFileException("Errore di lettura o dati del file corrotti: " + e.getMessage());
-
-        }
-    }
+    private void leggiDaFile() throws ErroreLetturaFileException {}
 
     /**
      * @brief Restituisce una rappresentazione testuale dell'archivio prestiti.
@@ -224,11 +131,6 @@ public class ArchivioPrestiti implements Serializable {
      */
     @Override
     public String toString(){
-        StringBuffer str=new StringBuffer();
-        for(Prestito p: prestiti.values()){
-            str.append(p.toString());
-            str.append("\n");
-        }
-        return str.toString();
+        return "";
     }
 }
