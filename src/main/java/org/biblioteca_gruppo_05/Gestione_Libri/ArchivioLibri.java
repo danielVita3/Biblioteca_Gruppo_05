@@ -70,7 +70,7 @@ public class ArchivioLibri implements Serializable {
      */
     public void rimuoviLibro(String ISBN) throws LibroNonTrovatoException {
         if(!libri.containsKey(ISBN)){
-            throw new LibroNonTrovatoException("Impossibile rimuovere: Libro con ISBN " + l.getISBN() + "non trovato");
+            throw new LibroNonTrovatoException("Impossibile rimuovere: Libro con ISBN " + ISBN + "non trovato");
         }
         libri.remove(ISBN);
         try{
