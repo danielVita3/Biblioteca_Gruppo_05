@@ -63,31 +63,41 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @post Restituisce l'attributo richiesto
      */
 
-    public String getTitolo(){}
+    public String getTitolo(){
+        return this.titolo;
+    }
     /**
      * @brief Restituisce l'autore del libro.
      * @return Stringa rappresentante l'autore.
      * @post Restituisce l'attributo richiesto
      */
-    public String getAutore(){}
+    public String getAutore(){
+        return this.autore;
+    }
     /**
      * @brief Restituisce l'ISBN del libro.
      * @return Stringa univoca dell'ISBN'.
      * @post Restituisce l'attributo richiesto.
      */
-    public String getISBN(){}
+    public int getISBN(){
+        return this.ISBN;
+    }
     /**
      * @brief Restituisce il numero di copie associate al libro.
      * @return Intero rappresentante il conteggio delle copie.
      * @post Restituisce l'attributo richiesto.
      */
-    public int getNumeroCopie(){}
+    public int getNumeroCopie(){
+        return this.numeroCopie;
+    }
     /**
      * @brief Restituisce la data in cui il libro è stato pubblicato.
      * @return LocalDate nel formato anno-mese-giorno.
      * @post Restituisce l'attributo richiesto.
      */
-    public LocalDate getDataPubblicazione(){}
+    public LocalDate getDataPubblicazione(){
+        return this.dataPubblicazione;
+    }
     /**
      * @brief Imposta o modifica il titolo del libro.
      * @param titolo Il nuovo titolo da asseganre.
@@ -95,7 +105,9 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre Il parametro titolo non deve essere null o vuoto.
      * @post L'attributo titolo viene aggiornato con il nuovo valore.
      */
-    public void setTitolo(String titolo){}
+    public void setTitolo(String titolo){
+        this.titolo=titolo;
+    }
     /**
      * @brief Imposta o modifica l'autore del libro.
      * @param autore Il nuovo autore da asseganre.
@@ -103,7 +115,9 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre Il parametro autore non deve essere null o vuoto.
      * @post L'attributo autore viene aggiornato con il nuovo valore.
      */
-    public void setAutore(String autore){}
+    public void setAutore(String autore){
+        this.autore=autore;
+    }
     /**
      * @brief Imposta o modifica l'ISBN del libro.
      * @param ISBN Il nuovo ISBN da assegnare.
@@ -111,7 +125,9 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre Il parametro ISBN non deve essere null e deve rispettare il formato univoco.
      * @post L'attributo ISBN viene aggiornato.
      */
-    public void setISBN(int ISBN){}
+    public void setISBN(int ISBN){
+        this.ISBN=ISBN;
+    }
     /**
      * @brief Aggiorna il numero delle copie del libro.
      * @param numeroCopie Il nuovo valore del contatore copie.
@@ -127,7 +143,9 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre La stringa dataPubblicazione non deve essere nulla e deve essere convertibile in un formato data valido.
      * @post L'attributo interno dataPubblicazione viene aggiornato con il valore fornito.
      */
-    public void setDataPubblicazione(String dataPubblicazione){}
+    public void setDataPubblicazione(LocalDate dataPubblicazione){
+        this.dataPubblicazione=dataPubblicazione;
+    }
     /**
      * @brief Confronta questo libro con un altro oggetto per verificarne l'uguaglianza.
      * @param obj L'oggetto con cui confrontare il libro corrente.
@@ -138,7 +156,11 @@ public class Libro implements Serializable,Comparable <Libro> {
      */
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(obj==null) return false;
+        if(obj==this) return true;
+        if(this.getClass()!=obj.getClass()) return false;
+        Libro l=(Libro) obj;
+        return this.ISBN==l.getISBN();
     }
     /**
      * @brief Confronta due libri per l'ordinamento.
@@ -150,7 +172,7 @@ public class Libro implements Serializable,Comparable <Libro> {
      */
     @Override
     public int compareTo(Libro l1){
-        return 0;
+        return Integer.compare(this.ISBN,l1.getISBN());
     }
     /**
      * @brief Calcola il codice hash del libro.
@@ -161,7 +183,7 @@ public class Libro implements Serializable,Comparable <Libro> {
      */
     @Override
     public int hashCode(){
-        return 0;
+        return Integer.hashCode(this.ISBN);
     }
     /**
      * @brief Restituisce una rappresentazione testuale del plibro.
@@ -170,5 +192,18 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @post Restituisce una stringa non nulla che descrive lo stato dell'oggetto.
      */
     @Override
-    public String toString(){}
+    public String toString(){
+        StringBuffer sb=new StringBuffer();
+        sb.append("\nTitolo=");
+        sb.append(titolo);
+        sb.append("\nAutore=");
+        sb.append(autore);
+        sb.append("\nISBN=");
+        sb.append(ISBN);
+        sb.append("\nNumero di copie disponibili=");
+        sb.append(numeroCopie);
+        sb.append("\nData di pubblicazione=");
+        sb.append(dataPubblicazione);
+        return sb.toString();
+    }
 }
