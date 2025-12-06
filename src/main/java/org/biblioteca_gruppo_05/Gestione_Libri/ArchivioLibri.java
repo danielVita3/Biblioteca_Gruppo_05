@@ -169,7 +169,7 @@ public class ArchivioLibri implements Serializable {
      * @pre Il percorso del file deve essere scrivibile.
      * @post I dati attuali sono persistiti su disco.
      */
-    private void salvaSuFile() throws ErroreScritturaFileException {
+    public void salvaSuFile() throws ErroreScritturaFileException {
         try(ObjectOutputStream out=new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(fileName)))){
             out.writeObject(libri);
         }catch(IOException e){
@@ -187,7 +187,7 @@ public class ArchivioLibri implements Serializable {
      * @pre Il file deve esistere e contenere dati validi.
      * @post La mappa 'libri' viene popolata con i dati letti.
      */
-    private void leggiDaFile() throws ErroreLetturaFileException {
+    protected void leggiDaFile() throws ErroreLetturaFileException {
         try(ObjectInputStream in=new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)))){
             Object c=in.readObject();
             if(c instanceof Map){
