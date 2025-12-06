@@ -190,7 +190,7 @@ public class ArchivioProfili implements Serializable {
      * @post La mappa 'profilo' viene popolata con i dati letti.
      */
     public void leggiDaFile() throws ErroreLetturaFileException {
-        try( ObjectInputStream ob= new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName))){
+        try( ObjectInputStream ob= new ObjectInputStream(new BufferedInputStream(new FileInputStream(fileName)))){
             Object data=ob.readObject();
             if(data instanceof Map){
                profili=(Map <String,Profilo>) data;
@@ -211,6 +211,11 @@ public class ArchivioProfili implements Serializable {
      */
     @Override
     public String toString(){
-        return "";
+        StringBuffer str=new StringBuffer();
+        for(Profilo p: profili.values()){
+            str.append(p.toString());
+            str.append("\n");
+        }
+        return str.toString();
     }
 }
