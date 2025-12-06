@@ -32,7 +32,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
     private String profilo;
 
     /** Codice ISBN del libro prestato. */
-    private int libro;
+    private String libro;
 
     /** Importo della penale (calcolato in base al ritardo). */
     private int costoPenale;
@@ -49,7 +49,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      * @pre matricola non deve essere null o vuota, ISBN non deve essere null o vuoto.
      * @post Viene istanziato un nuovo oggetto Prestito con ID univoco e costo penale calcolato in base alle date.
      */
-    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, int ISBN){
+    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, String ISBN){
         this.dataPrestito=dataPrestito;
         this.dataScadenza=dataScadenza;
         this.profilo=matricola;
@@ -84,7 +84,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      * @return Intero rappresentante l'ISBN.
      * @post Restituisce l'attributo richiesto.
      */
-    public int getLibro(){ return libro; }
+    public String getLibro(){ return libro; }
 
     /**
      * @brief Verifica la validità formale della matricola associata.

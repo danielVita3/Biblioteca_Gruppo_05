@@ -1,6 +1,7 @@
 package org.biblioteca_gruppo_05.Gestione_Profili;
 
 import org.biblioteca_gruppo_05.Eccezioni.ErroreMatricolaException;
+import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
 
 import java.io.Serializable;
 import java.lang.Comparable;
@@ -59,9 +60,16 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      * @pre La matricola deve essere stata inizializzata (non null).
      * @post Restituisce l'esito della validazione senza modificare lo stato dell'oggetto.
      */
-    public static boolean controlloMatricola()throws ErroreMatricolaException {
-        // Logica di validazione (omessa)
-        return true;
+    public static boolean controlloMatricola(String matricola)throws ErroreMatricolaException {
+        if(matricola.length()!=10){
+            throw new ErroreMatricolaException("Matricola non contiene 10 caratteri");
+        }else if(!matricola.matches("\\d{10}")){
+            throw new ErroreMatricolaException("Matricola non contiene 10 numeri ");
+        }else if(!matricola.substring(0,2).equals("06")){
+            throw new ErroreMatricolaException("Matricola non inizia con 06 ");
+        }else{
+            return true;
+        }
     }
 
     /**
@@ -142,7 +150,7 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      * @pre Il parametro prestito deve essere un intero +1, -1.
      * @post L'attributo numeroPrestiti viene aggiornato con il valore fornito.
      */
-    public void setNumeroPrestiti(int prestito){ this.numeroPrestiti = prestito; }
+    public void setNumeroPrestiti(int prestito){ this.numeroPrestiti += prestito; }
 
     /**
      * @brief Confronta questo profilo con un altro oggetto per verificarne l'uguaglianza.
@@ -154,7 +162,11 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      */
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(obj==null) return false;
+        if(obj==this) return true;
+        if(this.getClass()!=obj.getClass()) return false;
+        Profilo l=(Profilo) obj;
+        return this.matricola==l.getMatricola();
     }
 
     /**
@@ -167,7 +179,7 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      */
     @Override
     public int compareTo(Profilo p1){
-        return 0;
+        return this.matricola.compareToIgnoreCase(p1.getMatricola());
     }
 
     /**
@@ -179,7 +191,7 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      */
     @Override
     public int hashCode(){
-        return 0;
+        return matricola.hashCode();
     }
 
     /**
@@ -189,7 +201,19 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      * @post Restituisce una stringa non nulla che descrive lo stato dell'oggetto.
      */
     @Override
-    public String toString(){
-        return "";
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("\nNome = ");
+        sb.append(nome);
+        sb.append("\nCognome = ");
+        sb.append(cognome);
+        sb.append("\nMatricola = ");
+        sb.append(matricola);
+        sb.append("\nEmail = ");
+        sb.append(mail);
+        sb.append("\nNumero prestiti attivi = ");
+        sb.append(numeroPrestiti);
+        return sb.toString();
     }
+
 }
