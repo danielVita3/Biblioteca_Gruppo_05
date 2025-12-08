@@ -2,11 +2,17 @@ package org.biblioteca_gruppo_05.Gestione_Prestiti;
 
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+import javafx.stage.Stage;
 import org.biblioteca_gruppo_05.Gestione_Libri.*;
 import org.biblioteca_gruppo_05.Gestione_Profili.*;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -36,7 +42,16 @@ public class PrestitiController implements Initializable {
         this.archivioProfili = archivioProfili;
     }
 
-    @FXML private void handleIndietro(ActionEvent event) {}
+    @FXML private void handleIndietro(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.centerOnScreen();
+        stage.setTitle("Home Page!");
+        stage.setMaximized(true);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @FXML private void handleConfermaPrestito(ActionEvent event) {}
 
