@@ -12,9 +12,9 @@ import java.util.ResourceBundle;
 
 public class PrestitiController implements Initializable {
 
-    private final ArchivioPrestiti archivioPrestiti;
-    private final ArchivioLibri archivioLibri;
-    private final ArchivioProfili archivioProfili;
+    private  ArchivioPrestiti archivioPrestiti;
+    private  ArchivioLibri archivioLibri;
+    private  ArchivioProfili archivioProfili;
 
     @FXML private TextField prestitoMatricolaField;
     @FXML private TextField prestitoIsbnField;
@@ -27,7 +27,9 @@ public class PrestitiController implements Initializable {
     @FXML private ComboBox<String> filtroVisualizzazioneCombo;
     @FXML private TextField searchVisualizzazioneField;
     @FXML private TableView tableVisualizzazione;
+    public PrestitiController(){
 
+    }
     public PrestitiController(ArchivioPrestiti archivioPrestiti, ArchivioLibri archivioLibri, ArchivioProfili archivioProfili) {
         this.archivioPrestiti = archivioPrestiti;
         this.archivioLibri = archivioLibri;

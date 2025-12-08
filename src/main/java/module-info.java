@@ -1,11 +1,10 @@
-module gruppo_05.biblioteca_gruppo_05 {
+module org.biblioteca_gruppo_05 {
     requires javafx.controls;
     requires javafx.fxml;
-    requires gruppo_05.biblioteca_gruppo_05;
+    requires javafx.graphics;
 
 
-    opens org.biblioteca_gruppo_05 to javafx.fxml;
-    exports org.biblioteca_gruppo_05;
+
     exports org.biblioteca_gruppo_05.Gestione_Libri;
     opens org.biblioteca_gruppo_05.Gestione_Libri to javafx.fxml;
     exports org.biblioteca_gruppo_05.Gestione_Profili;

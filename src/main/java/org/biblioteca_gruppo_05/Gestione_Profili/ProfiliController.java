@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
     public class ProfiliController implements Initializable {
 
-        private final ArchivioProfili archivioProfili;
+        private ArchivioProfili archivioProfili;
 
         @FXML private TextField nomeField;
         @FXML private TextField cognomeField;
@@ -35,7 +35,9 @@ import java.util.ResourceBundle;
         @FXML private VBox confirmContainer;
         @FXML private Label lblNomeCognome;
         @FXML private Label lblMatricola;
+        public ProfiliController(){
 
+        }
         public ProfiliController(ArchivioProfili manager) {
             this.archivioProfili = manager;
         }

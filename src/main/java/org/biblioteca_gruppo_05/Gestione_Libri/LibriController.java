@@ -37,7 +37,9 @@ public class LibriController implements Initializable {
     @FXML private ComboBox<String> filtroLibriCombo;
     @FXML private TextField searchLibriField;
     @FXML private TableView<Object> tableLibri;
+    public LibriController(){
 
+    }
     public LibriController(ArchivioLibri manager) {
         this.archivioLibri = manager;
     }
