@@ -41,12 +41,15 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @post Viene creata una nuova istanza valida della classe Libro.
      * @post Tutti gli attributi sono stati inizializzati con i valori passati.
      */
-    public Libro(String titolo,String autore,String ISBN,LocalDate dataPubblicazione){
-        this.titolo=titolo;
-        this.autore=autore;
-        this.ISBN=ISBN;
-        this.numeroCopie=1;
-        this.dataPubblicazione=dataPubblicazione;
+    public Libro(String titolo,String autore,String ISBN,LocalDate dataPubblicazione) throws ErroreISBNException{
+        if(controllaISBN(ISBN)){
+            this.titolo=titolo;
+            this.autore=autore;
+            this.ISBN=ISBN;
+            this.numeroCopie=1;
+            this.dataPubblicazione=dataPubblicazione;
+        }
+
     }
     /**
      * @brief Verifica la validità del formato dell'ISBN.

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -48,64 +49,22 @@ import java.util.ResourceBundle;
             this.archivioProfili = manager;
         }
         @FXML private void handleTornaHomePage(ActionEvent event) throws IOException {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.centerOnScreen();
-            stage.setTitle("Home Page!");
-            stage.setMaximized(true);
-            stage.setScene(scene);
-            stage.show();
+            switchScene(event,"/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml");
         }
         @FXML private void handleIndietro(ActionEvent event) throws IOException{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Gestione_Profili_View/Profili.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.centerOnScreen();
-            stage.setTitle("Gestione Archivio Profili!");
-            stage.setMaximized(true);
-            stage.setScene(scene);
-            stage.show();
+            switchScene(event,"/org/biblioteca_gruppo_05/Gestione_Profili_View/Profili.fxml");
         }
         @FXML private void handleVaiARicercaProfili(ActionEvent event) throws IOException{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Gestione_Profili_View/Ricerca-Visualizzazione-Profili.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.centerOnScreen();
-            stage.setTitle("Ricerca e visualizza profili!");
-            stage.setMaximized(true);
-            stage.setScene(scene);
-            stage.show();
+            switchScene(event,"/org/biblioteca_gruppo_05/Gestione_Profili_View/Ricerca-Visualizzazione-Profili.fxml");
         }
         @FXML private void handleVaiAAggiungiProfilo(ActionEvent event) throws IOException{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Gestione_Profili_View/Aggiungi-Profilo.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.centerOnScreen();
-            stage.setTitle("Aggiungi profilo!");
-            stage.setMaximized(true);
-            stage.setScene(scene);
-            stage.show();
+            switchScene(event,"/org/biblioteca_gruppo_05/Gestione_Profili_View/Aggiungi-Profilo.fxml");
         }
         @FXML private void handleVaiAModificaProfilo(ActionEvent event) throws IOException{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Gestione_Profili_View/Modifica-Profilo.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.centerOnScreen();
-            stage.setTitle("Modifica profilo!");
-            stage.setMaximized(true);
-            stage.setScene(scene);
-            stage.show();
+            switchScene(event,"/org/biblioteca_gruppo_05/Gestione_Profili_View/Modifica-Profilo.fxml");
         }
         @FXML private void handleVaiAEliminaProfilo(ActionEvent event) throws IOException{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Gestione_Profili_View/Elimina-Profilo.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.centerOnScreen();
-            stage.setTitle("Elimina profilo!");
-            stage.setMaximized(true);
-            stage.setScene(scene);
-            stage.show();
+            switchScene(event,"/org/biblioteca_gruppo_05/Gestione_Profili_View/Elimina-Profilo.fxml");
         }
 
         @FXML private void handleCercaUtente(ActionEvent event) {}
@@ -117,7 +76,24 @@ import java.util.ResourceBundle;
         @FXML private void handleSalvaProfilo(ActionEvent event) {}
         @FXML private void handleSalvaModifiche(ActionEvent event) {}
         @FXML private void handleConfermaElimina(ActionEvent event) {}
-
+        private void showAlert(Alert.AlertType type, String title, String header, String content) {
+            Alert alert = new Alert(type);
+            alert.setTitle(title);
+            alert.setHeaderText(header);
+            alert.setContentText(content);
+            alert.showAndWait();
+        }
+        private void switchScene(ActionEvent event,String fxmlPath){
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+                Parent root=loader.load();
+                Scene stageAttuale=((Node) event.getSource()).getScene();
+                stageAttuale.setRoot(root);
+            }catch(IOException e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR,"Errore Critico!","Errore nel caricamento della scena",e.getMessage());
+            }
+        }
         @Override
         public void initialize(URL url, ResourceBundle rb) {
         }

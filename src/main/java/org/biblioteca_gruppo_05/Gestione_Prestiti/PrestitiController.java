@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
@@ -43,14 +44,7 @@ public class PrestitiController implements Initializable {
     }
 
     @FXML private void handleIndietro(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.centerOnScreen();
-        stage.setTitle("Home Page!");
-        stage.setMaximized(true);
-        stage.setScene(scene);
-        stage.show();
+        switchScene(event,"/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml");
     }
 
     @FXML private void handleConfermaPrestito(ActionEvent event) {}
@@ -59,7 +53,24 @@ public class PrestitiController implements Initializable {
 
     @FXML private void handleCercaVisualizzazione(ActionEvent event) {}
     @FXML private void handleResetVisualizzazione(ActionEvent event) {}
-
+    private void showAlert(Alert.AlertType type, String title, String header, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    private void switchScene(ActionEvent event,String fxmlPath){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent root=loader.load();
+            Scene stageAttuale=((Node) event.getSource()).getScene();
+            stageAttuale.setRoot(root);
+        }catch(IOException e){
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR,"Errore Critico!","Errore nel caricamento della scena",e.getMessage());
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
