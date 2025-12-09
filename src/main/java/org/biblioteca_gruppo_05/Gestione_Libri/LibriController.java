@@ -24,6 +24,7 @@ import org.biblioteca_gruppo_05.Eccezioni.LibroNonTrovatoException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class LibriController implements Initializable {
@@ -58,6 +59,12 @@ public class LibriController implements Initializable {
     @FXML private TextField isbnDisplayField;
     @FXML private Spinner<Integer> copieSpinner;
 
+    @FXML private TableView<Libro> tableLibriVisualizza;
+    @FXML private TableColumn<Libro, String> titoloColumnVisualizza;
+    @FXML private TableColumn<Libro, String> autoreColumnVisualizza;
+    @FXML private TableColumn<Libro, String> isbnColumnVisualizza;
+    @FXML private TableColumn<Libro, LocalDate> dataPubblicazioneColumnVisualizza;
+    @FXML private TableColumn<Libro, Integer> copieColumnVisualizza;
     @FXML private ComboBox<String> filtroLibriCombo;
     @FXML private TextField searchLibriField;
     public LibriController(){
@@ -209,6 +216,29 @@ public class LibriController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(tableLibriVisualizza!=null){
+            tableLibriVisualizza.setEditable(false);
+            if(titoloColumnVisualizza!=null)
+                titoloColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+            if(autoreColumnVisualizza!=null)
+                autoreColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("autore"));
+            if(isbnColumnVisualizza!=null)
+                isbnColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
+            if(dataPubblicazioneColumnVisualizza!=null)
+                dataPubblicazioneColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("dataPubblicazione"));
+            if(copieColumnVisualizza!=null)
+                copieColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("numeroCopie"));
+            try{
+                List<Libro> tuttiLibri = archivioLibri.visualizzaLibri();
+                ObservableList<Libro> l = FXCollections.observableArrayList(tuttiLibri);
+                tableLibriVisualizza.setItems(l);
+            } catch (LibroNonTrovatoException e){
+                showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Libro non presente nell'archivio.", e.getMessage());
+            } catch(Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+            }
+        }
         if (filtroLibriCombo != null) {
             ObservableList<String> opzioniRicerca = FXCollections.observableArrayList(
                     "ISBN", "Titolo", "Autore"

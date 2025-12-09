@@ -148,15 +148,16 @@ public class ArchivioLibri implements Serializable {
      *
      * @post L'archivio rimane invariato.
      */
-    public void visualizzaLibri(){
-        System.out.println("ARCHIVIO LIBRI:\n");
-        if(libri.isEmpty())
-            System.out.println("L'archivio è vuoto");
-        else{
-            for(Libro l: libri.values()){
-                System.out.println(l);
-            }
+    public List<Libro> visualizzaLibri() throws LibroNonTrovatoException {
+        if(libri.isEmpty()){
+            throw new LibroNonTrovatoException("Nessun libro trovato" );
         }
+        List<Libro> results=new ArrayList<>();
+        for(Libro l: libri.values()){
+            results.add(l);
+        }
+
+        return results;
     }
 
     /**
