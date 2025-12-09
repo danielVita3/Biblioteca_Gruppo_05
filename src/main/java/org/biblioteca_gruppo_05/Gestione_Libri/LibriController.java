@@ -215,7 +215,18 @@ public class LibriController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Salvataggio fallito", "Errore di scrittura sul file.", e.getMessage());
         }
     }
-    @FXML private void handleResetLibri(ActionEvent event) {}
+    @FXML private void handleResetLibri(ActionEvent event) {
+        try{
+            List<Libro> tuttiLibri = archivioLibri.visualizzaLibri();
+            ObservableList<Libro> l = FXCollections.observableArrayList(tuttiLibri);
+            tableLibriVisualizza.setItems(l);
+        } catch (LibroNonTrovatoException e){
+            showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Libro non presente nell'archivio.", e.getMessage());
+        } catch(Exception e){
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+        }
+    }
     private void switchScene(ActionEvent event, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
