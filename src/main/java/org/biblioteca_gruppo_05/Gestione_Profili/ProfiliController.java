@@ -1,6 +1,7 @@
 
 package org.biblioteca_gruppo_05.Gestione_Profili;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +10,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.LocalDateStringConverter;
+import org.biblioteca_gruppo_05.Eccezioni.*;
+import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
+
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -28,8 +38,20 @@ import java.util.ResourceBundle;
 
         @FXML private ComboBox<String> filtroUtentiCombo;
         @FXML private TextField searchUtentiField;
-        @FXML private TableView tableUtenti;
+        @FXML private TableView tableProfiliVisualizza;
 
+        // Container della tabella (per nasconderlo/mostrarlo)
+        @FXML private VBox tableViewContainer;
+
+        // La tabella principale
+        @FXML private TableView<Profilo> tableProfili;
+
+        // Le singole colonne (assicurati che <Utente, String> sia corretto in base alla tua classe modello)
+        @FXML private TableColumn<Profilo, String> colonnaMatricolaP;
+        @FXML private TableColumn<Profilo, String> colonnaNomeP;
+        @FXML private TableColumn<Profilo, String> colonnaCognomeP;
+        @FXML private TableColumn<Profilo, String> colonnaEmailP;
+        @FXML private TableColumn<Profilo, Integer> colonnaCopieP;
         @FXML private TextField searchMatricolaField;
 
         @FXML private VBox editFormContainer;
@@ -38,6 +60,13 @@ import java.util.ResourceBundle;
         @FXML private TextField editCognomeField;
         @FXML private TextField editEmailField;
         @FXML private TextField storicoField;
+
+        @FXML private TableView<Profilo> tableLibriVisualizza;
+        @FXML private TableColumn<Profilo, String> colonnaNome;
+        @FXML private TableColumn<Profilo, String> colonnaCognome;
+        @FXML private TableColumn<Profilo, String> colonnaMatricola;
+        @FXML private TableColumn<Profilo, String> colonnaEmail;
+        @FXML private TableColumn<Profilo, Integer> colonnaCopie;
 
         @FXML private VBox confirmContainer;
         @FXML private Label lblNomeCognome;
@@ -66,14 +95,55 @@ import java.util.ResourceBundle;
         @FXML private void handleVaiAEliminaProfilo(ActionEvent event) throws IOException{
             switchScene(event,"/org/biblioteca_gruppo_05/Gestione_Profili_View/Elimina-Profilo.fxml");
         }
+        private boolean isInputValido(){
+            String errorMessage="";
+            if(nomeField.getText()==null || nomeField.getText().trim().isEmpty()){
+                errorMessage+="Devi inserire il nome\n";
+            }
+            if(cognomeField.getText()==null || cognomeField.getText().trim().isEmpty()){
+                errorMessage+="Devi inserire il cognome\n";
+            }
+            if(matricolaField.getText()==null || matricolaField.getText().trim().isEmpty()){
+                errorMessage+="Devi inserire la matricola\n";
+            }
+            if(emailField.getText()==null || emailField.getText().trim().isEmpty()){
+                errorMessage+="Devi inserire l'email\n";
+            }
+            if (errorMessage.isEmpty()) {
+                return true;
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Errore di Validazione", "Correggi i seguenti campi:", errorMessage);
+                return false;
+            }
+        }
 
         @FXML private void handleCercaUtente(ActionEvent event) {}
         @FXML private void handleCercaPerEliminare(ActionEvent event) {}
         @FXML private void handleResetUtenti(ActionEvent event) {}
 
-        @FXML private void handlePulisci(ActionEvent event) {}
+        @FXML private void handlePulisci(ActionEvent event) {
+            matricolaField.setText("");
+            nomeField.setText("");
+            cognomeField.setText("");
+            emailField.setText("");
+        }
         @FXML private void handleAnnulla(ActionEvent event) {}
-        @FXML private void handleSalvaProfilo(ActionEvent event) {}
+        @FXML private void handleSalvaProfilo(ActionEvent event) {
+            if (isInputValido()) {
+                try {
+                    Profilo l = new Profilo(nomeField.getText(),cognomeField.getText(),matricolaField.getText(),  emailField.getText());
+                    archivioProfili.aggiungiProfilo(l);
+                    showAlert(Alert.AlertType.INFORMATION, "Successo", "Profilo Aggiunto", "Il profilo è stato aggiunto all'archivio.");
+                    handlePulisci(null);
+                } catch (ErroreMatricolaException e) {
+                    showAlert(Alert.AlertType.ERROR, "Errore matricola", "Formato matricola non valido.", e.getMessage());
+                } catch (UtenteEsitenteException e) {
+                    showAlert(Alert.AlertType.WARNING, "Errore di Duplicazione", "Libro già esistente", e.getMessage());
+                } catch (Exception e) {
+                    showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile salvare il libro.", e.getMessage());
+                }
+            }
+        }
         @FXML private void handleSalvaModifiche(ActionEvent event) {}
         @FXML private void handleConfermaElimina(ActionEvent event) {}
         private void showAlert(Alert.AlertType type, String title, String header, String content) {
@@ -83,19 +153,132 @@ import java.util.ResourceBundle;
             alert.setContentText(content);
             alert.showAndWait();
         }
-        private void switchScene(ActionEvent event,String fxmlPath){
-            try{
+        private void switchScene(ActionEvent event, String fxmlPath) {
+            try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-                Parent root=loader.load();
-                Scene stageAttuale=((Node) event.getSource()).getScene();
+
+                // AGGIUNTA FONDAMENTALE: Passiamo l'archivio al prossimo controller
+                loader.setControllerFactory(controllerClass -> {
+                    if (controllerClass == ProfiliController.class) {
+                        return new ProfiliController(this.archivioProfili);
+                    }
+                    try {
+                        return controllerClass.getDeclaredConstructor().newInstance();
+                    } catch (Exception e) {
+                        throw new RuntimeException("Impossibile creare il controller: " + controllerClass.getName(), e);
+                    }
+                });
+
+                Parent root = loader.load();
+                Scene stageAttuale = ((Node) event.getSource()).getScene();
+
+                // Opzionale: Mantiene le dimensioni/impostazioni dello stage
+                Stage stage = (Stage) stageAttuale.getWindow();
+
                 stageAttuale.setRoot(root);
-            }catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR,"Errore Critico!","Errore nel caricamento della scena",e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Errore Critico!", "Errore nel caricamento della scena", e.getMessage());
             }
         }
         @Override
         public void initialize(URL url, ResourceBundle rb) {
+            if(tableProfiliVisualizza!=null){
+                tableProfiliVisualizza.setEditable(false);
+                if (colonnaMatricola != null) {
+                    // Cerca getMatricola() nella classe Utente
+                    colonnaMatricola.setCellValueFactory(new PropertyValueFactory<>("matricola"));
+                }
+
+                if (colonnaNome != null) {
+                    // Cerca getNome()
+                    colonnaNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                }
+
+                if (colonnaCognome != null) {
+                    // Cerca getCognome()
+                    colonnaCognome.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+                }
+
+                if (colonnaEmail != null) {
+                    // Cerca getEmail()
+                    colonnaEmail.setCellValueFactory(new PropertyValueFactory<>("mail"));
+                }
+
+                if (colonnaCopie != null) {
+                    // Cerca getNumeroCopieInPrestito() (o getNumeroCopie(), controlla la tua classe Utente)
+                    colonnaCopie.setCellValueFactory(new PropertyValueFactory<>("numeroPrestiti"));
+                } try{
+                    List<Profilo> tuttiProfili = archivioProfili.visualizzaProfili();
+                    ObservableList<Profilo> l = FXCollections.observableArrayList(tuttiProfili);
+                    tableProfiliVisualizza.setItems(l);
+                } catch (UtenteNonTrovatoException e){
+                    showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Profilo non presente nell'archivio.", e.getMessage());
+                } catch(Exception e){
+                    e.printStackTrace();
+                    showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+                }
+            }
+            if (filtroUtentiCombo != null) {
+                ObservableList<String> opzioniRicerca = FXCollections.observableArrayList(
+                        "Matricola", "Nome", "Cognome", "Email"
+                );
+                filtroUtentiCombo.setItems(opzioniRicerca);
+                filtroUtentiCombo.getSelectionModel().selectFirst();
+            }
+            if (tableProfiliVisualizza != null) {
+                tableProfiliVisualizza.setEditable(true);
+
+                if (colonnaMatricolaP != null) {
+                    colonnaMatricolaP.setCellValueFactory(new PropertyValueFactory<>("matricola"));
+                    colonnaMatricolaP.setEditable(true);
+                    colonnaMatricolaP.setCellFactory(TextFieldTableCell.forTableColumn());
+                    colonnaMatricolaP.setOnEditCommit(event -> {
+                        event.getRowValue().setMatricola(event.getNewValue());
+                    });
+                }
+
+                if (colonnaNomeP != null) {
+                    colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                    colonnaNomeP.setEditable(true);
+                    colonnaNomeP.setCellFactory(TextFieldTableCell.forTableColumn());
+                    colonnaNomeP.setOnEditCommit(event -> {
+                        event.getRowValue().setNome(event.getNewValue());
+                    });
+                }
+
+                if (colonnaCognomeP != null) {
+                    colonnaCognomeP.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+                    colonnaCognomeP.setEditable(true);
+                    colonnaCognomeP.setCellFactory(TextFieldTableCell.forTableColumn());
+                    colonnaCognomeP.setOnEditCommit(event -> {
+                        event.getRowValue().setCognome(event.getNewValue());
+                    });
+                }
+
+                if (colonnaEmailP != null) {
+                    colonnaEmailP.setCellValueFactory(new PropertyValueFactory<>("mail"));
+                    colonnaEmailP.setEditable(true);
+                    colonnaEmailP.setCellFactory(TextFieldTableCell.forTableColumn());
+                    colonnaEmailP.setOnEditCommit(event -> {
+                        event.getRowValue().setMail(event.getNewValue());
+                    });
+                }
+
+                if (colonnaCopieP != null) {
+                    colonnaCopieP.setCellValueFactory(new PropertyValueFactory<>("numeroPrestiti"));
+                    colonnaCopieP.setEditable(false);
+                    colonnaCopieP.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+                    colonnaCopieP.setOnEditCommit(event -> {
+                        event.getRowValue().setNumeroPrestiti(event.getNewValue());
+                    });
+                }
+            }
+
+            if (tableViewContainer != null) {
+                tableViewContainer.setVisible(false);
+                tableViewContainer.setManaged(false);
+            }
         }
     }
 
