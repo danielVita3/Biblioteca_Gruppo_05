@@ -56,9 +56,9 @@ public class ArchivioProfili implements Serializable {
 
        if(this.profili.containsKey(p.getMatricola())){
            throw new UtenteEsitenteException("Utente già esistente");
-       }else{
-           this.profili.put(p.getMatricola(),p);
        }
+           this.profili.put(p.getMatricola(),p);
+
         try {
             salvaSuFile();
         }catch(ErroreScritturaFileException e){
@@ -159,7 +159,19 @@ public class ArchivioProfili implements Serializable {
      *
      * @post L'archivio rimane invariato.
      */
-    public void visualizzaProfili(){};
+    public List<Profilo> visualizzaProfili() throws UtenteNonTrovatoException {
+        if (profili.isEmpty()) {
+            throw new UtenteNonTrovatoException("Nessun profilo trovato");
+        }
+        List<Profilo> results = new ArrayList<>();
+        for (Profilo l : profili.values()) {
+            results.add(l);
+
+
+
+        }
+        return results;
+    };
 
     /**
      * @brief Salva lo stato corrente dell'archivio su file.

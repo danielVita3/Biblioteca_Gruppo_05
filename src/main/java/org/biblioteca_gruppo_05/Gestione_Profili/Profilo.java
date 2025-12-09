@@ -216,4 +216,5 @@ public class Profilo implements Serializable, Comparable<Profilo> {
         return sb.toString();
     }
 
+
 }
