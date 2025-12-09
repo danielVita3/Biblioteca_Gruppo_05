@@ -76,7 +76,7 @@
                         <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
-                <TableView fx:id="tableLibri" prefHeight="100.0" prefWidth="520.0">
+                <TableView fx:id="tableLibri" editable="true" prefHeight="100.0" prefWidth="520.0">
                     <columns>
                         <TableColumn fx:id="titoloColumn" prefWidth="120.0" text="Titolo" />
                         <TableColumn fx:id="autoreColumn" prefWidth="120.0" text="Autore" />
