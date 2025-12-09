@@ -136,8 +136,19 @@ public class LibriController implements Initializable {
 
 
     }
+    @FXML private void handleCercaVisualizza(ActionEvent event){
+
+    }
     @FXML private void handleCercaLibro(ActionEvent event) {
+        if (tableLibri != null) {
+            tableLibri.getItems().clear();
+        }
+        if (tableViewContainer != null) {
+            tableViewContainer.setVisible(false);
+            tableViewContainer.setManaged(false);
+        }
         try{
+
             String ISBN=searchIsbnField.getText();
             Libro libroTrovato=archivioLibri.ricercaLibroPerISBN(ISBN);
             ObservableList<Libro> risultati= FXCollections.observableArrayList(libroTrovato);
@@ -154,7 +165,6 @@ public class LibriController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
         }
     }
-    @FXML private void handleAnnulla(ActionEvent event) {}
     @FXML private void handleConfermaElimina(ActionEvent event) {
 
     }
@@ -199,6 +209,13 @@ public class LibriController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (filtroLibriCombo != null) {
+            ObservableList<String> opzioniRicerca = FXCollections.observableArrayList(
+                    "ISBN", "Titolo", "Autore"
+            );
+            filtroLibriCombo.setItems(opzioniRicerca);
+            filtroLibriCombo.getSelectionModel().selectFirst();
+        }
         if (tableLibri != null) {
             tableLibri.setEditable(true);
 
