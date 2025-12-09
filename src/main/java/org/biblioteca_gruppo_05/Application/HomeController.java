@@ -52,7 +52,6 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleVaiArchivio(ActionEvent event) throws IOException{
-
         switchScene(event,"/org/biblioteca_gruppo_05/Gestione_Libri_View/Archivio.fxml");
     }
 

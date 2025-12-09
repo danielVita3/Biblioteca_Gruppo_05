@@ -90,7 +90,7 @@ public class ArchivioLibri implements Serializable {
      * @pre ISBN deve essere non null.
      * @post Restituisce il libro senza rimuoverlo o modificarlo.
      */
-    public Libro ricercaLibroPerISBN(String ISBN) throws LibroNonTrovatoException {
+    public Libro ricercaLibroPerISBN(String ISBN) throws LibroNonTrovatoException,ErroreISBNException {
 
         Libro result=libri.get(ISBN);
         if(result == null){
