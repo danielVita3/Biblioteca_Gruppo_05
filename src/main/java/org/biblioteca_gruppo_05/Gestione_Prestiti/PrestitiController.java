@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.stage.Stage;
+import org.biblioteca_gruppo_05.Eccezioni.*;
 import org.biblioteca_gruppo_05.Gestione_Libri.*;
 import org.biblioteca_gruppo_05.Gestione_Profili.*;
 
@@ -42,17 +43,66 @@ public class PrestitiController implements Initializable {
         this.archivioLibri = archivioLibri;
         this.archivioProfili = archivioProfili;
     }
-
+    private boolean isInputValido(){
+        String errorMessage="";
+        if(prestitoMatricolaField.getText()==null || prestitoMatricolaField.getText().trim().isEmpty()){
+            errorMessage+="Devi inserire la matricola\n";
+        }
+        if(prestitoIsbnField.getText()==null || prestitoIsbnField.getText().trim().isEmpty()){
+            errorMessage+="Devi inserire l'ISBN\n";
+        }
+        if(dataInizioPicker.getValue()==null ){
+            errorMessage+="Devi inserire una data di prestito\n";
+        }
+        if(dataFinePicker.getValue()==null){
+            errorMessage+="Devi inserire la data di restituzione\n";
+        }
+        if (errorMessage.isEmpty()) {
+            return true;
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Errore di Validazione", "Correggi i seguenti campi:", errorMessage);
+            return false;
+        }
+    }
     @FXML private void handleIndietro(ActionEvent event) throws IOException {
         switchScene(event,"/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml");
     }
 
-    @FXML private void handleConfermaPrestito(ActionEvent event) {}
+    @FXML private void handlePulisciCampi(ActionEvent event) {
+        prestitoMatricolaField.setText("");
+        prestitoIsbnField.setText("");
+        dataInizioPicker.setValue(null);
+        dataFinePicker.setValue(null);
+    }
+
+    @FXML private void handleConfermaPrestito(ActionEvent event) {
+        if (isInputValido()) {
+            try {
+                Prestito p = new Prestito(dataInizioPicker.getValue(),dataFinePicker.getValue(),prestitoMatricolaField.getText(), prestitoIsbnField.getText());
+                archivioPrestiti.registraPrestito(p);
+                showAlert(Alert.AlertType.INFORMATION, "Successo", "Prestito Aggiunto", "Il prestito è stato aggiunto all'archivio.");
+                handlePulisciCampi(null);
+            } catch (ErroreISBNException e) {
+                showAlert(Alert.AlertType.ERROR, "Errore ISBN", "Formato ISBN non valido.", e.getMessage());
+            } catch (ErroreMatricolaException e) {
+                showAlert(Alert.AlertType.WARNING, "Errore di Duplicazione", "Libro già esistente", e.getMessage());
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile salvare il libro.", e.getMessage());
+            } catch (LibroNonTrovatoException e) {
+                showAlert(Alert.AlertType.WARNING, "Libro non esistente", "Libro non presente in archivio", e.getMessage());
+            } catch (UtenteNonTrovatoException e) {
+                showAlert(Alert.AlertType.WARNING, "Utente non iscritto", "Utente non presente in archivio", e.getMessage());
+            } catch (ErroreNumeroCopieLibro e) {
+                showAlert(Alert.AlertType.WARNING, "Numero copie non disponibile", "Numero copie non disponibili", e.getMessage());
+            }
+        }
+    }
 
     @FXML private void handleRegistraRestituzione(ActionEvent event) {}
 
     @FXML private void handleCercaVisualizzazione(ActionEvent event) {}
     @FXML private void handleResetVisualizzazione(ActionEvent event) {}
+
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

@@ -1,6 +1,11 @@
 package org.biblioteca_gruppo_05.Gestione_Prestiti;
 
+import org.biblioteca_gruppo_05.Eccezioni.ErroreNumeroCopieLibro;
+import org.biblioteca_gruppo_05.Eccezioni.LibroNonTrovatoException;
+import org.biblioteca_gruppo_05.Eccezioni.UtenteNonTrovatoException;
+import org.biblioteca_gruppo_05.Gestione_Libri.ArchivioLibri;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
+import org.biblioteca_gruppo_05.Gestione_Profili.ArchivioProfili;
 import org.biblioteca_gruppo_05.Gestione_Profili.Profilo;
 
 import java.io.Serializable;
@@ -51,18 +56,33 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      * @pre matricola non deve essere null o vuota, ISBN non deve essere null o vuoto.
      * @post Viene istanziato un nuovo oggetto Prestito con ID univoco e costo penale calcolato in base alle date.
      */
-    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, String ISBN){
+    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, String ISBN) throws ErroreNumeroCopieLibro, UtenteNonTrovatoException, LibroNonTrovatoException {
+        ArchivioLibri l = new ArchivioLibri("libri.bin");
+        ArchivioProfili pro = new ArchivioProfili("profili.bin");
+        //try {
         if(Libro.controllaISBN(ISBN)){
-            if(Profilo.controlloMatricola(matricola)) {
-                this.dataPrestito = dataPrestito;
-                this.dataScadenza = dataScadenza;
-                this.profilo = matricola;
-                this.libro = ISBN;
-                this.id = cont++;
-                this.costoPenale = calcolaPenale();
+            if(Profilo.controlloMatricola(matricola)){
+                Libro librotrovato = l.ricercaLibroPerISBN(ISBN);
+                Profilo profilotrovato = pro.ricercaProfiloPerMatricola(matricola);
+                if (librotrovato.getNumeroCopie() <= 0) {
+                    throw new ErroreNumeroCopieLibro("Impossibile prestare: copie esaurite per ISBN " + ISBN);
+                }
+                if (profilotrovato != null) {
+                    this.dataPrestito = dataPrestito;
+                    this.dataScadenza = dataScadenza;
+                    this.profilo = matricola;
+                    this.libro = ISBN;
+                    this.id = cont++;
+                    this.costoPenale = calcolaPenale();
+                }
             }
         }
 
+        /*} catch (LibroNonTrovatoException e) {
+            throw new LibroNonTrovatoException("Creazione fallita: Libro non trovato (" + ISBN + ")");
+        } catch (UtenteNonTrovatoException e) {
+            throw new UtenteNonTrovatoException("Creazione fallita: Utente non trovato (" + matricola + ")");
+        }*/
     }
 
     /**
