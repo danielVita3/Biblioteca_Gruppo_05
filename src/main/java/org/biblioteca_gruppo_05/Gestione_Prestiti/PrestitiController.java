@@ -1,5 +1,7 @@
 package org.biblioteca_gruppo_05.Gestione_Prestiti;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -9,13 +11,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import org.biblioteca_gruppo_05.Eccezioni.*;
 import org.biblioteca_gruppo_05.Gestione_Libri.*;
 import org.biblioteca_gruppo_05.Gestione_Profili.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PrestitiController implements Initializable {
@@ -28,6 +35,10 @@ public class PrestitiController implements Initializable {
     @FXML private TextField prestitoIsbnField;
     @FXML private DatePicker dataInizioPicker;
     @FXML private DatePicker dataFinePicker;
+    @FXML private TableColumn<Prestito,String> colMatricola;
+    @FXML private TableColumn<Prestito,String> colIsbn;
+    @FXML private TableColumn<Prestito, LocalDate> colDataInizio;
+    @FXML private TableColumn<Prestito,LocalDate> colScadenza;
 
     @FXML private TextField searchPrestitoField;
     @FXML private TableView tablePrestitiAttivi;
@@ -96,7 +107,12 @@ public class PrestitiController implements Initializable {
         }
     }
 
-    @FXML private void handleRegistraRestituzione(ActionEvent event) {}
+    @FXML private void handleRegistraRestituzione(ActionEvent event) {
+      Prestito p= (Prestito)tablePrestitiAttivi.getSelectionModel().getSelectedItem();
+      if(p==null){
+          showAlert();
+      }
+    }
 
     @FXML private void handleCercaVisualizzazione(ActionEvent event) {}
     @FXML private void handleResetVisualizzazione(ActionEvent event) {}
@@ -121,5 +137,37 @@ public class PrestitiController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    }
+
+        if(tablePrestitiAttivi!=null){
+            tablePrestitiAttivi.setEditable(false);
+            if (colMatricola != null) {
+                colMatricola.setCellValueFactory(new PropertyValueFactory<>("matricola"));
+            }
+
+            if (colIsbn != null) {
+                colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+            }
+
+            if (colDataInizio != null) {
+                colDataInizio.setCellValueFactory(new PropertyValueFactory<>("datainizio"));
+            }
+
+            if (colScadenza != null) {
+                colScadenza.setCellValueFactory(new PropertyValueFactory<>("datascadenza"));
+            }
+
+             try{
+                List<Prestito> tuttiPrestiti = archivioPrestiti.visualizzaPrestiti();
+                ObservableList<Prestito> l = FXCollections.observableArrayList(tuttiPrestiti);
+                tablePrestitiAttivi.setItems(l);
+            } catch (PrestitoNonTrovatoException e){
+                showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Prestito non presente nell'archivio.", e.getMessage());
+            } catch(Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+            }
+        }
+
 }
+    }
+

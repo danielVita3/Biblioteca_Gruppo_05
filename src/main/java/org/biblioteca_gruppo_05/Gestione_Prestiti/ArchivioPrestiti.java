@@ -168,15 +168,18 @@ public class ArchivioPrestiti implements Serializable {
      * @post Restituisce una lista senza modificare l'archivio.
      */
     public List<Prestito> ricercaPrestitoPerISBN(String ISBN) throws PrestitoNonTrovatoException {
-        List <Prestito> results=new ArrayList<>();
-        for(Prestito p:prestiti.values()){
-            if(p.getLibro().equalsIgnoreCase(ISBN))
+        if (Libro.controllaISBN(ISBN)) {
+        List<Prestito> results = new ArrayList<>();
+        for (Prestito p : prestiti.values()) {
+            if (p.getLibro().equalsIgnoreCase(ISBN))
                 results.add(p);
         }
-        if(results.isEmpty()){
+        if (results.isEmpty()) {
             throw new PrestitoNonTrovatoException("Nessun libro trovato con ISBN: " + ISBN);
         }
         return results;
+    }
+        return List.of();
     }
 
     /**
@@ -184,7 +187,16 @@ public class ArchivioPrestiti implements Serializable {
      *
      * @post L'archivio rimane invariato.
      */
-    public void visualizzaPrestiti(){}
+    public List<Prestito> visualizzaPrestiti() throws PrestitoNonTrovatoException {
+        List<Prestito> tuttiPrestiti=new ArrayList<>();
+        for(Prestito p: prestiti.values()){
+            tuttiPrestiti.add(p);
+        }
+        if(tuttiPrestiti.isEmpty()){
+            throw new PrestitoNonTrovatoException("Archivio vuoto");
+        }
+        return tuttiPrestiti;
+    }
 
     /**
      * @brief Salva lo stato corrente dell'archivio su file.
