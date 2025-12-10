@@ -42,7 +42,7 @@ public class PrestitiController implements Initializable {
     @FXML private TableColumn<Prestito,LocalDate> colScadenza;
 
     @FXML private TextField searchPrestitoField;
-    @FXML private TableView tablePrestitiAttivi;
+    @FXML private TableView <Prestito> tablePrestitiAttivi;
     @FXML private ComboBox<String> filtroPrestitiCombo;
     @FXML private TextField searchVisualizzazioneField;
     @FXML private TableView tableVisualizzazione;
@@ -108,22 +108,35 @@ public class PrestitiController implements Initializable {
     }
 
     @FXML private void handleRegistraRestituzione(ActionEvent event) {
-      Prestito p= (Prestito)tablePrestitiAttivi.getSelectionModel().getSelectedItem();
-      if(p==null){
-          showAlert(Alert.AlertType.WARNING, "Prestito non selezionato", "Prestito nullo", "Seleziona Prestito" );
+        Prestito p = (Prestito) tablePrestitiAttivi.getSelectionModel().getSelectedItem();
 
-      }else{
-          if(p.calcolaPenale()>0){
-              showAlert(Alert.AlertType.WARNING, "Successo", "Pagare penale", "p.getCostoPenale()" );
+        if(p == null){
+            showAlert(Alert.AlertType.WARNING, "Prestito non selezionato", "Seleziona un Prestito", "Devi selezionare un prestito dalla tabella.");
+            return;
+        }
 
-          }
-          archivioPrestiti.registraPrestito(p);
-      }
+        try {
+            int penale = p.calcolaPenale();
+
+            if(penale > 0){
+                showAlert(Alert.AlertType.WARNING, "Penale Dovuta", "Pagare penale", "L'utente deve pagare una penale di: " + penale + " €");
+            }
+
+            archivioPrestiti.restituzionPrestito(p);
+
+            tablePrestitiAttivi.getItems().remove(p);
+
+            showAlert(Alert.AlertType.INFORMATION, "Restituzione Registrata", "Successo", "Il prestito è stato registrato come restituito.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile registrare la restituzione.", e.getMessage());
+        }
     }
 
     @FXML private void handleModifica(ActionEvent event){
         try {
-            archivioPrestiti.salvaSulFile();
+            archivioPrestiti.salvaSuFile();
         }catch(ErroreScritturaFileException e){
             showAlert(Alert.AlertType.ERROR, "Salvataggio fallito", "Errore di scrittura sul file.", e.getMessage());
 
@@ -144,7 +157,7 @@ public class PrestitiController implements Initializable {
             ObservableList<Prestito> risultati= FXCollections.observableArrayList();
             switch(criterio){
                 case "ISBN":
-                    risultati = FXCollections.observableArrayList( archivioPrestiti.ricercaPrestitoPerMatricola(query));
+                    risultati = FXCollections.observableArrayList( archivioPrestiti.ricercaPrestitoPerISBN(query));
                     break;
                 case "Matricola":
                     risultati = FXCollections.observableArrayList( archivioPrestiti.ricercaPrestitoPerMatricola(query));

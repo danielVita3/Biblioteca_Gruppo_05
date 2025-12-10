@@ -355,7 +355,7 @@ import java.util.ResourceBundle;
 
                 if (colonnaMatricolaP != null) {
                     colonnaMatricolaP.setCellValueFactory(new PropertyValueFactory<>("matricola"));
-                    colonnaMatricolaP.setEditable(true);
+                    colonnaMatricolaP.setEditable(false);
                     colonnaMatricolaP.setCellFactory(TextFieldTableCell.forTableColumn());
                     colonnaMatricolaP.setOnEditCommit(event -> {
                         event.getRowValue().setMatricola(event.getNewValue());

@@ -323,8 +323,11 @@ public class LibriController implements Initializable {
                 titoloColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("titolo"));
             if(autoreColumnVisualizza!=null)
                 autoreColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("autore"));
-            if(isbnColumnVisualizza!=null)
+            if(isbnColumnVisualizza!=null){
                 isbnColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
+                isbnColumnVisualizza.setEditable(true);
+            }
+
             if(dataPubblicazioneColumnVisualizza!=null)
                 dataPubblicazioneColumnVisualizza.setCellValueFactory(new PropertyValueFactory<>("dataPubblicazione"));
             if(copieColumnVisualizza!=null)
@@ -370,7 +373,7 @@ public class LibriController implements Initializable {
 
             if (isbnColumn != null) {
                 isbnColumn.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
-                isbnColumn.setEditable(true);
+                isbnColumn.setEditable(false);
                 isbnColumn.setCellFactory(TextFieldTableCell.forTableColumn());
                 isbnColumn.setOnEditCommit(event -> {
                     event.getRowValue().setISBN(event.getNewValue());

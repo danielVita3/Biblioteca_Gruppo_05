@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -119,21 +120,20 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                              <Label text="Filtra per:" textFill="#7f8c8d">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox fx:id="filtroPrestitiCombo" prefHeight="31.0" prefWidth="145.0" promptText="Seleziona..." style="-fx-background-color: #f9f9f9; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
+                                        <Label text="Filtra per:" textFill="#7f8c8d">
+                                            <font>
+                                                <Font name="System Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="filtroPrestitiCombo" prefHeight="31.0" prefWidth="145.0" promptText="Seleziona..." style="-fx-background-color: #f9f9f9; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
                                         <TextField fx:id="searchPrestitoField" prefHeight="30.0" prefWidth="250.0" promptText="Cerca per Matricola o ISBN..." style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
                                         <Button mnemonicParsing="false" onAction="#handleCerca" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="CERCA" />
-                              <Button onAction="#handleResetPrestiti" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6;" text="Reset" underline="true" />
+                                        <Button onAction="#handleResetPrestiti" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6;" text="Reset" underline="true" />
                                     </children>
                                 </HBox>
 
                                 <TableView fx:id="tablePrestitiAttivi" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: #fafafa; -fx-border-color: #ecf0f1;">
                                     <columns>
-                                        <!-- Colonne esistenti con fx:id aggiunti per comodità -->
                                         <TableColumn fx:id="colMatricola" prefWidth="150.0" text="Utente (Matricola)" />
                                         <TableColumn fx:id="colIsbn" prefWidth="150.0" text="Libro (ISBN)" />
                                         <TableColumn fx:id="colDataInizio" prefWidth="120.0" text="Data Inizio" />
@@ -144,10 +144,14 @@
                                     </columnResizePolicy>
                                 </TableView>
 
-                                <HBox alignment="CENTER_RIGHT" spacing="15.0">
-                                    <children>
-                                        <Button mnemonicParsing="false" onAction="#handleRegistraRestituzione" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="REGISTRA RIENTRO" />
-                                    </children>
+                                <HBox alignment="CENTER_LEFT" spacing="15.0">
+
+                                    <Button mnemonicParsing="false" onAction="#handleModifica" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="MODIFICA" />
+
+                                    <Region HBox.hgrow="ALWAYS" />
+
+                                    <Button mnemonicParsing="false" onAction="#handleRegistraRestituzione" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="REGISTRA RIENTRO" />
+
                                 </HBox>
                             </children>
                         </VBox>
