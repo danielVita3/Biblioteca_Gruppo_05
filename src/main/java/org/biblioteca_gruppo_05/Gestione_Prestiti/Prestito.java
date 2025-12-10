@@ -132,6 +132,12 @@ public class Prestito implements Serializable, Comparable<Prestito> {
         return id;
     }
 
+    public int getCostoPenale() {
+        return costoPenale;
+    }
+
+
+    public void setCostoPenale(int penale){this.costoPenale=penale;}
     /**
      * @brief Calcola l'eventuale penale per il prestito.
      *
@@ -146,6 +152,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
             return 0;
         long mesiDiRitardo= ChronoUnit.MONTHS.between(this.dataScadenza,dataConsegna);
         int penale= (int) (mesiDiRitardo*10);
+        this.setCostoPenale(penale);
         return penale;
     }
 

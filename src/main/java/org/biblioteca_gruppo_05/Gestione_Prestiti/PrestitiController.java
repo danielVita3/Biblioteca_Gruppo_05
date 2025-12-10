@@ -109,13 +109,20 @@ public class PrestitiController implements Initializable {
     @FXML private void handleRegistraRestituzione(ActionEvent event) {
       Prestito p= (Prestito)tablePrestitiAttivi.getSelectionModel().getSelectedItem();
       if(p==null){
-          showAlert();
+          showAlert(Alert.AlertType.WARNING, "Prestito non selezionato", "Prestito nullo", "Seleziona Prestito" );
+
+      }else{
+          if(p.calcolaPenale()>0){
+              showAlert(Alert.AlertType.WARNING, "Successo", "Pagare penale", "p.getCostoPenale()" );
+
+          }
+          archivioPrestiti.registraPrestito(p);
       }
     }
     @FXML private void handleCerca(ActionEvent event){
         tablePrestitiAttivi.getItems().clear();
 
-        String criterio = filtroPrestitiCombo.getValue(); // "ISBN", "Titolo" o "Autore"
+        String criterio = filtroPrestitiCombo.getValue(); // "ISBN", "Titolo"
         String query = searchPrestitoField.getText().trim();
 
         if (query.isEmpty()) {

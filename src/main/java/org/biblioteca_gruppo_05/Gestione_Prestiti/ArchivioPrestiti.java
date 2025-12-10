@@ -189,9 +189,7 @@ public class ArchivioPrestiti implements Serializable {
      */
     public List<Prestito> visualizzaPrestiti() throws PrestitoNonTrovatoException {
         List<Prestito> tuttiPrestiti=new ArrayList<>();
-        for(Prestito p: prestiti.values()){
-            tuttiPrestiti.add(p);
-        }
+        tuttiPrestiti.addAll(prestiti.values());
         if(tuttiPrestiti.isEmpty()){
             throw new PrestitoNonTrovatoException("Archivio vuoto");
         }
