@@ -119,6 +119,15 @@ public class PrestitiController implements Initializable {
           archivioPrestiti.registraPrestito(p);
       }
     }
+
+    @FXML private void handleModifica(ActionEvent event){
+        try {
+            archivioPrestiti.salvaSulFile();
+        }catch(ErroreScritturaFileException e){
+            showAlert(Alert.AlertType.ERROR, "Salvataggio fallito", "Errore di scrittura sul file.", e.getMessage());
+
+        }
+    }
     @FXML private void handleCerca(ActionEvent event){
         tablePrestitiAttivi.getItems().clear();
 
@@ -183,18 +192,30 @@ public class PrestitiController implements Initializable {
             tablePrestitiAttivi.setEditable(false);
             if (colMatricola != null) {
                 colMatricola.setCellValueFactory(new PropertyValueFactory<>("matricola"));
+
             }
 
             if (colIsbn != null) {
                 colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+
             }
 
             if (colDataInizio != null) {
                 colDataInizio.setCellValueFactory(new PropertyValueFactory<>("datainizio"));
+                colDataInizio.setEditable(true);
+                colDataInizio.setCellFactory(TextFieldTableCell.forTableColumn());
+                colDataInizio.setOnEditCommit(event -> {
+                    event.getRowValue().setDataPrestito(event.getNewValue());
+                });
             }
 
             if (colScadenza != null) {
                 colScadenza.setCellValueFactory(new PropertyValueFactory<>("datascadenza"));
+                colScadenza.setEditable(true);
+                colScadenza.setCellFactory(TextFieldTableCell.forTableColumn());
+                colScadenza.setOnEditCommit(event -> {
+                    event.getRowValue().setDataScadenza(event.getNewValue());
+                });
             }
 
              try{

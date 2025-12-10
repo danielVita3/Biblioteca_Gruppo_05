@@ -206,7 +206,7 @@ public class ArchivioPrestiti implements Serializable {
      * @pre Il percorso del file deve essere scrivibile.
      * @post I dati attuali sono persistiti su disco.
      */
-    private void salvaSuFile() throws ErroreScritturaFileException {
+    public void salvaSuFile() throws ErroreScritturaFileException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
             oos.writeObject(prestiti);
         } catch (IOException e) {

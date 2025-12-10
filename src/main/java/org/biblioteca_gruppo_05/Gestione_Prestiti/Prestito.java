@@ -136,6 +136,13 @@ public class Prestito implements Serializable, Comparable<Prestito> {
         return costoPenale;
     }
 
+    public void setDataPrestito(LocalDate dataPrestito) {
+        this.dataPrestito = dataPrestito;
+    }
+
+    public void setDataScadenza(LocalDate dataScadenza) {
+        this.dataScadenza = dataScadenza;
+    }
 
     public void setCostoPenale(int penale){this.costoPenale=penale;}
     /**
