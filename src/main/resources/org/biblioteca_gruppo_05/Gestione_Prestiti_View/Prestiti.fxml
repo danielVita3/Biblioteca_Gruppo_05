@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Prestiti.PrestitiController">
+<VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Prestiti.PrestitiController">
 
     <padding>
         <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
@@ -56,7 +56,7 @@
 
         <Separator prefWidth="200.0" />
 
-        <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
+        <TabPane style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
             <tabs>
 
                 <Tab text="   ➕ REGISTRA PRESTITO   ">
@@ -119,9 +119,15 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label text="Cerca prestito attivo:" textFill="#34495e" />
+                              <Label text="Filtra per:" textFill="#7f8c8d">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="filtroPrestitiCombo" prefHeight="31.0" prefWidth="145.0" promptText="Seleziona..." style="-fx-background-color: #f9f9f9; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
                                         <TextField fx:id="searchPrestitoField" prefHeight="30.0" prefWidth="250.0" promptText="Cerca per Matricola o ISBN..." style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
-                                        <Button mnemonicParsing="false" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Cerca" />
+                                        <Button mnemonicParsing="false" onAction="#handleCerca" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="CERCA" />
+                              <Button onAction="#handleResetPrestiti" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6;" text="Reset" underline="true" />
                                     </children>
                                 </HBox>
 
@@ -143,48 +149,6 @@
                                         <Button mnemonicParsing="false" onAction="#handleRegistraRestituzione" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="REGISTRA RIENTRO" />
                                     </children>
                                 </HBox>
-                            </children>
-                        </VBox>
-                    </content>
-                </Tab>
-
-                <Tab text="   📂 VISUALIZZAZIONE   ">
-                    <content>
-                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 0 0 10 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                            <padding>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                            </padding>
-                            <children>
-
-                                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #f9f9f9; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #ecf0f1; -fx-border-radius: 5;">
-                                    <children>
-                                        <Label text="Filtra per:" textFill="#7f8c8d">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font>
-                                        </Label>
-
-                                        <ComboBox fx:id="filtroVisualizzazioneCombo" prefHeight="35.0" prefWidth="150.0" promptText="Seleziona..." style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
-
-                                        <TextField fx:id="searchVisualizzazioneField" promptText="Cerca nello storico..." HBox.hgrow="ALWAYS" prefHeight="35.0" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7;" />
-
-                                        <Button onAction="#handleCercaVisualizzazione" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="CERCA" />
-                                        <Button onAction="#handleResetVisualizzazione" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6; -fx-cursor: hand;" text="Reset" underline="true" />
-                                    </children>
-                                </HBox>
-
-                                <TableView fx:id="tableVisualizzazione" VBox.vgrow="ALWAYS">
-                                    <columns>
-                                        <TableColumn text="Utente" sortable="true" />
-                                        <TableColumn text="ISBN Libro" sortable="true" />
-                                        <TableColumn text="Data Uscita" sortable="true" />
-                                        <TableColumn text="Data Rientro" sortable="true" />
-                                        <TableColumn text="Costo Penale (€)" sortable="true" />
-                                    </columns>
-                                    <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                    </columnResizePolicy>
-                                </TableView>
                             </children>
                         </VBox>
                     </content>

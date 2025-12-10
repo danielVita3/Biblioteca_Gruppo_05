@@ -42,8 +42,7 @@ public class PrestitiController implements Initializable {
 
     @FXML private TextField searchPrestitoField;
     @FXML private TableView tablePrestitiAttivi;
-
-    @FXML private ComboBox<String> filtroVisualizzazioneCombo;
+    @FXML private ComboBox<String> filtroPrestitiCombo;
     @FXML private TextField searchVisualizzazioneField;
     @FXML private TableView tableVisualizzazione;
     public PrestitiController(){
@@ -113,9 +112,37 @@ public class PrestitiController implements Initializable {
           showAlert();
       }
     }
+    @FXML private void handleCerca(ActionEvent event){
+        tablePrestitiAttivi.getItems().clear();
 
-    @FXML private void handleCercaVisualizzazione(ActionEvent event) {}
-    @FXML private void handleResetVisualizzazione(ActionEvent event) {}
+        String criterio = filtroPrestitiCombo.getValue(); // "ISBN", "Titolo" o "Autore"
+        String query = searchPrestitoField.getText().trim();
+
+        if (query.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Attenzione", "Campo vuoto", "Inserisci un termine di ricerca.");
+            return;
+        }
+
+        try{
+            ObservableList<Prestito> risultati= FXCollections.observableArrayList();
+            switch(criterio){
+                case "ISBN":
+                    risultati = FXCollections.observableArrayList( archivioPrestiti.ricercaPrestitoPerMatricola(query));
+                    break;
+                case "Matricola":
+                    risultati = FXCollections.observableArrayList( archivioPrestiti.ricercaPrestitoPerMatricola(query));
+                    break;
+            }
+            tablePrestitiAttivi.setItems(risultati);
+
+        }catch(PrestitoNonTrovatoException e){
+            showAlert(Alert.AlertType.WARNING,"Attenzione", "Libri non trovati", e.getMessage());
+        }
+    }
+
+    @FXML private void handleResetPrestiti(ActionEvent event) {
+
+    }
 
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
@@ -135,9 +162,16 @@ public class PrestitiController implements Initializable {
             showAlert(Alert.AlertType.ERROR,"Errore Critico!","Errore nel caricamento della scena",e.getMessage());
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        if (filtroPrestitiCombo != null) {
+            ObservableList<String> opzioniRicerca = FXCollections.observableArrayList(
+                    "ISBN", "Matricola"
+            );
+            filtroPrestitiCombo.setItems(opzioniRicerca);
+            filtroPrestitiCombo.getSelectionModel().selectFirst();
+        }
         if(tablePrestitiAttivi!=null){
             tablePrestitiAttivi.setEditable(false);
             if (colMatricola != null) {
