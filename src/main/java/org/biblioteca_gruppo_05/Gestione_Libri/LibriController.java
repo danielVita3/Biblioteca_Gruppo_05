@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 public class LibriController implements Initializable {
 
     private ArchivioLibri archivioLibri;
+    public static String ISBNtemporaneo;
 
     @FXML private TextField addTitoloField;
     @FXML private TextField addAutoreField;
@@ -78,6 +79,9 @@ public class LibriController implements Initializable {
     }
     public LibriController(ArchivioLibri manager) {
         this.archivioLibri = manager;
+    }
+    public static void setIsbnDaCaricare(String ISBN){
+        ISBNtemporaneo=ISBN;
     }
     @FXML private void handleTornaHomePage(ActionEvent event) throws IOException {
         switchScene(event,"/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml");
@@ -265,6 +269,27 @@ public class LibriController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
         }
     }
+    @FXML private void handleEliminaVisualizza(ActionEvent event){
+        Libro libroSelezionato = tableLibriVisualizza.getSelectionModel().getSelectedItem();
+        if (libroSelezionato != null) {
+            LibriController.setIsbnDaCaricare(libroSelezionato.getISBN());
+        }else{
+            LibriController.setIsbnDaCaricare(null);
+        }
+        switchScene(event, "/org/biblioteca_gruppo_05/Gestione_Libri_View/Elimina-Libro.fxml");
+    }
+    @FXML private void handleModificaVisualizza(ActionEvent event){
+
+        Libro libroSelezionato = tableLibriVisualizza.getSelectionModel().getSelectedItem();
+        if (libroSelezionato != null) {
+            LibriController.setIsbnDaCaricare(libroSelezionato.getISBN());
+        }else{
+            LibriController.setIsbnDaCaricare(null);
+        }
+        switchScene(event, "/org/biblioteca_gruppo_05/Gestione_Libri_View/Modifica-Libro.fxml");
+
+    }
+
     private void switchScene(ActionEvent event, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -297,6 +322,10 @@ public class LibriController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(ISBNtemporaneo!=null && searchIsbnField.getText()!=null){
+            searchIsbnField.setText(ISBNtemporaneo);
+            ISBNtemporaneo=null;
+        }
         if(tableLibriVisualizza!=null){
             tableLibriVisualizza.setEditable(false);
             if(titoloColumnVisualizza!=null)
@@ -434,7 +463,12 @@ public class LibriController implements Initializable {
                 copieColumne.setEditable(true);
                 copieColumne.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
                 copieColumne.setOnEditCommit(event -> {
-                    event.getRowValue().setNumeroCopie(event.getNewValue());
+                    try{
+                        event.getRowValue().setNumeroCopie(event.getNewValue());
+                    } catch (ErroreNumeroCopieLibro e) {
+                        showAlert(Alert.AlertType.ERROR, "Errore Critico", "Il numero di copie non può essere minore di 1", e.getMessage());
+                    }
+
                 });
             }
         }

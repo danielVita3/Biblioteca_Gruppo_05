@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 import org.biblioteca_gruppo_05.Eccezioni.*;
+import org.biblioteca_gruppo_05.Gestione_Libri.LibriController;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
 
 
@@ -30,6 +31,7 @@ import java.util.ResourceBundle;
     public class ProfiliController implements Initializable {
 
         private ArchivioProfili archivioProfili;
+        public static String matricolaTemporanea;
 
         @FXML private TextField nomeField;
         @FXML private TextField cognomeField;
@@ -38,7 +40,7 @@ import java.util.ResourceBundle;
 
         @FXML private ComboBox<String> filtroUtentiCombo;
         @FXML private TextField searchUtentiField;
-        @FXML private TableView tableProfiliVisualizza;
+
 
         // Container della tabella (per nasconderlo/mostrarlo)
         @FXML private VBox tableViewContainer;
@@ -61,7 +63,8 @@ import java.util.ResourceBundle;
         @FXML private TextField editEmailField;
         @FXML private TextField storicoField;
 
-        @FXML private TableView<Profilo> tableLibriVisualizza;
+        @FXML private TableView<Profilo> tableProfiliVisualizza;
+
         @FXML private TableColumn<Profilo, String> colonnaNome;
         @FXML private TableColumn<Profilo, String> colonnaCognome;
         @FXML private TableColumn<Profilo, String> colonnaMatricola;
@@ -76,6 +79,9 @@ import java.util.ResourceBundle;
         }
         public ProfiliController(ArchivioProfili manager) {
             this.archivioProfili = manager;
+        }
+        public static void setMatricolaDaCaricare(String matricola){
+            matricolaTemporanea=matricola;
         }
         @FXML private void handleTornaHomePage(ActionEvent event) throws IOException {
             switchScene(event,"/org/biblioteca_gruppo_05/Application_View/Home-Page.fxml");
@@ -249,8 +255,33 @@ import java.util.ResourceBundle;
                 showAlert(Alert.AlertType.ERROR, "Errore Critico!", "Errore nel caricamento della scena", e.getMessage());
             }
         }
+        @FXML private void handleEliminaVisualizza(ActionEvent event){
+            Profilo profiloSelezionato = tableProfiliVisualizza.getSelectionModel().getSelectedItem();
+            if (profiloSelezionato != null) {
+                ProfiliController.setMatricolaDaCaricare(profiloSelezionato.getMatricola());
+            }else{
+                ProfiliController.setMatricolaDaCaricare(null);
+            }
+            switchScene(event, "/org/biblioteca_gruppo_05/Gestione_Profili_View/Elimina-Profilo.fxml");
+        }
+        @FXML private void handleModificaVisualizza(ActionEvent event){
+
+            Profilo profiloSelezionato = tableProfiliVisualizza.getSelectionModel().getSelectedItem();
+            if (profiloSelezionato != null) {
+                ProfiliController.setMatricolaDaCaricare(profiloSelezionato.getMatricola());
+            }else{
+                ProfiliController.setMatricolaDaCaricare(null);
+            }
+            switchScene(event, "/org/biblioteca_gruppo_05/Gestione_Profili_View/Modifica-Profilo.fxml");
+
+        }
+
         @Override
         public void initialize(URL url, ResourceBundle rb) {
+            if(matricolaTemporanea!=null && searchMatricolaField.getText()!=null){
+                searchMatricolaField.setText(matricolaTemporanea);
+                matricolaTemporanea=null;
+            }
             if(tableProfiliVisualizza!=null){
                 tableProfiliVisualizza.setEditable(false);
                 if (colonnaMatricola != null) {

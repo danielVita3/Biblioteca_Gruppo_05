@@ -33,8 +33,10 @@
             <ComboBox fx:id="filtroLibriCombo" prefHeight="35.0" prefWidth="150.0" promptText="Seleziona..." style="-fx-background-color: #f9f9f9; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
 
             <TextField fx:id="searchLibriField" prefHeight="35.0" promptText="Digita qui..." style="-fx-background-radius: 5; -fx-border-color: #bdc3c7;" HBox.hgrow="ALWAYS" />
+         <Button onAction="#handleCercaVisualizza" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="CERCA" />
 
-            <Button onAction="#handleCercaVisualizza" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="CERCA" />
+            <Button onAction="#handleModificaVisualizza" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="MODIFICA" />
+         <Button onAction="#handleEliminaVisualizza" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="ELIMINA" />
             <Button onAction="#handleResetLibri" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6; -fx-cursor: hand;" text="Reset" underline="true" />
         </HBox>
 
