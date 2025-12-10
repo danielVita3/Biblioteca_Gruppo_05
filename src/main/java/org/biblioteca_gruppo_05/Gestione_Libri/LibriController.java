@@ -16,10 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
-import org.biblioteca_gruppo_05.Eccezioni.ErroreISBNException;
-import org.biblioteca_gruppo_05.Eccezioni.ErroreScritturaFileException;
-import org.biblioteca_gruppo_05.Eccezioni.LibroEsistenteException;
-import org.biblioteca_gruppo_05.Eccezioni.LibroNonTrovatoException;
+import org.biblioteca_gruppo_05.Eccezioni.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -332,9 +329,19 @@ public class LibriController implements Initializable {
                 copieColumn.setCellValueFactory(new PropertyValueFactory<>("numeroCopie"));
                 copieColumn.setEditable(true);
                 copieColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-                copieColumn.setOnEditCommit(event -> {
-                    event.getRowValue().setNumeroCopie(event.getNewValue());
-                });
+
+                    copieColumn.setOnEditCommit(event -> {
+                        try {
+                            event.getRowValue().setNumeroCopie(event.getNewValue());
+                        } catch (ErroreNumeroCopieLibro e) {
+                            showAlert(Alert.AlertType.WARNING, "Numero copie errato", "Inserimento numero copie non corretto", e.getMessage());
+
+                        }
+                    });
+
+
+
+
             }
         }
 

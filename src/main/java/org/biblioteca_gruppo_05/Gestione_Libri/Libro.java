@@ -1,6 +1,7 @@
 package org.biblioteca_gruppo_05.Gestione_Libri;
 
 import org.biblioteca_gruppo_05.Eccezioni.ErroreISBNException;
+import org.biblioteca_gruppo_05.Eccezioni.ErroreNumeroCopieLibro;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -160,7 +161,10 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre Il parametro numeroCopie deve essere un intero +1, -1.
      * @post L'attributo numeroCopie viene aggiornato con il valore fornito.
      */
-    public void setNumeroCopie(int numeroCopie){
+    public void setNumeroCopie(int numeroCopie) throws ErroreNumeroCopieLibro {
+        if(numeroCopie<1){
+            throw new ErroreNumeroCopieLibro("Non puoi inserire un numero negativo o uguale a 0");
+        }
         this.numeroCopie=numeroCopie;
     }
     /**
