@@ -27,7 +27,7 @@
             <Label text="Inserisci Matricola da eliminare" textFill="#34495e"><font><Font name="System Bold" size="14.0" /></font></Label>
             <HBox spacing="10.0">
                 <TextField fx:id="searchMatricolaField" prefHeight="35.0" prefWidth="300.0" promptText="Matricola..." style="-fx-background-radius: 5; -fx-border-color: #bdc3c7;" />
-                <Button onAction="#handleCercaPerEliminare" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="TROVA" />
+                <Button onAction="#handleCercaUtente" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="TROVA" />
             </HBox>
         </VBox>
 
@@ -40,8 +40,7 @@
             </VBox>
 
             <HBox alignment="CENTER_RIGHT" spacing="20.0">
-                <Button onAction="#handleAnnulla" style="-fx-background-color: transparent;" text="Annulla" textFill="#7f8c8d"/>
-                <Button onAction="#handleConfermaElimina" prefHeight="40.0" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(192, 57, 43, 0.4), 5, 0, 0, 3);" text="ELIMINA UTENTE" />
+                 <Button onAction="#handleConfermaElimina" prefHeight="40.0" style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(192, 57, 43, 0.4), 5, 0, 0, 3);" text="ELIMINA UTENTE" />
             </HBox>
         </VBox>
     </children>

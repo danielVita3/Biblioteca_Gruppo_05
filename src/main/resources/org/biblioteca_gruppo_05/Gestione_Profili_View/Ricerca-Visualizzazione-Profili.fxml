@@ -33,7 +33,7 @@
 
             <TextField fx:id="searchUtentiField" promptText="Cerca nome o matricola..." HBox.hgrow="ALWAYS" prefHeight="35.0" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7;" />
 
-            <Button onAction="#handleCercaUtente" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="CERCA" />
+            <Button onAction="#handleCercaVisualizza" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="CERCA" />
             <Button onAction="#handleResetUtenti" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6;" text="Reset" underline="true" />
         </HBox>
 

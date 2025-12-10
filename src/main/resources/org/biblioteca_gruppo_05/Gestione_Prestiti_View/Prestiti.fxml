@@ -127,9 +127,6 @@
 
                                 <TableView fx:id="tablePrestitiAttivi" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: #fafafa; -fx-border-color: #ecf0f1;">
                                     <columns>
-                                        <!-- NUOVA COLONNA PER LA CHECKBOX -->
-                                        <TableColumn fx:id="colSelezione" prefWidth="50.0" text="✔" style="-fx-alignment: CENTER;"/>
-
                                         <!-- Colonne esistenti con fx:id aggiunti per comodità -->
                                         <TableColumn fx:id="colMatricola" prefWidth="150.0" text="Utente (Matricola)" />
                                         <TableColumn fx:id="colIsbn" prefWidth="150.0" text="Libro (ISBN)" />

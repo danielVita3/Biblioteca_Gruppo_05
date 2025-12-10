@@ -44,12 +44,14 @@ public class Profilo implements Serializable, Comparable<Profilo> {
      * @pre I parametri nome, cognome, matricola e mail non devono essere nulli o vuoti.
      * @post Viene istanziato un nuovo oggetto Profilo con i dati forniti e numeroPrestiti inizializzato a 0.
      */
-    public Profilo(String nome, String cognome, String matricola, String mail){
-        this.nome = nome;
-        this.cognome = cognome;
-        this.matricola = matricola;
-        this.mail = mail;
-        this.numeroPrestiti = 0;
+    public Profilo(String nome, String cognome, String matricola, String mail)throws ErroreMatricolaException {
+        if (controlloMatricola(matricola)) {
+            this.nome = nome;
+            this.cognome = cognome;
+            this.matricola = matricola;
+            this.mail = mail;
+            this.numeroPrestiti = 0;
+        }
     }
 
     /**

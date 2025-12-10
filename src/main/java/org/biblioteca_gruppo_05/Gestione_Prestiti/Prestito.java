@@ -52,12 +52,17 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      * @post Viene istanziato un nuovo oggetto Prestito con ID univoco e costo penale calcolato in base alle date.
      */
     public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, String ISBN){
-        this.dataPrestito=dataPrestito;
-        this.dataScadenza=dataScadenza;
-        this.profilo=matricola;
-        this.libro=ISBN;
-        this.id=cont++;
-        this.costoPenale= calcolaPenale();
+        if(Libro.controllaISBN(ISBN)){
+            if(Profilo.controlloMatricola(matricola)) {
+                this.dataPrestito = dataPrestito;
+                this.dataScadenza = dataScadenza;
+                this.profilo = matricola;
+                this.libro = ISBN;
+                this.id = cont++;
+                this.costoPenale = calcolaPenale();
+            }
+        }
+
     }
 
     /**

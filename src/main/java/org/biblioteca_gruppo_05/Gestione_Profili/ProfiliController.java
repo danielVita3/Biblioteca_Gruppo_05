@@ -117,8 +117,67 @@ import java.util.ResourceBundle;
             }
         }
 
-        @FXML private void handleCercaUtente(ActionEvent event) {}
-        @FXML private void handleCercaPerEliminare(ActionEvent event) {}
+        @FXML private void handleCercaUtente(ActionEvent event) {
+            if (tableProfili != null) {
+                tableProfili.getItems().clear();
+            }
+            if (tableViewContainer != null) {
+                tableViewContainer.setVisible(false);
+                tableViewContainer.setManaged(false);
+            }
+            try{
+
+                String matricola=searchMatricolaField.getText();
+                Profilo profiloTrovato=archivioProfili.ricercaProfiloPerMatricola(matricola);
+                ObservableList<Profilo> risultati= FXCollections.observableArrayList(profiloTrovato);
+                tableProfili.setItems(risultati);
+                tableViewContainer.setVisible(true);
+                tableViewContainer.setManaged(true);
+                showAlert(Alert.AlertType.INFORMATION, "Ricerca Completata", "Successo", "Il libro è stato trovato e visualizzato.");
+            }catch(ErroreISBNException e){
+                showAlert(Alert.AlertType.ERROR, "Errore di Input", "Formato matricola non valido.", e.getMessage());
+            } catch (UtenteNonTrovatoException e) {
+                showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Utente non presente nell'archivio.", e.getMessage());
+            } catch (Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+            }
+        }
+        @FXML private void handleCercaVisualizza(ActionEvent event)  {
+            tableProfiliVisualizza.getItems().clear();
+
+            String criterio = filtroUtentiCombo.getValue(); // "Matricola", "Nome", "Cognome"
+            String query = searchUtentiField.getText().trim();
+
+            if (query.isEmpty()) {
+                showAlert(Alert.AlertType.WARNING, "Attenzione", "Campo vuoto", "Inserisci un termine di ricerca.");
+                return;
+            }
+
+            try{
+                ObservableList<Profilo> risultati= FXCollections.observableArrayList();
+                switch(criterio){
+                    case "Matricola":
+                        Profilo profiloTrovato= archivioProfili.ricercaProfiloPerMatricola(query);
+                        if (profiloTrovato != null) {
+                            risultati.add(profiloTrovato);
+                        }
+                        break;
+                    case "Nome":
+                        risultati = FXCollections.observableArrayList( archivioProfili.ricercaProfiloPerNome(query));
+                        break;
+                    case "Cognome":
+
+                        risultati = FXCollections.observableArrayList( archivioProfili.ricercaProfiloPerCognome(query));
+                        break;
+                }
+                tableProfiliVisualizza.setItems(risultati);
+
+            }catch(UtenteNonTrovatoException e){
+                showAlert(Alert.AlertType.WARNING,"Attenzione", "Profili non trovati", e.getMessage());
+            }
+
+        }
         @FXML private void handleResetUtenti(ActionEvent event) {}
 
         @FXML private void handlePulisci(ActionEvent event) {
@@ -127,7 +186,7 @@ import java.util.ResourceBundle;
             cognomeField.setText("");
             emailField.setText("");
         }
-        @FXML private void handleAnnulla(ActionEvent event) {}
+
         @FXML private void handleSalvaProfilo(ActionEvent event) {
             if (isInputValido()) {
                 try {
@@ -144,8 +203,17 @@ import java.util.ResourceBundle;
                 }
             }
         }
-        @FXML private void handleSalvaModifiche(ActionEvent event) {}
-        @FXML private void handleConfermaElimina(ActionEvent event) {}
+        @FXML private void handleSalvaModifiche(ActionEvent event) {
+            try{
+                archivioProfili.salvaSuFile();
+                showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il libro è stato modificato correttamente");
+            } catch (ErroreScritturaFileException e) {
+                showAlert(Alert.AlertType.ERROR, "Salvataggio fallito", "Errore di scrittura sul file.", e.getMessage());
+            }
+        }
+        @FXML private void handleConfermaElimina(ActionEvent event) {
+
+        }
         private void showAlert(Alert.AlertType type, String title, String header, String content) {
             Alert alert = new Alert(type);
             alert.setTitle(title);
@@ -221,13 +289,13 @@ import java.util.ResourceBundle;
             }
             if (filtroUtentiCombo != null) {
                 ObservableList<String> opzioniRicerca = FXCollections.observableArrayList(
-                        "Matricola", "Nome", "Cognome", "Email"
+                        "Matricola", "Nome", "Cognome"
                 );
                 filtroUtentiCombo.setItems(opzioniRicerca);
                 filtroUtentiCombo.getSelectionModel().selectFirst();
             }
-            if (tableProfiliVisualizza != null) {
-                tableProfiliVisualizza.setEditable(true);
+            if (tableProfili != null) {
+                tableProfili.setEditable(true);
 
                 if (colonnaMatricolaP != null) {
                     colonnaMatricolaP.setCellValueFactory(new PropertyValueFactory<>("matricola"));
@@ -239,7 +307,7 @@ import java.util.ResourceBundle;
                 }
 
                 if (colonnaNomeP != null) {
-                    colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                    colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("cognome"));
                     colonnaNomeP.setEditable(true);
                     colonnaNomeP.setCellFactory(TextFieldTableCell.forTableColumn());
                     colonnaNomeP.setOnEditCommit(event -> {
@@ -248,7 +316,7 @@ import java.util.ResourceBundle;
                 }
 
                 if (colonnaCognomeP != null) {
-                    colonnaCognomeP.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+                    colonnaCognomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
                     colonnaCognomeP.setEditable(true);
                     colonnaCognomeP.setCellFactory(TextFieldTableCell.forTableColumn());
                     colonnaCognomeP.setOnEditCommit(event -> {
