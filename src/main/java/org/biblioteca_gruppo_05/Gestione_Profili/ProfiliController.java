@@ -127,20 +127,29 @@ import java.util.ResourceBundle;
             if (tableProfili != null) {
                 tableProfili.getItems().clear();
             }
+            // Usa solo tableViewContainer per la visibilità in entrambe le scene
             if (tableViewContainer != null) {
                 tableViewContainer.setVisible(false);
                 tableViewContainer.setManaged(false);
             }
-            try{
 
-                String matricola=searchMatricolaField.getText();
-                Profilo profiloTrovato=archivioProfili.ricercaProfiloPerMatricola(matricola);
-                ObservableList<Profilo> risultati= FXCollections.observableArrayList(profiloTrovato);
+
+
+            try{
+                String matricola = searchMatricolaField.getText();
+                Profilo profiloTrovato = archivioProfili.ricercaProfiloPerMatricola(matricola);
+                ObservableList<Profilo> risultati = FXCollections.observableArrayList(profiloTrovato);
                 tableProfili.setItems(risultati);
-                tableViewContainer.setVisible(true);
-                tableViewContainer.setManaged(true);
+
+
+                if (tableViewContainer != null) {
+                    tableViewContainer.setVisible(true);
+                    tableViewContainer.setManaged(true);
+                }
+
                 showAlert(Alert.AlertType.INFORMATION, "Ricerca Completata", "Successo", "Il profilo è stato trovato e visualizzato.");
-            }catch(ErroreMatricolaException e){
+
+            } catch(ErroreMatricolaException e){
                 showAlert(Alert.AlertType.ERROR, "Errore di Input", "Formato matricola non valido.", e.getMessage());
             } catch (UtenteNonTrovatoException e) {
                 showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Utente non presente nell'archivio.", e.getMessage());
@@ -184,7 +193,18 @@ import java.util.ResourceBundle;
             }
 
         }
-        @FXML private void handleResetUtenti(ActionEvent event) {}
+        @FXML private void handleResetUtenti(ActionEvent event) {
+            try{
+                List<Profilo> tuttiProfili = archivioProfili.visualizzaProfili();
+                ObservableList<Profilo> l = FXCollections.observableArrayList(tuttiProfili);
+                tableProfiliVisualizza.setItems(l);
+            } catch (UtenteNonTrovatoException e){
+                showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Profilo non presente nell'archivio.", e.getMessage());
+            } catch(Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+            }
+        }
 
         @FXML private void handlePulisci(ActionEvent event) {
             matricolaField.setText("");
@@ -203,22 +223,28 @@ import java.util.ResourceBundle;
                 } catch (ErroreMatricolaException e) {
                     showAlert(Alert.AlertType.ERROR, "Errore matricola", "Formato matricola non valido.", e.getMessage());
                 } catch (UtenteEsitenteException e) {
-                    showAlert(Alert.AlertType.WARNING, "Errore di Duplicazione", "Utente già esistente", e.getMessage());
+                    showAlert(Alert.AlertType.WARNING, "Errore di Duplicazione", "Libro già esistente", e.getMessage());
                 } catch (Exception e) {
-                    showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile salvare il profilo.", e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile salvare il libro.", e.getMessage());
                 }
             }
         }
         @FXML private void handleSalvaModifiche(ActionEvent event) {
             try{
                 archivioProfili.salvaSuFile();
-                showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il profilo è stato modificato correttamente");
+                showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il libro è stato modificato correttamente");
             } catch (ErroreScritturaFileException e) {
                 showAlert(Alert.AlertType.ERROR, "Salvataggio fallito", "Errore di scrittura sul file.", e.getMessage());
             }
         }
         @FXML private void handleConfermaElimina(ActionEvent event) {
+            try{
 
+                archivioProfili.rimuoviProfilo(searchMatricolaField.getText());
+                showAlert(Alert.AlertType.INFORMATION, "Elimina ", "Successo.", "il profilo è stato eliminato");
+            }catch(UtenteNonTrovatoException e){
+                showAlert(Alert.AlertType.WARNING, "Ricerca fallita", "Errore.","il profilo non è stato eliminato");
+            }
         }
         private void showAlert(Alert.AlertType type, String title, String header, String content) {
             Alert alert = new Alert(type);
@@ -275,7 +301,6 @@ import java.util.ResourceBundle;
             switchScene(event, "/org/biblioteca_gruppo_05/Gestione_Profili_View/Modifica-Profilo.fxml");
 
         }
-
         @Override
         public void initialize(URL url, ResourceBundle rb) {
             if(matricolaTemporanea!=null && searchMatricolaField.getText()!=null){

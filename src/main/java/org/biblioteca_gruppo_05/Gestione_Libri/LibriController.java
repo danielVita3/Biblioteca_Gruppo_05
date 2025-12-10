@@ -153,32 +153,7 @@ public class LibriController implements Initializable {
 
 
     }
-    @FXML private void handleCercaLibroe(ActionEvent event) {
-        if (tableLibrie != null) {
-            tableLibrie.getItems().clear();
-        }
-        if (tableViewContainere != null) {
-            tableViewContainere.setVisible(false);
-            tableViewContainere.setManaged(false);
-        }
-        try{
 
-            String ISBN=searchIsbnFielde.getText();
-            Libro libroTrovato=archivioLibri.ricercaLibroPerISBN(ISBN);
-            ObservableList<Libro> risultati= FXCollections.observableArrayList(libroTrovato);
-            tableLibrie.setItems(risultati);
-            tableViewContainere.setVisible(true);
-            tableViewContainere.setManaged(true);
-            showAlert(Alert.AlertType.INFORMATION, "Ricerca Completata", "Successo", "Il libro è stato trovato e visualizzato.");
-        }catch(ErroreISBNException e){
-            showAlert(Alert.AlertType.ERROR, "Errore di Input", "Formato ISBN non valido.", e.getMessage());
-        } catch (LibroNonTrovatoException e) {
-            showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Libro non presente nell'archivio.", e.getMessage());
-        } catch (Exception e){
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
-        }
-    }
     @FXML private void handleCercaVisualizza(ActionEvent event)  {
         tableLibriVisualizza.getItems().clear();
 
@@ -222,16 +197,32 @@ public class LibriController implements Initializable {
             tableViewContainer.setVisible(false);
             tableViewContainer.setManaged(false);
         }
-        try{
+        if (previewContainer != null) {
+            previewContainer.setVisible(false);
+            previewContainer.setManaged(false);
+        }
 
-            String ISBN=searchIsbnField.getText();
-            Libro libroTrovato=archivioLibri.ricercaLibroPerISBN(ISBN);
-            ObservableList<Libro> risultati= FXCollections.observableArrayList(libroTrovato);
+        try{
+            String ISBN = searchIsbnField.getText();
+
+            Libro libroTrovato = archivioLibri.ricercaLibroPerISBN(ISBN);
+
+            ObservableList<Libro> risultati = FXCollections.observableArrayList(libroTrovato);
             tableLibri.setItems(risultati);
-            tableViewContainer.setVisible(true);
-            tableViewContainer.setManaged(true);
+
+            if (tableViewContainer != null) {
+                tableViewContainer.setVisible(true);
+                tableViewContainer.setManaged(true);
+            }
+
+            if (previewContainer != null) {
+                previewContainer.setVisible(true);
+                previewContainer.setManaged(true);
+            }
+
             showAlert(Alert.AlertType.INFORMATION, "Ricerca Completata", "Successo", "Il libro è stato trovato e visualizzato.");
-        }catch(ErroreISBNException e){
+
+        } catch(ErroreISBNException e){
             showAlert(Alert.AlertType.ERROR, "Errore di Input", "Formato ISBN non valido.", e.getMessage());
         } catch (LibroNonTrovatoException e) {
             showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Libro non presente nell'archivio.", e.getMessage());
@@ -244,9 +235,9 @@ public class LibriController implements Initializable {
         try{
 
             archivioLibri.rimuoviLibro(searchIsbnField.getText());
-            showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il libro è stato modificato correttamente");
+            showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il libro è stato eliminato");
         }catch(LibroNonTrovatoException e){
-            showAlert(Alert.AlertType.WARNING, "Ricerca fallita", "Errore.","il libro è stato eliminato");
+            showAlert(Alert.AlertType.WARNING, "Ricerca fallita", "Errore.","il libro non è stato eliminato");
         }
     }
     @FXML private void handleConfermaModifica(ActionEvent event) {
@@ -405,7 +396,7 @@ public class LibriController implements Initializable {
                             event.getRowValue().setNumeroCopie(event.getNewValue());
                         } catch (ErroreNumeroCopieLibro e) {
                             showAlert(Alert.AlertType.WARNING, "Numero copie errato", "Inserimento numero copie non corretto", e.getMessage());
-
+                            tableLibri.refresh();
                         }
                     });
 
@@ -419,63 +410,6 @@ public class LibriController implements Initializable {
             tableViewContainer.setVisible(false);
             tableViewContainer.setManaged(false);
         }
-        if (tableLibrie != null) {
-            tableLibrie.setEditable(true);
 
-            if (titoloColumne != null) {
-                titoloColumne.setCellValueFactory(new PropertyValueFactory<>("titolo"));
-                titoloColumne.setEditable(true);
-                titoloColumne.setCellFactory(TextFieldTableCell.forTableColumn());
-                titoloColumne.setOnEditCommit(event -> {
-                    event.getRowValue().setTitolo(event.getNewValue());
-                });
-            }
-
-            if (autoreColumne != null) {
-                autoreColumne.setCellValueFactory(new PropertyValueFactory<>("autore"));
-                autoreColumne.setEditable(true);
-                autoreColumne.setCellFactory(TextFieldTableCell.forTableColumn());
-                autoreColumne.setOnEditCommit(event -> {
-                    event.getRowValue().setAutore(event.getNewValue());
-                });
-            }
-
-            if (isbnColumne != null) {
-                isbnColumne.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
-                isbnColumne.setEditable(true);
-                isbnColumne.setCellFactory(TextFieldTableCell.forTableColumn());
-                isbnColumne.setOnEditCommit(event -> {
-                    event.getRowValue().setISBN(event.getNewValue());
-                });
-            }
-
-            if (dataPubblicazioneColumne != null) {
-                dataPubblicazioneColumne.setCellValueFactory(new PropertyValueFactory<>("dataPubblicazione"));
-                dataPubblicazioneColumne.setEditable(true);
-                dataPubblicazioneColumne.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
-                dataPubblicazioneColumne.setOnEditCommit(event -> {
-                    event.getRowValue().setDataPubblicazione(event.getNewValue());
-                });
-            }
-
-            if (copieColumne != null) {
-                copieColumne.setCellValueFactory(new PropertyValueFactory<>("numeroCopie"));
-                copieColumne.setEditable(true);
-                copieColumne.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-                copieColumne.setOnEditCommit(event -> {
-                    try{
-                        event.getRowValue().setNumeroCopie(event.getNewValue());
-                    } catch (ErroreNumeroCopieLibro e) {
-                        showAlert(Alert.AlertType.ERROR, "Errore Critico", "Il numero di copie non può essere minore di 1", e.getMessage());
-                    }
-
-                });
-            }
-        }
-
-        if (tableViewContainere != null) {
-            tableViewContainere.setVisible(false);
-            tableViewContainere.setManaged(false);
-        }
     }
 }
