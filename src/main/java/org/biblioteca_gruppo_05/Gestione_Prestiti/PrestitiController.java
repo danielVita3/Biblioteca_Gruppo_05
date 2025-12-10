@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.LocalDateStringConverter;
 import org.biblioteca_gruppo_05.Eccezioni.*;
 import org.biblioteca_gruppo_05.Gestione_Libri.*;
 import org.biblioteca_gruppo_05.Gestione_Profili.*;
@@ -191,28 +192,29 @@ public class PrestitiController implements Initializable {
         if(tablePrestitiAttivi!=null){
             tablePrestitiAttivi.setEditable(false);
             if (colMatricola != null) {
-                colMatricola.setCellValueFactory(new PropertyValueFactory<>("matricola"));
+                colMatricola.setCellValueFactory(new PropertyValueFactory<>("profilo"));
 
             }
 
             if (colIsbn != null) {
-                colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+                colIsbn.setCellValueFactory(new PropertyValueFactory<>("libro"));
 
             }
 
             if (colDataInizio != null) {
-                colDataInizio.setCellValueFactory(new PropertyValueFactory<>("datainizio"));
+                colDataInizio.setCellValueFactory(new PropertyValueFactory<>("dataPrestito"));
                 colDataInizio.setEditable(true);
-                colDataInizio.setCellFactory(TextFieldTableCell.forTableColumn());
+                colDataInizio.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
+
                 colDataInizio.setOnEditCommit(event -> {
                     event.getRowValue().setDataPrestito(event.getNewValue());
                 });
             }
 
             if (colScadenza != null) {
-                colScadenza.setCellValueFactory(new PropertyValueFactory<>("datascadenza"));
+                colScadenza.setCellValueFactory(new PropertyValueFactory<>("dataScadenza"));
                 colScadenza.setEditable(true);
-                colScadenza.setCellFactory(TextFieldTableCell.forTableColumn());
+                colScadenza.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
                 colScadenza.setOnEditCommit(event -> {
                     event.getRowValue().setDataScadenza(event.getNewValue());
                 });
