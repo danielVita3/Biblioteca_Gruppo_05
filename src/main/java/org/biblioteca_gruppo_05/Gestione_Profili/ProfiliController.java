@@ -134,7 +134,7 @@ import java.util.ResourceBundle;
                 tableViewContainer.setVisible(true);
                 tableViewContainer.setManaged(true);
                 showAlert(Alert.AlertType.INFORMATION, "Ricerca Completata", "Successo", "Il libro è stato trovato e visualizzato.");
-            }catch(ErroreISBNException e){
+            }catch(ErroreMatricolaException e){
                 showAlert(Alert.AlertType.ERROR, "Errore di Input", "Formato matricola non valido.", e.getMessage());
             } catch (UtenteNonTrovatoException e) {
                 showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Utente non presente nell'archivio.", e.getMessage());

@@ -50,6 +50,15 @@ public class LibriController implements Initializable {
     @FXML private Label lblAutore;
     @FXML private Label lblCopie;
 
+    @FXML private TextField searchIsbnFielde;
+    @FXML private VBox tableViewContainere;
+    @FXML private TableView<Libro> tableLibrie;
+    @FXML private TableColumn<Libro, String> titoloColumne;
+    @FXML private TableColumn<Libro, String> autoreColumne;
+    @FXML private TableColumn<Libro, String> isbnColumne;
+    @FXML private TableColumn<Libro, LocalDate> dataPubblicazioneColumne;
+    @FXML private TableColumn<Libro, Integer> copieColumne;
+
     @FXML private VBox searchContainer;
     @FXML private VBox editFormContainer;
     @FXML private Button btnCerca;
@@ -143,6 +152,32 @@ public class LibriController implements Initializable {
 
 
     }
+    @FXML private void handleCercaLibroe(ActionEvent event) {
+        if (tableLibrie != null) {
+            tableLibrie.getItems().clear();
+        }
+        if (tableViewContainere != null) {
+            tableViewContainere.setVisible(false);
+            tableViewContainere.setManaged(false);
+        }
+        try{
+
+            String ISBN=searchIsbnFielde.getText();
+            Libro libroTrovato=archivioLibri.ricercaLibroPerISBN(ISBN);
+            ObservableList<Libro> risultati= FXCollections.observableArrayList(libroTrovato);
+            tableLibrie.setItems(risultati);
+            tableViewContainere.setVisible(true);
+            tableViewContainere.setManaged(true);
+            showAlert(Alert.AlertType.INFORMATION, "Ricerca Completata", "Successo", "Il libro è stato trovato e visualizzato.");
+        }catch(ErroreISBNException e){
+            showAlert(Alert.AlertType.ERROR, "Errore di Input", "Formato ISBN non valido.", e.getMessage());
+        } catch (LibroNonTrovatoException e) {
+            showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Libro non presente nell'archivio.", e.getMessage());
+        } catch (Exception e){
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+        }
+    }
     @FXML private void handleCercaVisualizza(ActionEvent event)  {
         tableLibriVisualizza.getItems().clear();
 
@@ -205,7 +240,13 @@ public class LibriController implements Initializable {
         }
     }
     @FXML private void handleConfermaElimina(ActionEvent event) {
+        try{
 
+            archivioLibri.rimuoviLibro(searchIsbnField.getText());
+            showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il libro è stato modificato correttamente");
+        }catch(LibroNonTrovatoException e){
+            showAlert(Alert.AlertType.WARNING, "Ricerca fallita", "Errore.","il libro è stato eliminato");
+        }
     }
     @FXML private void handleConfermaModifica(ActionEvent event) {
         try{
@@ -341,6 +382,59 @@ public class LibriController implements Initializable {
         if (tableViewContainer != null) {
             tableViewContainer.setVisible(false);
             tableViewContainer.setManaged(false);
+        }
+        if (tableLibrie != null) {
+            tableLibrie.setEditable(true);
+
+            if (titoloColumne != null) {
+                titoloColumne.setCellValueFactory(new PropertyValueFactory<>("titolo"));
+                titoloColumne.setEditable(true);
+                titoloColumne.setCellFactory(TextFieldTableCell.forTableColumn());
+                titoloColumne.setOnEditCommit(event -> {
+                    event.getRowValue().setTitolo(event.getNewValue());
+                });
+            }
+
+            if (autoreColumne != null) {
+                autoreColumne.setCellValueFactory(new PropertyValueFactory<>("autore"));
+                autoreColumne.setEditable(true);
+                autoreColumne.setCellFactory(TextFieldTableCell.forTableColumn());
+                autoreColumne.setOnEditCommit(event -> {
+                    event.getRowValue().setAutore(event.getNewValue());
+                });
+            }
+
+            if (isbnColumne != null) {
+                isbnColumne.setCellValueFactory(new PropertyValueFactory<>("ISBN"));
+                isbnColumne.setEditable(true);
+                isbnColumne.setCellFactory(TextFieldTableCell.forTableColumn());
+                isbnColumne.setOnEditCommit(event -> {
+                    event.getRowValue().setISBN(event.getNewValue());
+                });
+            }
+
+            if (dataPubblicazioneColumne != null) {
+                dataPubblicazioneColumne.setCellValueFactory(new PropertyValueFactory<>("dataPubblicazione"));
+                dataPubblicazioneColumne.setEditable(true);
+                dataPubblicazioneColumne.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
+                dataPubblicazioneColumne.setOnEditCommit(event -> {
+                    event.getRowValue().setDataPubblicazione(event.getNewValue());
+                });
+            }
+
+            if (copieColumne != null) {
+                copieColumne.setCellValueFactory(new PropertyValueFactory<>("numeroCopie"));
+                copieColumne.setEditable(true);
+                copieColumne.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+                copieColumne.setOnEditCommit(event -> {
+                    event.getRowValue().setNumeroCopie(event.getNewValue());
+                });
+            }
+        }
+
+        if (tableViewContainere != null) {
+            tableViewContainere.setVisible(false);
+            tableViewContainere.setManaged(false);
         }
     }
 }
