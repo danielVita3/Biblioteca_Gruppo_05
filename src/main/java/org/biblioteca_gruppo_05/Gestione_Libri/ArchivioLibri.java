@@ -5,6 +5,8 @@ import org.biblioteca_gruppo_05.Eccezioni.*;
 import java.io.*;
 import java.util.*;
 
+import static org.biblioteca_gruppo_05.Gestione_Libri.Libro.controllaISBN;
+
 /**
  * @class ArchivioLibri
  * @brief Gestisce l'insieme dei libri presenti nella biblioteca.
@@ -91,12 +93,15 @@ public class ArchivioLibri implements Serializable {
      * @post Restituisce il libro senza rimuoverlo o modificarlo.
      */
     public Libro ricercaLibroPerISBN(String ISBN) throws LibroNonTrovatoException,ErroreISBNException {
-
-        Libro result=libri.get(ISBN);
-        if(result == null){
-            throw new LibroNonTrovatoException("Nessun libro trovato con ISBN: " + ISBN);
+        if(controllaISBN(ISBN)){
+            Libro result=libri.get(ISBN);
+            if(result == null){
+                throw new LibroNonTrovatoException("Nessun libro trovato con ISBN: " + ISBN);
+            }
+            return result;
         }
-        return result;
+
+        return null;
     }
 
     /**

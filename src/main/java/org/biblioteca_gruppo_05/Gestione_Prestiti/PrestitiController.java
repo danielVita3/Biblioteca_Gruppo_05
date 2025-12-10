@@ -86,8 +86,6 @@ public class PrestitiController implements Initializable {
                 showAlert(Alert.AlertType.ERROR, "Errore ISBN", "Formato ISBN non valido.", e.getMessage());
             } catch (ErroreMatricolaException e) {
                 showAlert(Alert.AlertType.WARNING, "Errore di Duplicazione", "Libro già esistente", e.getMessage());
-            } catch (Exception e) {
-                showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile salvare il libro.", e.getMessage());
             } catch (LibroNonTrovatoException e) {
                 showAlert(Alert.AlertType.WARNING, "Libro non esistente", "Libro non presente in archivio", e.getMessage());
             } catch (UtenteNonTrovatoException e) {

@@ -56,12 +56,12 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      * @pre matricola non deve essere null o vuota, ISBN non deve essere null o vuoto.
      * @post Viene istanziato un nuovo oggetto Prestito con ID univoco e costo penale calcolato in base alle date.
      */
-    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, String ISBN) throws ErroreNumeroCopieLibro, UtenteNonTrovatoException, LibroNonTrovatoException {
+    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola,
+                    String ISBN) throws ErroreNumeroCopieLibro, UtenteNonTrovatoException, LibroNonTrovatoException {
         ArchivioLibri l = new ArchivioLibri("libri.bin");
         ArchivioProfili pro = new ArchivioProfili("profili.bin");
         //try {
-        if(Libro.controllaISBN(ISBN)){
-            if(Profilo.controlloMatricola(matricola)){
+
                 Libro librotrovato = l.ricercaLibroPerISBN(ISBN);
                 Profilo profilotrovato = pro.ricercaProfiloPerMatricola(matricola);
                 if (librotrovato.getNumeroCopie() <= 0) {
@@ -76,14 +76,14 @@ public class Prestito implements Serializable, Comparable<Prestito> {
                     this.costoPenale = calcolaPenale();
                 }
             }
-        }
+
 
         /*} catch (LibroNonTrovatoException e) {
             throw new LibroNonTrovatoException("Creazione fallita: Libro non trovato (" + ISBN + ")");
         } catch (UtenteNonTrovatoException e) {
             throw new UtenteNonTrovatoException("Creazione fallita: Utente non trovato (" + matricola + ")");
         }*/
-    }
+
 
     /**
      * @brief Restituisce la data di inizio del prestito.

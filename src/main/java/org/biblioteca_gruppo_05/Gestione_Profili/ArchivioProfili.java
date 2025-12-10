@@ -6,6 +6,8 @@ import org.biblioteca_gruppo_05.Eccezioni.*;
 import java.io.*;
 import java.util.*;
 
+import static org.biblioteca_gruppo_05.Gestione_Profili.Profilo.controlloMatricola;
+
 /**
  * @class ArchivioProfili
  * @brief Gestisce l'insieme dei profili (utenti) iscritti alla biblioteca.
@@ -100,12 +102,16 @@ public class ArchivioProfili implements Serializable {
      * @post Restituisce il profilo senza rimuoverlo o modificarlo.
      */
     public Profilo ricercaProfiloPerMatricola(String matricola) throws UtenteNonTrovatoException,ErroreMatricolaException {
-        if(this.profili.containsKey(matricola)){
-            return profili.get(matricola);
-        }else{
-            throw new UtenteNonTrovatoException("Utente non trovato con questa matricola: "+matricola);
+        if(controlloMatricola(matricola)){
+            if(this.profili.containsKey(matricola)){
+                return profili.get(matricola);
+            }else{
+                throw new UtenteNonTrovatoException("Utente non trovato con questa matricola: "+matricola);
+            }
         }
 
+
+        return null;
     }
 
     /**
