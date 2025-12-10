@@ -99,7 +99,7 @@ public class ArchivioProfili implements Serializable {
      * @pre matricola non deve essere null o vuota.
      * @post Restituisce il profilo senza rimuoverlo o modificarlo.
      */
-    public Profilo ricercaProfiloPerMatricola(String matricola) throws UtenteNonTrovatoException {
+    public Profilo ricercaProfiloPerMatricola(String matricola) throws UtenteNonTrovatoException,ErroreMatricolaException {
         if(this.profili.containsKey(matricola)){
             return profili.get(matricola);
         }else{
