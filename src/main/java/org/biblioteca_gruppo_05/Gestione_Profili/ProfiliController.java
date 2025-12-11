@@ -26,9 +26,11 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
-    public class ProfiliController implements Initializable {
+public class ProfiliController implements Initializable {
 
         private ArchivioProfili archivioProfili;
         public static String matricolaTemporanea;
@@ -215,6 +217,11 @@ import java.util.ResourceBundle;
 
         @FXML private void handleSalvaProfilo(ActionEvent event) {
             if (isInputValido()) {
+                String mail=emailField.getText();
+                if(!controllaMail(mail)){
+                    showAlert(Alert.AlertType.ERROR, "Errore di Validazione Mail", "La mail deve essere nel formato testo@testo.", "Mail sbagliata.");
+                    return;
+                }
                 try {
                     Profilo l = new Profilo(nomeField.getText(),cognomeField.getText(),matricolaField.getText(),  emailField.getText());
                     archivioProfili.aggiungiProfilo(l);
@@ -300,6 +307,15 @@ import java.util.ResourceBundle;
             }
             switchScene(event, "/org/biblioteca_gruppo_05/Gestione_Profili_View/Modifica-Profilo.fxml");
 
+        }
+        public boolean controllaMail(String email) {
+            if (email == null) {
+                return false;
+            }
+            String regexPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+            Pattern pattern = Pattern.compile(regexPattern);
+            Matcher matcher = pattern.matcher(email);
+            return matcher.matches();
         }
         @Override
         public void initialize(URL url, ResourceBundle rb) {

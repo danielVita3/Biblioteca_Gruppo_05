@@ -11,14 +11,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Application.HomeController">
+<StackPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Application.HomeController">
     <children>
 
         <VBox style="-fx-background-color: radial-gradient(focus-angle 0.0deg, focus-distance 0.0% , center 50.0% 50.0%, radius 100.0%, #5d4037 0.0%, #1a0f0a 100.0%);" />
@@ -29,7 +28,7 @@
                     <stops>
                         <Stop>
                             <color>
-                                <Color red="1.0" green="0.800000011920929" blue="0.4000000059604645" opacity="0.15" />
+                                <Color blue="0.4000000059604645" green="0.800000011920929" opacity="0.15" red="1.0" />
                             </color>
                         </Stop>
                         <Stop offset="1.0">
@@ -91,22 +90,22 @@
                     </padding>
                 </Label>
 
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="60.0" stroke="#8d6e63" strokeType="INSIDE" strokeWidth="2.0" width="60.0" rotate="45.0">
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="60.0" rotate="45.0" stroke="#8d6e63" strokeType="INSIDE" strokeWidth="2.0" width="60.0">
                     <effect>
                         <InnerShadow color="#5d4037" />
                     </effect>
                     <VBox.margin>
-                        <Insets top="10.0" bottom="10.0"/>
+                        <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
                 </Rectangle>
-                <Label text="📖" rotate="-45.0" textFill="#5d4037">
-                    <font><Font size="24.0"/></font>
-                    <VBox.margin><Insets top="-65.0" bottom="25.0"/></VBox.margin>
+                <Label rotate="-45.0" text="📖" textFill="#5d4037">
+                    <font><Font size="24.0" /></font>
+                    <VBox.margin><Insets bottom="25.0" top="-65.0" /></VBox.margin>
                 </Label>
 
-                <Label text="&quot;Una stanza senza libri è come un corpo senza anima.&quot;" textAlignment="CENTER" textFill="#6d4c41" wrapText="true">
+                <Label prefHeight="44.0" prefWidth="302.0" text="&quot;Una stanza senza libri è come un corpo senza anima.&quot;" textAlignment="CENTER" textFill="#6d4c41" wrapText="true">
                     <font>
-                        <Font name="Garamond" size="18.0" />
+                        <Font name="Garamond" size="14.0" />
                     </font>
                     <VBox.margin>
                         <Insets bottom="20.0" top="10.0" />
