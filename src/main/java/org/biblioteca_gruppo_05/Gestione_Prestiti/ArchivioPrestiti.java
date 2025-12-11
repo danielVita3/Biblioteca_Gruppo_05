@@ -102,8 +102,8 @@ public class ArchivioPrestiti implements Serializable {
      */
     public void restituzionPrestito(Prestito p){
         prestiti.remove(p.getId());
-        ArchivioLibri l=new ArchivioLibri("ArchivioLibri.bin");
-        ArchivioProfili pro=new ArchivioProfili("ArchivioProfili.bin");
+        ArchivioLibri l=new ArchivioLibri("libri.bin");
+        ArchivioProfili pro=new ArchivioProfili("profili.bin");
         try {
             l.ricercaLibroPerISBN(p.getLibro()).incrementaNumCopie();
         }catch(LibroNonTrovatoException e){

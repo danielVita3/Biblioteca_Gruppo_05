@@ -210,7 +210,7 @@ public class PrestitiController implements Initializable {
             filtroPrestitiCombo.getSelectionModel().selectFirst();
         }
         if(tablePrestitiAttivi!=null){
-            tablePrestitiAttivi.setEditable(false);
+            tablePrestitiAttivi.setEditable(true);
             if (colMatricola != null) {
                 colMatricola.setCellValueFactory(new PropertyValueFactory<>("profilo"));
 
