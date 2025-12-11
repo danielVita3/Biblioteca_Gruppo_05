@@ -88,6 +88,13 @@ public class PrestitiController implements Initializable {
 
     @FXML private void handleConfermaPrestito(ActionEvent event) {
         if (isInputValido()) {
+            LocalDate dataInizio = dataInizioPicker.getValue();
+            LocalDate dataFine = dataFinePicker.getValue();
+
+            if (dataFine.isBefore(dataInizio)) {
+                showAlert(Alert.AlertType.ERROR, "Errore di Validazione Data", "Data di scadenza non valida.", "La data di restituzione non può essere precedente alla data di inizio prestito.");
+                return;
+            }
             try {
                 Prestito p = new Prestito(dataInizioPicker.getValue(),dataFinePicker.getValue(),prestitoMatricolaField.getText(), prestitoIsbnField.getText());
                 archivioPrestiti.registraPrestito(p);
