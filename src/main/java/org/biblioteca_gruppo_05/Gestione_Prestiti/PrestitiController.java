@@ -178,7 +178,16 @@ public class PrestitiController implements Initializable {
     }
 
     @FXML private void handleResetPrestiti(ActionEvent event) {
-
+        try{
+            List<Prestito> tuttiPrestiti = archivioPrestiti.visualizzaPrestiti();
+            ObservableList<Prestito> l = FXCollections.observableArrayList(tuttiPrestiti);
+            tablePrestitiAttivi.setItems(l);
+        } catch (PrestitoNonTrovatoException e){
+            showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Prestito non presente nell'archivio.", e.getMessage());
+        } catch(Exception e){
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+        }
     }
 
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
@@ -240,7 +249,7 @@ public class PrestitiController implements Initializable {
                 });
             }
 
-             try{
+            try{
                 List<Prestito> tuttiPrestiti = archivioPrestiti.visualizzaPrestiti();
                 ObservableList<Prestito> l = FXCollections.observableArrayList(tuttiPrestiti);
                 tablePrestitiAttivi.setItems(l);
