@@ -98,6 +98,7 @@ public class PrestitiController implements Initializable {
             try {
                 Prestito p = new Prestito(dataInizioPicker.getValue(),dataFinePicker.getValue(),prestitoMatricolaField.getText(), prestitoIsbnField.getText());
                 archivioPrestiti.registraPrestito(p);
+                refreshPrestitiTable();
                 showAlert(Alert.AlertType.INFORMATION, "Successo", "Prestito Aggiunto", "Il prestito è stato aggiunto all'archivio.");
                 handlePulisciCampi(null);
             } catch (ErroreISBNException e) {
@@ -189,7 +190,21 @@ public class PrestitiController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
         }
     }
+    private void refreshPrestitiTable() {
+        if (tablePrestitiAttivi != null) {
+            try{
+                List<Prestito> tuttiPrestiti = archivioPrestiti.visualizzaPrestiti();
+                ObservableList<Prestito> l = FXCollections.observableArrayList(tuttiPrestiti);
+                tablePrestitiAttivi.setItems(l);
+            } catch (PrestitoNonTrovatoException e){
 
+                tablePrestitiAttivi.getItems().clear();
+            } catch(Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+            }
+        }
+    }
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
