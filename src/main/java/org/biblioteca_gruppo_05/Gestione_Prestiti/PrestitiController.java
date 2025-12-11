@@ -40,7 +40,8 @@ public class PrestitiController implements Initializable {
     @FXML private TableColumn<Prestito,String> colIsbn;
     @FXML private TableColumn<Prestito, LocalDate> colDataInizio;
     @FXML private TableColumn<Prestito,LocalDate> colScadenza;
-
+    @FXML private ComboBox <String>  prestitiMatricolaCombo;
+    @FXML private ComboBox <String>  prestitiIsbnCombo;
     @FXML private TextField searchPrestitoField;
     @FXML private TableView <Prestito> tablePrestitiAttivi;
     @FXML private ComboBox<String> filtroPrestitiCombo;
@@ -56,11 +57,11 @@ public class PrestitiController implements Initializable {
     }
     private boolean isInputValido(){
         String errorMessage="";
-        if(prestitoMatricolaField.getText()==null || prestitoMatricolaField.getText().trim().isEmpty()){
-            errorMessage+="Devi inserire la matricola\n";
+        if(prestitiMatricolaCombo.getValue()==null){
+            errorMessage+="Devi selezionare la matricola\n";
         }
-        if(prestitoIsbnField.getText()==null || prestitoIsbnField.getText().trim().isEmpty()){
-            errorMessage+="Devi inserire l'ISBN\n";
+        if(prestitiIsbnCombo.getValue()==null){
+            errorMessage+="Devi selezionare l'ISBN\n";
         }
         if(dataInizioPicker.getValue()==null ){
             errorMessage+="Devi inserire una data di prestito\n";
@@ -85,7 +86,20 @@ public class PrestitiController implements Initializable {
         dataInizioPicker.setValue(null);
         dataFinePicker.setValue(null);
     }
+    private String estrai(String stringaCompleta) {
+        if (stringaCompleta == null) {
+            return null;
+        }
 
+        int indiceSeparatore = stringaCompleta.indexOf(" - ");
+
+        if (indiceSeparatore != -1) {
+
+            return stringaCompleta.substring(0, indiceSeparatore).trim();
+        }
+
+        return stringaCompleta.trim();
+    }
     @FXML private void handleConfermaPrestito(ActionEvent event) {
         if (isInputValido()) {
             LocalDate dataInizio = dataInizioPicker.getValue();
@@ -96,7 +110,7 @@ public class PrestitiController implements Initializable {
                 return;
             }
             try {
-                Prestito p = new Prestito(dataInizioPicker.getValue(),dataFinePicker.getValue(),prestitoMatricolaField.getText(), prestitoIsbnField.getText());
+                Prestito p = new Prestito(dataInizioPicker.getValue(),dataFinePicker.getValue(),estrai(prestitiMatricolaCombo.getValue()), estrai(prestitiIsbnCombo.getValue()));
                 archivioPrestiti.registraPrestito(p);
                 refreshPrestitiTable();
                 showAlert(Alert.AlertType.INFORMATION, "Successo", "Prestito Aggiunto", "Il prestito è stato aggiunto all'archivio.");
@@ -226,6 +240,34 @@ public class PrestitiController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if(prestitiMatricolaCombo!=null && archivioProfili!=null){
+            try{
+
+                ObservableList<String> matricole = FXCollections.observableArrayList();
+                List<Profilo> profili=archivioProfili.visualizzaProfili();
+                for(Profilo p: profili){
+                    matricole.add(p.getMatricola()+ " - " +p.getCognome()+" " +p.getNome());
+                }
+                prestitiMatricolaCombo.setItems(matricole);
+            } catch(Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+            }
+        }
+        if(prestitiIsbnCombo!=null && archivioLibri!=null){
+            try{
+
+                ObservableList<String> isbn = FXCollections.observableArrayList();
+                List<Libro> libri=archivioLibri.visualizzaLibri();
+                for(Libro l: libri){
+                    isbn.add(l.getISBN()+" - " +l.getTitolo());
+                }
+                prestitiIsbnCombo.setItems(isbn);
+            } catch(Exception e){
+                e.printStackTrace();
+                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+            }
+        }
         if (filtroPrestitiCombo != null) {
             ObservableList<String> opzioniRicerca = FXCollections.observableArrayList(
                     "ISBN", "Matricola"
@@ -275,7 +317,6 @@ public class PrestitiController implements Initializable {
                 showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
             }
         }
-
-}
     }
+}
 

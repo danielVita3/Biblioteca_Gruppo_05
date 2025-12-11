@@ -86,16 +86,16 @@
                                     </rowConstraints>
                                     <children>
                                         <Label text="Matricola Utente:" textFill="#7f8c8d" />
-                                        <TextField fx:id="prestitoMatricolaField" promptText="Chi prende il libro?" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" />
 
                                         <Label text="ISBN Libro:" textFill="#7f8c8d" GridPane.rowIndex="1" />
-                                        <TextField fx:id="prestitoIsbnField" promptText="Quale libro esce?" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                                         <Label text="Data Inizio:" textFill="#7f8c8d" GridPane.rowIndex="2" />
                                         <DatePicker fx:id="dataInizioPicker" prefWidth="300.0" promptText="Oggi" style="-fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                                         <Label text="Data Fine Prevista:" textFill="#7f8c8d" GridPane.rowIndex="3" />
                                         <DatePicker fx:id="dataFinePicker" prefWidth="300.0" promptText="Data di rientro" style="-fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="prestitiMatricolaCombo" editable="true" prefHeight="25.0" prefWidth="297.0" promptText="Seleziona la matricola" GridPane.columnIndex="1" />
+                              <ComboBox fx:id="prestitiIsbnCombo" editable="true" prefWidth="297.0" promptText="Seleziona l'ISBN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
 
