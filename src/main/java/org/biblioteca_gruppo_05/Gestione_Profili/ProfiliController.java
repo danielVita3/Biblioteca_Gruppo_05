@@ -230,16 +230,16 @@ public class ProfiliController implements Initializable {
                 } catch (ErroreMatricolaException e) {
                     showAlert(Alert.AlertType.ERROR, "Errore matricola", "Formato matricola non valido.", e.getMessage());
                 } catch (UtenteEsitenteException e) {
-                    showAlert(Alert.AlertType.WARNING, "Errore di Duplicazione", "Libro già esistente", e.getMessage());
+                    showAlert(Alert.AlertType.WARNING, "Errore di Duplicazione", "Profilo già esistente", e.getMessage());
                 } catch (Exception e) {
-                    showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile salvare il libro.", e.getMessage());
+                    showAlert(Alert.AlertType.ERROR, "Errore di Sistema", "Impossibile salvare il profilo.", e.getMessage());
                 }
             }
         }
         @FXML private void handleSalvaModifiche(ActionEvent event) {
             try{
                 archivioProfili.salvaSuFile();
-                showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il libro è stato modificato correttamente");
+                showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il profilo è stato modificato correttamente");
             } catch (ErroreScritturaFileException e) {
                 showAlert(Alert.AlertType.ERROR, "Salvataggio fallito", "Errore di scrittura sul file.", e.getMessage());
             }
