@@ -198,6 +198,7 @@ public class Libro implements Serializable,Comparable <Libro> {
     }
 
     public void decrementaNumeroCopie(){
+
         this.numeroCopie-=1;
     }
 

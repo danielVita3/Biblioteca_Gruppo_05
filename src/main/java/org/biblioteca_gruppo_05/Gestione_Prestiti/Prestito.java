@@ -62,7 +62,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
         ArchivioProfili pro = new ArchivioProfili("profili.bin");
                 Libro librotrovato = l.ricercaLibroPerISBN(ISBN);
                 Profilo profilotrovato = pro.ricercaProfiloPerMatricola(matricola);
-                if (librotrovato.getNumeroCopie() <= 0) {
+                if (librotrovato.getNumeroCopie() == 0) {
                     throw new ErroreNumeroCopieLibro("Impossibile prestare: copie esaurite per ISBN " + ISBN);
                 }
                 if (profilotrovato != null) {

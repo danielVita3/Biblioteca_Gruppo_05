@@ -42,7 +42,6 @@ class LibroTest {
             new Libro(TITOLO, AUTORE, isbnErrato, DATA);
         });
 
-        // Opzionale: verificare che il messaggio dell'errore contenga dettagli utili
         assertTrue(exception.getMessage().contains("Lunghezza non valida"));
     }
 
@@ -78,8 +77,6 @@ class LibroTest {
         assertEquals(10, libro.getNumeroCopie());
     }
 
-    // Qui usiamo @ParameterizedTest per provare tanti ISBN diversi velocemente
-    // Se non ti funziona, assicurati di aver risolto il problema della dipendenza 'junit-jupiter-params'
     @ParameterizedTest
     @ValueSource(strings = {
             "1234567890123",  // Prefisso errato (non 978/979)
@@ -120,9 +117,67 @@ class LibroTest {
         Libro l1 = new Libro(TITOLO, AUTORE, "9780000000001", DATA);
         Libro l2 = new Libro(TITOLO, AUTORE, "9780000000002", DATA);
 
-        // l1 viene prima di l2 (risultato negativo)
         assertTrue(l1.compareTo(l2) < 0);
-        // l2 viene dopo l1 (risultato positivo)
         assertTrue(l2.compareTo(l1) > 0);
+    }
+
+    // --- NUOVI CASI LIMITE E CRITICI ---
+
+    @Test
+    @DisplayName("Caso Critico: HashCode deve essere coerente con Equals")
+    void testHashCode() throws ErroreISBNException {
+        Libro l1 = new Libro(TITOLO, AUTORE, ISBN_VALIDO, DATA);
+        Libro l2 = new Libro("Altro Titolo", "Altro Autore", ISBN_VALIDO, DATA);
+
+        // Se due oggetti sono uguali (stesso ISBN), DEVONO avere lo stesso HashCode
+        // Questo è fondamentale per HashMap e HashSet
+        assertEquals(l1, l2);
+        assertEquals(l1.hashCode(), l2.hashCode(), "HashCode inconsistente per oggetti uguali");
+    }
+
+    @Test
+    @DisplayName("Caso Limite: Supporto per ISBN che iniziano con 979")
+    void testISBN979() {
+        // I nuovi libri possono iniziare con 979 invece di 978. Verifichiamo che il regex lo accetti.
+        String isbnNuovoFormato = "9791234567890";
+        assertDoesNotThrow(() -> Libro.controllaISBN(isbnNuovoFormato));
+    }
+
+    @Test
+    @DisplayName("Caso Critico: Decremento copie al limite (comportamento bordo)")
+    void testDecrementoAlLimite() throws ErroreISBNException {
+        Libro libro = new Libro(TITOLO, AUTORE, ISBN_VALIDO, DATA);
+        // Copie iniziali = 1
+
+        libro.decrementaNumeroCopie();
+        // Attenzione: Nella tua classe Libro, decrementaNumeroCopie() fa solo "-=1" senza controlli.
+        // Quindi le copie diventano 0.
+        // setNumeroCopie invece VIETA lo 0. Questa è una possibile incongruenza che il test evidenzia.
+
+        assertEquals(0, libro.getNumeroCopie(), "Il decremento da 1 dovrebbe portare a 0");
+    }
+
+    @Test
+    @DisplayName("Caso Limite: Modifica dati con Setters")
+    void testSetters() throws ErroreISBNException {
+        Libro libro = new Libro(TITOLO, AUTORE, ISBN_VALIDO, DATA);
+
+        libro.setTitolo("Nuovo Titolo");
+        libro.setAutore("Nuovo Autore");
+        libro.setDataPubblicazione(LocalDate.of(2000, 1, 1));
+
+        assertAll(
+                () -> assertEquals("Nuovo Titolo", libro.getTitolo()),
+                () -> assertEquals("Nuovo Autore", libro.getAutore()),
+                () -> assertEquals(LocalDate.of(2000, 1, 1), libro.getDataPubblicazione())
+        );
+    }
+
+    @Test
+    @DisplayName("Robustezza: ToString non deve essere nullo")
+    void testToString() throws ErroreISBNException {
+        Libro libro = new Libro(TITOLO, AUTORE, ISBN_VALIDO, DATA);
+        assertNotNull(libro.toString());
+        assertTrue(libro.toString().contains(ISBN_VALIDO));
     }
 }

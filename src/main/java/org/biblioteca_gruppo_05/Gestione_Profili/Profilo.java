@@ -168,7 +168,7 @@ public class Profilo implements Serializable, Comparable<Profilo> {
         if(obj==this) return true;
         if(this.getClass()!=obj.getClass()) return false;
         Profilo l=(Profilo) obj;
-        return this.matricola==l.getMatricola();
+        return this.matricola.equals(l.getMatricola());
     }
 
     /**
