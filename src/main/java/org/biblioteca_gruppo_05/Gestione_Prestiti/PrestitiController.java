@@ -188,7 +188,7 @@ public class PrestitiController implements Initializable {
             tablePrestitiAttivi.setItems(risultati);
 
         }catch(PrestitoNonTrovatoException e){
-            showAlert(Alert.AlertType.WARNING,"Attenzione", "Libri non trovati", e.getMessage());
+            showAlert(Alert.AlertType.WARNING,"Attenzione", "Prestiti non trovati", e.getMessage());
         }
     }
 
