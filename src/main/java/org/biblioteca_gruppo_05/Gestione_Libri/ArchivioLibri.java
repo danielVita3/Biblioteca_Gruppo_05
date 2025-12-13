@@ -1,6 +1,8 @@
 package org.biblioteca_gruppo_05.Gestione_Libri;
 
 import org.biblioteca_gruppo_05.Eccezioni.*;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.ArchivioPrestiti;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.Prestito;
 
 import java.io.*;
 import java.util.*;
@@ -71,6 +73,11 @@ public class ArchivioLibri implements Serializable {
      * @post Il libro viene rimosso dalla mappa.
      */
     public void rimuoviLibro(String ISBN) throws LibroNonTrovatoException {
+        ArchivioPrestiti a=new ArchivioPrestiti("prestiti.bin");
+        for (Prestito p : a.getPrestiti().values()) {
+            if (p.getLibro().equalsIgnoreCase(ISBN))
+                throw new RuntimeException("Prestiti attivi con questo libro impossibile eliminare");
+        }
         if(!libri.containsKey(ISBN)){
             throw new LibroNonTrovatoException("Impossibile rimuovere: Libro con ISBN " + ISBN + "non trovato");
         }

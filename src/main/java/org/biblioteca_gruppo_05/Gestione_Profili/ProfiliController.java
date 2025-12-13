@@ -1,5 +1,6 @@
 
 package org.biblioteca_gruppo_05.Gestione_Profili;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,11 +15,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 import org.biblioteca_gruppo_05.Eccezioni.*;
+import org.biblioteca_gruppo_05.Gestione_Libri.ArchivioLibri;
 import org.biblioteca_gruppo_05.Gestione_Libri.LibriController;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.ArchivioPrestiti;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.PrestitiController;
 
 
 import java.io.IOException;
@@ -251,6 +256,9 @@ public class ProfiliController implements Initializable {
                 showAlert(Alert.AlertType.INFORMATION, "Elimina ", "Successo.", "il profilo è stato eliminato");
             }catch(UtenteNonTrovatoException e){
                 showAlert(Alert.AlertType.WARNING, "Ricerca fallita", "Errore.","il profilo non è stato eliminato");
+            }catch (RuntimeException e) {
+                showAlert(Alert.AlertType.WARNING, "Annullata", "Errore.",e.getMessage());
+
             }
         }
         private void showAlert(Alert.AlertType type, String title, String header, String content) {
@@ -306,7 +314,6 @@ public class ProfiliController implements Initializable {
                 ProfiliController.setMatricolaDaCaricare(null);
             }
             switchScene(event, "/org/biblioteca_gruppo_05/Gestione_Profili_View/Modifica-Profilo.fxml");
-
         }
         public boolean controllaMail(String email) {
             if (email == null) {
@@ -317,11 +324,50 @@ public class ProfiliController implements Initializable {
             Matcher matcher = pattern.matcher(email);
             return matcher.matches();
         }
+    private void switchScene2(ActionEvent event, String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+
+            loader.setControllerFactory(controllerClass -> {
+
+                if (controllerClass == ProfiliController.class) {
+                    return new ProfiliController(this.archivioProfili);
+                }
+
+                if (controllerClass == PrestitiController.class) {
+
+                    ArchivioPrestiti nuovoArchivioPrestiti = new ArchivioPrestiti("prestiti.bin");
+                    ArchivioLibri nuovoArchivioLibri = new ArchivioLibri("libri.bin");
+
+
+                    return new PrestitiController(nuovoArchivioPrestiti, nuovoArchivioLibri, this.archivioProfili);
+                }
+
+                try {
+                    return controllerClass.getDeclaredConstructor().newInstance();
+                } catch (Exception e) {
+                    throw new RuntimeException("Impossibile creare il controller: " + controllerClass.getName(), e);
+                }
+            });
+
+            Parent root = loader.load();
+            Scene stageAttuale = ((Node) event.getSource()).getScene();
+            stageAttuale.setRoot(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Errore Critico!", "Errore nel caricamento della scena", e.getMessage());
+        }
+    }
         @Override
         public void initialize(URL url, ResourceBundle rb) {
             if(matricolaTemporanea!=null && searchMatricolaField.getText()!=null){
                 searchMatricolaField.setText(matricolaTemporanea);
                 matricolaTemporanea=null;
+                Platform.runLater(() -> {
+                    handleCercaUtente(new ActionEvent());
+                });
+
             }
             if(tableProfiliVisualizza!=null){
                 tableProfiliVisualizza.setEditable(false);
@@ -346,9 +392,43 @@ public class ProfiliController implements Initializable {
                 }
 
                 if (colonnaCopie != null) {
-                    // Cerca getNumeroCopieInPrestito() (o getNumeroCopie(), controlla la tua classe Utente)
                     colonnaCopie.setCellValueFactory(new PropertyValueFactory<>("numeroPrestiti"));
-                } try{
+
+                    // Creiamo la CellFactory personalizzata
+                    colonnaCopie.setCellFactory(new Callback<TableColumn<Profilo, Integer>, TableCell<Profilo, Integer>>() {
+                        @Override
+                        public TableCell<Profilo, Integer> call(TableColumn<Profilo, Integer> param) {
+                            return new TableCell<Profilo, Integer>() {
+                                final Button btn = new Button();
+
+                                @Override
+                                public void updateItem(Integer item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (empty || item == null) {
+                                        setGraphic(null);
+                                        setText(null);
+                                    } else {
+                                        btn.setText(item.toString());
+                                        btn.setStyle("-fx-background-color: #8d6e63; -fx-text-fill: white; -fx-cursor: hand; -fx-font-size: 12px;");
+
+                                        btn.setOnAction(event -> {
+                                            Profilo profilo = getTableView().getItems().get(getIndex());
+
+                                            PrestitiController.matricolaDaRicercareAutom = profilo.getMatricola();
+
+                                            switchScene2(event, "/org/biblioteca_gruppo_05/Gestione_Prestiti_View/Prestiti.fxml");
+                                        });
+
+                                        setGraphic(btn);
+                                        setText(null);
+                                    }
+                                }
+                            };
+                        }
+                    });
+                }
+
+                try{
                     List<Profilo> tuttiProfili = archivioProfili.visualizzaProfili();
                     ObservableList<Profilo> l = FXCollections.observableArrayList(tuttiProfili);
                     tableProfiliVisualizza.setItems(l);

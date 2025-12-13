@@ -70,8 +70,7 @@
 
         <Separator opacity="0.3" prefWidth="200.0" style="-fx-background-color: #8d6e63;" />
 
-        <TabPane style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-            <tabs>
+        <TabPane fx:id="tabPanePrestiti" style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">    <tabs>
 
                 <!-- TAB 1: REGISTRAZIONE -->
                 <Tab text="   ➕ REGISTRA PRESTITO   ">
@@ -142,7 +141,7 @@
                 </Tab>
 
                 <!-- TAB 2: RESTITUZIONE / VISUALIZZAZIONE -->
-                <Tab text="   ↩ RESTITUZIONE   ">
+                <Tab text="   ↩ RESTITUZIONE E VISUALIZZAZIONE ">
                     <content>
                         <VBox spacing="15.0" style="-fx-background-color: #fff8e1; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5);">
                             <padding>

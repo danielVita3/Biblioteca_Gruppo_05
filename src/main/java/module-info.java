@@ -5,7 +5,6 @@ module org.biblioteca_gruppo_05 {
     requires javafx.base;
 
 
-
     exports org.biblioteca_gruppo_05.Gestione_Libri;
     opens org.biblioteca_gruppo_05.Gestione_Libri to javafx.fxml;
 

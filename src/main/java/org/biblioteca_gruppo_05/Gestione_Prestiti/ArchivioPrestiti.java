@@ -167,6 +167,7 @@ public class ArchivioPrestiti implements Serializable {
      * @pre ISBN deve essere valido.
      * @post Restituisce una lista senza modificare l'archivio.
      */
+
     public List<Prestito> ricercaPrestitoPerISBN(String ISBN) throws PrestitoNonTrovatoException {
         if (Libro.controllaISBN(ISBN)) {
         List<Prestito> results = new ArrayList<>();
@@ -181,6 +182,9 @@ public class ArchivioPrestiti implements Serializable {
     }
         return List.of();
     }
+
+        public Map<Integer,Prestito> getPrestiti(){
+                return prestiti;}
 
     /**
      * @brief Stampa a video o visualizza l'elenco completo dei prestiti.

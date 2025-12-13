@@ -1,5 +1,6 @@
 package org.biblioteca_gruppo_05.Gestione_Libri;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -238,6 +239,9 @@ public class LibriController implements Initializable {
             showAlert(Alert.AlertType.INFORMATION, "Modifica ", "Successo.", "il libro è stato eliminato");
         }catch(LibroNonTrovatoException e){
             showAlert(Alert.AlertType.WARNING, "Ricerca fallita", "Errore.","il libro non è stato eliminato");
+        } catch (RuntimeException e) {
+            showAlert(Alert.AlertType.WARNING, "Annullata", "Errore.",e.getMessage());
+
         }
     }
     @FXML private void handleConfermaModifica(ActionEvent event) {
@@ -316,6 +320,10 @@ public class LibriController implements Initializable {
         if(ISBNtemporaneo!=null && searchIsbnField.getText()!=null){
             searchIsbnField.setText(ISBNtemporaneo);
             ISBNtemporaneo=null;
+            Platform.runLater(() -> {
+                handleCercaLibro(new ActionEvent());
+
+            });
         }
         if(tableLibriVisualizza!=null){
             tableLibriVisualizza.setEditable(false);

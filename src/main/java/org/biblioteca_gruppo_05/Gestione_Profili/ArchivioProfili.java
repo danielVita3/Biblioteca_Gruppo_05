@@ -2,6 +2,8 @@ package org.biblioteca_gruppo_05.Gestione_Profili;
 
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro; // Mantenuto se serve per riferimenti, ma non per i return type
 import org.biblioteca_gruppo_05.Eccezioni.*;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.ArchivioPrestiti;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.Prestito;
 
 import java.io.*;
 import java.util.*;
@@ -78,6 +80,11 @@ public class ArchivioProfili implements Serializable {
      * @post Il profilo viene rimosso dalla mappa.
      */
     public void rimuoviProfilo(String matricola) throws UtenteNonTrovatoException {
+        ArchivioPrestiti a=new ArchivioPrestiti("prestiti.bin");
+        for (Prestito p : a.getPrestiti().values()) {
+            if (p.getProfilo().equalsIgnoreCase(matricola))
+                throw new RuntimeException("Prestiti attivi con questo profilo impossibile eliminare");
+        }
         if(this.profili.containsKey(matricola)){
             this.profili.remove(matricola);
         }else{
