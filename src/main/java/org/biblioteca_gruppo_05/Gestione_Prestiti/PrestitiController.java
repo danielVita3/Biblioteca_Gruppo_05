@@ -317,7 +317,9 @@ public class PrestitiController implements Initializable {
                     matricole.add(p.getMatricola() + " - " + p.getCognome() + " " + p.getNome());
                 }
                 prestitiMatricolaCombo.setItems(matricole);
-            } catch (Exception e) {
+            } catch(UtenteNonTrovatoException e){
+
+            }catch (Exception e) {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
             }
@@ -331,6 +333,8 @@ public class PrestitiController implements Initializable {
                     isbn.add(l.getISBN() + " - " + l.getTitolo());
                 }
                 prestitiIsbnCombo.setItems(isbn);
+            }catch(LibroNonTrovatoException e){
+
             } catch (Exception e) {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
@@ -379,7 +383,9 @@ public class PrestitiController implements Initializable {
                 ObservableList<Prestito> l = FXCollections.observableArrayList(tuttiPrestiti);
                 tablePrestitiAttivi.setItems(l);
             } catch (PrestitoNonTrovatoException e) {
-                showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Prestito non presente nell'archivio.", e.getMessage());
+                if (tablePrestitiAttivi.getItems() != null) {
+                    tablePrestitiAttivi.getItems().clear();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());

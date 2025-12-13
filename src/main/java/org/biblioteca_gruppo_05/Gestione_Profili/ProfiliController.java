@@ -433,7 +433,9 @@ public class ProfiliController implements Initializable {
                     ObservableList<Profilo> l = FXCollections.observableArrayList(tuttiProfili);
                     tableProfiliVisualizza.setItems(l);
                 } catch (UtenteNonTrovatoException e){
-                    showAlert(Alert.AlertType.WARNING, "Ricerca Fallita", "Profilo non presente nell'archivio.", e.getMessage());
+                    if (tableProfiliVisualizza.getItems() != null) {
+                        tableProfiliVisualizza.getItems().clear();
+                    }
                 } catch(Exception e){
                     e.printStackTrace();
                     showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
