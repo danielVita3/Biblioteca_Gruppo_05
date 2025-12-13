@@ -18,7 +18,7 @@ class ArchivioLibriTest {
 
     private ArchivioLibri archivio;
     // Usa un nome file diverso per evitare conflitti se il sistema operativo blocca il file
-    private final String FILE_TEST = "archivio_test_unitario.dat";
+    private final String FILE_TEST = "archivioTestUnitario.bin";
     private Libro libro1;
     private Libro libro2;
 

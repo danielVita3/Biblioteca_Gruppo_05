@@ -21,6 +21,7 @@
 <?import javafx.scene.text.Font?>
 
 <!-- Sfondo generale scuro (Brown #2b1b17) come la Home Page -->
+
 <VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Prestiti.PrestitiController">
 
     <padding>
@@ -190,6 +191,11 @@
                                     <Button mnemonicParsing="false" onAction="#handleRegistraRestituzione" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2); -fx-font-family: 'Georgia';" text="REGISTRA RIENTRO" />
 
                                 </HBox>
+                        <HBox prefHeight="58.0" prefWidth="780.0">
+                           <children>
+                              <Button onAction="#handleModificaPenale" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #5d4037; -fx-font-family: 'Georgia';" text="Modifica penale mensile" underline="true" />
+                           </children>
+                        </HBox>
                             </children>
                         </VBox>
                     </content>

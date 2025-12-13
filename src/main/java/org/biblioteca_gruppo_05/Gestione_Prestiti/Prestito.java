@@ -25,7 +25,8 @@ import java.time.temporal.ChronoUnit;
 public class Prestito implements Serializable, Comparable<Prestito> {
     /** Contatore statico per generare ID univoci incrementali. */
     private static int cont = 0;
-
+    /**Penale mensile.*/
+    private static int moltiplicatorePenaleMensile=10;
     /** Identificativo univoco del prestito. */
     private int id;
 
@@ -93,6 +94,12 @@ public class Prestito implements Serializable, Comparable<Prestito> {
     public LocalDate getDataScadenza(){
         return dataScadenza;
     }
+    /**
+     * @brief Restituisce il moltiplicatore penale mensile.
+     * @return Tipo int rappresentante la penale mensile.
+     * @post Restituisce l'attributo richiesto.
+     */
+    public static int getMoltiplicatorePenaleMensile(){return moltiplicatorePenaleMensile;}
 
     /**
      * @brief Restituisce la matricola dell'utente associato al prestito.
@@ -135,6 +142,11 @@ public class Prestito implements Serializable, Comparable<Prestito> {
         this.dataScadenza = dataScadenza;
     }
 
+    public static void setMoltiplicatorePenaleMensile(int moltiplicatorePenaleMensile) {
+        if(moltiplicatorePenaleMensile>=0)
+            Prestito.moltiplicatorePenaleMensile = moltiplicatorePenaleMensile;
+    }
+
     public void setCostoPenale(int penale){this.costoPenale=penale;}
     /**
      * @brief Calcola l'eventuale penale per il prestito.
@@ -149,7 +161,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
         if(dataConsegna.isBefore(this.dataScadenza) || dataConsegna.isEqual(this.dataScadenza))
             return 0;
         long mesiDiRitardo= ChronoUnit.MONTHS.between(this.dataScadenza,dataConsegna);
-        int penale= (int) (mesiDiRitardo*10);
+        int penale= (int) (mesiDiRitardo*moltiplicatorePenaleMensile);
         this.setCostoPenale(penale);
         return penale;
     }

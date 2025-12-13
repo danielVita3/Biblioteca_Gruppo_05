@@ -1,6 +1,7 @@
 package org.biblioteca_gruppo_05.Gestione_Prestiti;
 
 import org.biblioteca_gruppo_05.Eccezioni.PrestitoNonTrovatoException;
+import org.biblioteca_gruppo_05.Eccezioni.ErroreLetturaFileException;
 import org.biblioteca_gruppo_05.Gestione_Libri.ArchivioLibri;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
 import org.biblioteca_gruppo_05.Gestione_Profili.ArchivioProfili;
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,9 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArchivioPrestitiTest {
 
     private ArchivioPrestiti archivioPrestiti;
-    private final String FILE_PRESTITI = "prestiti_test.bin";
-    private final String FILE_LIBRI = "libri.bin";   // Hardcoded nella classe
-    private final String FILE_PROFILI = "profili.bin"; // Hardcoded nella classe
+    private final String FILE_PRESTITI = "prestitiTest.bin";
+    private final String FILE_LIBRI = "libri.bin";   // Hardcoded nella classe ArchivioPrestiti
+    private final String FILE_PROFILI = "profili.bin"; // Hardcoded nella classe ArchivioPrestiti
 
     private final String ISBN = "9788812345678";
     private final String MATRICOLA = "0612345678";
@@ -59,6 +62,8 @@ class ArchivioPrestitiTest {
         new File(FILE_LIBRI).delete();
         new File(FILE_PROFILI).delete();
     }
+
+    // --- TEST FUNZIONALITÀ BASE (REGISTRAZIONE/RESTITUZIONE) ---
 
     @Test
     @DisplayName("Registra Prestito: Verifica aggiornamento copie e profilo")
@@ -103,6 +108,9 @@ class ArchivioPrestitiTest {
         assertEquals(0, ap.ricercaProfiloPerMatricola(MATRICOLA).getNumeroPrestiti());
     }
 
+
+    // --- TEST PERSISTENZA E RICERCA ---
+
     @Test
     @DisplayName("Persistenza: Salvataggio e Caricamento")
     void testPersistenza() throws Exception {
@@ -125,5 +133,38 @@ class ArchivioPrestitiTest {
         assertThrows(PrestitoNonTrovatoException.class, () ->
                 archivioPrestiti.ricercaPrestitoPerMatricola("0699999999")
         );
+    }
+
+    // --- TEST VISUALIZZAZIONE ---
+
+    @Test
+    @DisplayName("Visualizza Prestiti: Archivio Vuoto")
+    void testVisualizzaPrestitiVuoto() {
+        // Precondizione: L'archivio è vuoto
+        assertThrows(PrestitoNonTrovatoException.class, () ->
+                archivioPrestiti.visualizzaPrestiti()
+        );
+    }
+
+    @Test
+    @DisplayName("Visualizza Prestiti: Archivio Pieno")
+    void testVisualizzaPrestitiPieno() throws Exception {
+        archivioPrestiti.registraPrestito(prestitoValido);
+
+        List<Prestito> tutti = archivioPrestiti.visualizzaPrestiti();
+        // Postcondizione: Restituisce l'elenco completo dei prestiti registrati
+        assertFalse(tutti.isEmpty());
+        assertEquals(1, tutti.size());
+    }
+
+    @Test
+    @DisplayName("Costruttore: File Prestiti Non Trovato")
+    void testCostruttoreFileNonTrovato() {
+        // Verifica che l'inizializzazione non fallisca catastroficamente
+        assertDoesNotThrow(() -> {
+            ArchivioPrestiti archivioInizializzatoVuoto = new ArchivioPrestiti("file_che_non_esiste_ancora.dat");
+            // Verifica che l'archivio interno sia vuoto
+            assertThrows(PrestitoNonTrovatoException.class, () -> archivioInizializzatoVuoto.visualizzaPrestiti());
+        });
     }
 }

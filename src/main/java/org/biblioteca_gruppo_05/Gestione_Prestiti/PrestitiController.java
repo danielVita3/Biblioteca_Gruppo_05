@@ -100,6 +100,39 @@ public class PrestitiController implements Initializable {
 
         return stringaCompleta.trim();
     }
+    @FXML
+    private void handleModificaPenale(ActionEvent event) {
+
+        TextInputDialog dialog = new TextInputDialog(
+                String.valueOf(Prestito.getMoltiplicatorePenaleMensile())
+        );
+        dialog.setTitle("Modifica Penale Mensile");
+        dialog.setHeaderText("Modifica il Moltiplicatore della Penale");
+        dialog.setContentText("Nuovo valore intero (€/mese di ritardo):");
+
+        dialog.showAndWait().ifPresent(nuovoValoreString -> {
+            try {
+                int nuovoMoltiplicatore = Integer.parseInt(nuovoValoreString);
+
+                if (nuovoMoltiplicatore < 0) {
+                    showAlert(Alert.AlertType.ERROR, "Errore di Validazione", "Valore Non Valido",
+                            "Il moltiplicatore della penale non può essere negativo.");
+                    handleModificaPenale(event);
+                    return;
+                }
+
+                Prestito.setMoltiplicatorePenaleMensile(nuovoMoltiplicatore);
+
+                showAlert(Alert.AlertType.INFORMATION, "Successo", "Penale Aggiornata",
+                        "Il nuovo moltiplicatore penale è stato impostato a: " + nuovoMoltiplicatore + " €.");
+
+            } catch (NumberFormatException e) {
+                showAlert(Alert.AlertType.ERROR, "Errore di Input", "Formato non valido",
+                        "Inserisci solo numeri interi validi (es. 15).");
+                handleModificaPenale(event);
+            }
+        });
+    }
     @FXML private void handleConfermaPrestito(ActionEvent event) {
         if (isInputValido()) {
             LocalDate dataInizio = dataInizioPicker.getValue();

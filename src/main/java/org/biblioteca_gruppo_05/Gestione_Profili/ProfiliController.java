@@ -379,7 +379,7 @@ public class ProfiliController implements Initializable {
                 }
 
                 if (colonnaNomeP != null) {
-                    colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("cognome"));
+                    colonnaNomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
                     colonnaNomeP.setEditable(true);
                     colonnaNomeP.setCellFactory(TextFieldTableCell.forTableColumn());
                     colonnaNomeP.setOnEditCommit(event -> {
@@ -388,7 +388,7 @@ public class ProfiliController implements Initializable {
                 }
 
                 if (colonnaCognomeP != null) {
-                    colonnaCognomeP.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                    colonnaCognomeP.setCellValueFactory(new PropertyValueFactory<>("cognome"));
                     colonnaCognomeP.setEditable(true);
                     colonnaCognomeP.setCellFactory(TextFieldTableCell.forTableColumn());
                     colonnaCognomeP.setOnEditCommit(event -> {
