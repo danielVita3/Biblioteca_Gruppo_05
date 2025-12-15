@@ -221,6 +221,9 @@ public class PrestitiController implements Initializable {
     private void handleModifica(ActionEvent event) {
         try {
             archivioPrestiti.salvaSuFile();
+            tablePrestitiAttivi.refresh();
+            showAlert(Alert.AlertType.INFORMATION, "Salvataggio eseguito", "Modificato", "Salvataggio delle modifiche" );
+
         } catch (ErroreScritturaFileException e) {
             showAlert(Alert.AlertType.ERROR, "Salvataggio fallito", "Errore di scrittura sul file.", e.getMessage());
 
@@ -317,9 +320,9 @@ public class PrestitiController implements Initializable {
                     matricole.add(p.getMatricola() + " - " + p.getCognome() + " " + p.getNome());
                 }
                 prestitiMatricolaCombo.setItems(matricole);
-            } catch(UtenteNonTrovatoException e){
+            } catch (UtenteNonTrovatoException e) {
 
-            }catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
             }
@@ -333,7 +336,7 @@ public class PrestitiController implements Initializable {
                     isbn.add(l.getISBN() + " - " + l.getTitolo());
                 }
                 prestitiIsbnCombo.setItems(isbn);
-            }catch(LibroNonTrovatoException e){
+            } catch (LibroNonTrovatoException e) {
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -377,31 +380,58 @@ public class PrestitiController implements Initializable {
                     event.getRowValue().setDataScadenza(event.getNewValue());
                 });
             }
+            if (tablePrestitiAttivi != null) {
+                // ... (codice delle colonne che hai già scritto) ...
 
-            try {
-                List<Prestito> tuttiPrestiti = archivioPrestiti.visualizzaPrestiti();
-                ObservableList<Prestito> l = FXCollections.observableArrayList(tuttiPrestiti);
-                tablePrestitiAttivi.setItems(l);
-            } catch (PrestitoNonTrovatoException e) {
-                if (tablePrestitiAttivi.getItems() != null) {
-                    tablePrestitiAttivi.getItems().clear();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
-            }
-            if (matricolaDaRicercareAutom != null) {
-                Platform.runLater(() -> {
-                    tabPanePrestiti.getSelectionModel().select(1);
+                // --- INIZIO CODICE AGGIUNTO ---
+                tablePrestitiAttivi.setRowFactory(tv -> new TableRow<Prestito>() {
+                    @Override
+                    protected void updateItem(Prestito prestito, boolean empty) {
+                        super.updateItem(prestito, empty);
 
-                    filtroPrestitiCombo.setValue("Matricola");
-
-                    searchPrestitoField.setText(matricolaDaRicercareAutom);
-
-                    handleCerca(new ActionEvent());
-
-                    matricolaDaRicercareAutom = null;
+                        if (prestito == null || empty) {
+                            setStyle(""); // Ripulisce lo stile per le righe vuote
+                        } else {
+                            // Logica: Se la data di oggi è DOPO la data di scadenza (prestito scaduto)
+                            if (LocalDate.now().isAfter(prestito.getDataScadenza())) {
+                                // Colore rosso chiaro (per mantenere leggibile il testo nero)
+                                setStyle("-fx-background-color: #ffcccc;");
+                            }
+                            // Opzionale: Se scade ESATTAMENTE oggi (Giallo/Arancio)
+                            else if (LocalDate.now().isEqual(prestito.getDataScadenza())) {
+                                setStyle("-fx-background-color: #ffeb99;");
+                            } else {
+                                setStyle(""); // Stile default per i prestiti regolari
+                            }
+                        }
+                    }
                 });
+
+                try {
+                    List<Prestito> tuttiPrestiti = archivioPrestiti.visualizzaPrestiti();
+                    ObservableList<Prestito> l = FXCollections.observableArrayList(tuttiPrestiti);
+                    tablePrestitiAttivi.setItems(l);
+                } catch (PrestitoNonTrovatoException e) {
+                    if (tablePrestitiAttivi.getItems() != null) {
+                        tablePrestitiAttivi.getItems().clear();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert(Alert.AlertType.ERROR, "Errore Critico", "Si è verificato un errore imprevisto.", e.getMessage());
+                }
+                if (matricolaDaRicercareAutom != null) {
+                    Platform.runLater(() -> {
+                        tabPanePrestiti.getSelectionModel().select(1);
+
+                        filtroPrestitiCombo.setValue("Matricola");
+
+                        searchPrestitoField.setText(matricolaDaRicercareAutom);
+
+                        handleCerca(new ActionEvent());
+
+                        matricolaDaRicercareAutom = null;
+                    });
+                }
             }
         }
     }
