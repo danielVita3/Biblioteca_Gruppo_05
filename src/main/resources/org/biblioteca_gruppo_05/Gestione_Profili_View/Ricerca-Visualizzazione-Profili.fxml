@@ -8,45 +8,76 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Profili.ProfiliController">
-
-    <padding><Insets bottom="30.0" left="40.0" right="40.0" top="30.0" /></padding>
+<StackPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Profili.ProfiliController">
 
     <children>
-        <HBox alignment="CENTER_LEFT" spacing="20.0">
-            <Button onAction="#handleIndietro" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 2);" text="←" />
-            <VBox>
-                <Label text="LISTA UTENTI" textFill="#2c3e50"><font><Font name="Segoe UI Semibold" size="32.0" /></font></Label>
-                <Label text="Gestione anagrafica degli iscritti" textFill="#7f8c8d" />
-            </VBox>
-        </HBox>
-        <Separator prefWidth="200.0" />
+        <VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-background-color: transparent;">
 
-        <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);">
-            <Label text="Filtra per:" textFill="#7f8c8d"><font><Font name="System Bold" size="12.0" /></font></Label>
+            <padding><Insets bottom="30.0" left="40.0" right="40.0" top="30.0" /></padding>
 
-            <ComboBox fx:id="filtroUtentiCombo" prefHeight="35.0" prefWidth="150.0" promptText="Seleziona..." style="-fx-background-color: #f9f9f9; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <Button onAction="#handleIndietro" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: #8d6e63; -fx-text-fill: #fff8e1; -fx-background-radius: 50; -fx-min-width: 45px; -fx-min-height: 45px; -fx-cursor: hand; -fx-font-family: 'Georgia';" text="←">
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                        <effect>
+                            <DropShadow color="#00000080" height="10.0" radius="4.5" width="10.0" />
+                        </effect>
+                    </Button>
+                    <VBox>
+                        <Label text="LISTA UTENTI" textFill="#fff8e1">
+                            <font>
+                                <Font name="Georgia Bold" size="32.0" />
+                            </font>
+                            <effect>
+                                <DropShadow color="#000000" height="5.0" radius="2.0" width="5.0" />
+                            </effect>
+                        </Label>
+                        <Label text="Gestione anagrafica degli iscritti" textFill="#a1887f" />
+                    </VBox>
+                </HBox>
+                <Separator prefWidth="200.0" style="-fx-background-color: #8d6e63;" />
 
-            <TextField fx:id="searchUtentiField" promptText="Cerca nome o matricola..." HBox.hgrow="ALWAYS" prefHeight="35.0" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7;" />
+                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #fff8e1; -fx-padding: 15; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2); -fx-border-color: #8d6e63; -fx-border-width: 1; -fx-border-radius: 10;">
+                    <Label text="Filtra per:" textFill="#5d4037"><font><Font name="Georgia Bold" size="12.0" /></font></Label>
 
-            <Button onAction="#handleCercaUtente" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="CERCA" />
-            <Button onAction="#handleResetUtenti" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6;" text="Reset" underline="true" />
-        </HBox>
+                    <ComboBox fx:id="filtroUtentiCombo" prefHeight="35.0" prefWidth="128.0" promptText="Seleziona..." style="-fx-background-color: #fcf6e7; -fx-border-color: #8d6e63; -fx-border-radius: 5;" />
 
-        <TableView fx:id="tableUtenti" VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 2);">
-            <columns>
-                <TableColumn text="Matricola" sortable="true"  prefWidth="100.0" />
-                <TableColumn text="Nome" sortable="true" prefWidth="150.0" />
-                <TableColumn text="Cognome" sortable="true" prefWidth="150.0" />
-                <TableColumn text="Email" sortable="true" prefWidth="200.0" />
-                <!-- NUOVA COLONNA AGGIUNTA QUI SOTTO -->
-                <TableColumn text="Numero copie" sortable="true" prefWidth="120.0" />
-            </columns>
-            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
-        </TableView>
+                    <TextField fx:id="searchUtentiField" prefHeight="35.0" prefWidth="171.0" promptText="Cerca nome o matricola..." style="-fx-background-radius: 5; -fx-border-color: #8d6e63; -fx-background-color: #fcf6e7;" HBox.hgrow="ALWAYS" />
+
+                    <Button onAction="#handleCercaVisualizza" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #5d4037; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="CERCA">
+                        <font><Font name="Georgia Bold" size="12.0" /></font>
+                    </Button>
+
+                    <Button onAction="#handleModificaVisualizza" prefHeight="35.0" prefWidth="88.0" style="-fx-background-color: #8d6e63; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="MODIFICA">
+                        <font><Font name="Georgia Bold" size="12.0" /></font>
+                    </Button>
+
+                    <Button onAction="#handleEliminaVisualizza" prefHeight="35.0" prefWidth="92.0" style="-fx-background-color: #9c3427; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="ELIMINA">
+                        <font><Font name="Georgia Bold" size="12.0" /></font>
+                    </Button>
+
+                    <Button onAction="#handleResetUtenti" prefHeight="35.0" prefWidth="57.0" style="-fx-background-color: transparent; -fx-text-fill: #a1887f; -fx-cursor: hand;" text="Reset" underline="true" />
+                </HBox>
+
+                <TableView fx:id="tableProfiliVisualizza" style="-fx-background-color: #fcf6e7; -fx-border-color: #8d6e63; -fx-border-width: 1; -fx-background-radius: 10;" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colonnaMatricola" prefWidth="100.0" sortable="true" text="Matricola" />
+                        <TableColumn fx:id="colonnaNome" prefWidth="150.0" sortable="true" text="Nome" />
+                        <TableColumn fx:id="colonnaCognome" prefWidth="150.0" sortable="true" text="Cognome" />
+                        <TableColumn fx:id="colonnaEmail" prefWidth="200.0" sortable="true" text="Email" />
+                        <TableColumn fx:id="colonnaCopie" prefWidth="120.0" sortable="true" text="N. prestiti attivi" />
+                    </columns>
+                    <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
+                </TableView>
+            </children>
+        </VBox>
     </children>
-</VBox>
+</StackPane>

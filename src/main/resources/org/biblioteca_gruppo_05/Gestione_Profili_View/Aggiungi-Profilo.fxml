@@ -5,58 +5,87 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="546.0" prefWidth="611.0" spacing="20.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Profili.ProfiliController">
-
-    <padding><Insets bottom="30.0" left="40.0" right="40.0" top="30.0" /></padding>
+<StackPane prefHeight="546.0" prefWidth="611.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Profili.ProfiliController">
 
     <children>
-        <HBox alignment="CENTER_LEFT" spacing="20.0">
-            <Button onAction="#handleIndietro" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 2);" text="←" />
-            <VBox>
-                <Label text="AGGIUNGI PROFILO" textFill="#2c3e50"><font><Font name="Segoe UI Semibold" size="32.0" /></font></Label>
-                <Label text="Registra un nuovo utente nel sistema" textFill="#7f8c8d" />
-            </VBox>
-        </HBox>
-        <Separator prefWidth="200.0" />
+        <VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-background-color: transparent;">
 
-        <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5); -fx-padding: 30;">
-            <Label text="Dati Personali" textFill="#34495e"><font><Font name="System Bold" size="18.0" /></font></Label>
+            <padding><Insets bottom="30.0" left="40.0" right="40.0" top="30.0" /></padding>
 
-            <GridPane hgap="20.0" vgap="20.0">
-                <columnConstraints>
-                    <ColumnConstraints halignment="RIGHT" minWidth="100.0" />
-                    <ColumnConstraints hgrow="ALWAYS" />
-                </columnConstraints>
-                <rowConstraints>
-                    <RowConstraints /><RowConstraints /><RowConstraints /><RowConstraints />
-                </rowConstraints>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20.0">
+                    <Button fx:id="btnBack" mnemonicParsing="false" onAction="#handleIndietro" style="-fx-background-color: #8d6e63; -fx-text-fill: #fff8e1; -fx-background-radius: 50; -fx-min-width: 45px; -fx-min-height: 45px; -fx-cursor: hand; -fx-font-family: 'Georgia';" text="←">
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                        <effect>
+                            <DropShadow color="#00000080" height="10.0" radius="4.5" width="10.0" />
+                        </effect>
+                    </Button>
+                    <VBox>
+                        <Label text="AGGIUNGI PROFILO" textFill="#fff8e1">
+                            <font>
+                                <Font name="Georgia" size="32.0" />
+                            </font>
+                            <effect>
+                                <DropShadow color="#000000" height="5.0" radius="2.0" width="5.0" />
+                            </effect>
+                        </Label>
+                        <Label text="Registra un nuovo utente nel sistema" textFill="#a1887f" />
+                    </VBox>
+                </HBox>
+                <Separator prefWidth="200.0" style="-fx-background-color: #8d6e63;" />
 
-                <Label text="Nome:" textFill="#7f8c8d" />
-                <TextField fx:id="nomeField" promptText="Es. Mario" style="-fx-border-color: #bdc3c7; -fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" />
+                <VBox spacing="20.0" style="-fx-background-color: #fff8e1; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 5); -fx-padding: 30; -fx-border-color: #5d4037; -fx-border-radius: 10; -fx-border-width: 2;">
+                    <Label text="Dati Personali" textFill="#3e2723"><font><Font name="Georgia Bold" size="18.0" /></font></Label>
 
-                <Label text="Cognome:" textFill="#7f8c8d" GridPane.rowIndex="1" />
-                <TextField fx:id="cognomeField" promptText="Es. Rossi" style="-fx-border-color: #bdc3c7; -fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <GridPane hgap="20.0" vgap="20.0">
+                        <columnConstraints>
+                            <ColumnConstraints halignment="RIGHT" minWidth="100.0" />
+                            <ColumnConstraints hgrow="ALWAYS" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints /><RowConstraints /><RowConstraints /><RowConstraints />
+                        </rowConstraints>
 
-                <Label text="Matricola:" textFill="#7f8c8d" GridPane.rowIndex="2" />
-                <TextField fx:id="matricolaField" promptText="Numero identificativo univoco" style="-fx-border-color: #bdc3c7; -fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Nome:" textFill="#5d4037" />
+                        <TextField fx:id="nomeField" promptText="Es. Mario" style="-fx-border-color: #8d6e63; -fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: #fcf6e7;" GridPane.columnIndex="1" />
 
-                <Label text="Email Istituzionale:" textFill="#7f8c8d" GridPane.rowIndex="3" />
-                <TextField fx:id="emailField" promptText="nome.cognome@istituto.it" style="-fx-border-color: #bdc3c7; -fx-background-radius: 5; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            </GridPane>
+                        <Label text="Cognome:" textFill="#5d4037" GridPane.rowIndex="1" />
+                        <TextField fx:id="cognomeField" promptText="Es. Rossi" style="-fx-border-color: #8d6e63; -fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: #fcf6e7;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Separator />
+                        <Label text="Matricola:" textFill="#5d4037" GridPane.rowIndex="2" />
+                        <TextField fx:id="matricolaField" promptText="Numero identificativo univoco" style="-fx-border-color: #8d6e63; -fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: #fcf6e7;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-            <HBox alignment="CENTER_RIGHT" spacing="15.0">
-                <Button onAction="#handlePulisci" style="-fx-background-color: transparent;" text="Pulisci campi" textFill="#95a5a6" underline="true" />
-                <Button onAction="#handleSalvaProfilo" prefHeight="40.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(39,174,96,0.3), 5, 0, 0, 3);" text="REGISTRA UTENTE" />
-            </HBox>
+                        <Label text="Email Istituzionale:" textFill="#5d4037" GridPane.rowIndex="3" />
+                        <TextField fx:id="emailField" promptText="nome.cognome@istituto.it" style="-fx-border-color: #8d6e63; -fx-background-radius: 5; -fx-border-radius: 5; -fx-background-color: #fcf6e7;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    </GridPane>
+
+                    <Separator style="-fx-background-color: #8d6e63;" />
+
+                    <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                        <Button onAction="#handlePulisci" style="-fx-background-color: transparent; -fx-cursor: hand;" text="Pulisci campi" textFill="#a1887f" underline="true" />
+
+                        <Button onAction="#handleSalvaProfilo" prefHeight="40.0" style="-fx-background-color: #5d4037; -fx-text-fill: #fff8e1; -fx-font-weight: bold; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5, 0, 0, 3); -fx-cursor: hand;" text="REGISTRA UTENTE">
+                            <font>
+                                <Font name="Georgia Bold" size="14.0" />
+                            </font>
+                        </Button>
+                    </HBox>
+                </VBox>
+            </children>
         </VBox>
     </children>
-</VBox>
+</StackPane>

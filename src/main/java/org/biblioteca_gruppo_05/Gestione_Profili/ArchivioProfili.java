@@ -2,9 +2,13 @@ package org.biblioteca_gruppo_05.Gestione_Profili;
 
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro; // Mantenuto se serve per riferimenti, ma non per i return type
 import org.biblioteca_gruppo_05.Eccezioni.*;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.ArchivioPrestiti;
+import org.biblioteca_gruppo_05.Gestione_Prestiti.Prestito;
 
 import java.io.*;
 import java.util.*;
+
+import static org.biblioteca_gruppo_05.Gestione_Profili.Profilo.controlloMatricola;
 
 /**
  * @class ArchivioProfili
@@ -56,9 +60,9 @@ public class ArchivioProfili implements Serializable {
 
        if(this.profili.containsKey(p.getMatricola())){
            throw new UtenteEsitenteException("Utente già esistente");
-       }else{
-           this.profili.put(p.getMatricola(),p);
        }
+           this.profili.put(p.getMatricola(),p);
+
         try {
             salvaSuFile();
         }catch(ErroreScritturaFileException e){
@@ -76,6 +80,11 @@ public class ArchivioProfili implements Serializable {
      * @post Il profilo viene rimosso dalla mappa.
      */
     public void rimuoviProfilo(String matricola) throws UtenteNonTrovatoException {
+        ArchivioPrestiti a=new ArchivioPrestiti("prestiti.bin");
+        for (Prestito p : a.getPrestiti().values()) {
+            if (p.getProfilo().equalsIgnoreCase(matricola))
+                throw new RuntimeException("Prestiti attivi con questo profilo impossibile eliminare");
+        }
         if(this.profili.containsKey(matricola)){
             this.profili.remove(matricola);
         }else{
@@ -99,13 +108,17 @@ public class ArchivioProfili implements Serializable {
      * @pre matricola non deve essere null o vuota.
      * @post Restituisce il profilo senza rimuoverlo o modificarlo.
      */
-    public Profilo ricercaProfiloPerMatricola(String matricola) throws UtenteNonTrovatoException {
-        if(this.profili.containsKey(matricola)){
-            return profili.get(matricola);
-        }else{
-            throw new UtenteNonTrovatoException("Utente non trovato con questa matricola: "+matricola);
+    public Profilo ricercaProfiloPerMatricola(String matricola) throws UtenteNonTrovatoException,ErroreMatricolaException {
+        if(controlloMatricola(matricola)){
+            if(this.profili.containsKey(matricola)){
+                return profili.get(matricola);
+            }else{
+                throw new UtenteNonTrovatoException("Utente non trovato con questa matricola: "+matricola);
+            }
         }
 
+
+        return null;
     }
 
     /**
@@ -159,7 +172,19 @@ public class ArchivioProfili implements Serializable {
      *
      * @post L'archivio rimane invariato.
      */
-    public void visualizzaProfili(){};
+    public List<Profilo> visualizzaProfili() throws UtenteNonTrovatoException {
+        if (profili.isEmpty()) {
+            throw new UtenteNonTrovatoException("Nessun profilo trovato");
+        }
+        List<Profilo> results = new ArrayList<>();
+        for (Profilo l : profili.values()) {
+            results.add(l);
+
+
+
+        }
+        return results;
+    };
 
     /**
      * @brief Salva lo stato corrente dell'archivio su file.

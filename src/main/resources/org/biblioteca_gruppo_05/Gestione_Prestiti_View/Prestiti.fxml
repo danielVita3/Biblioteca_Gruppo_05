@@ -11,40 +11,54 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #f4f6f8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_PRESTITI">
+<!-- Sfondo generale scuro (Brown #2b1b17) come la Home Page -->
+
+<VBox alignment="TOP_CENTER" prefHeight="700.0" prefWidth="900.0" spacing="20.0" style="-fx-background-color: #2b1b17;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.biblioteca_gruppo_05.Gestione_Prestiti.PrestitiController">
 
     <padding>
         <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
     </padding>
 
     <children>
+        <!-- Header Section -->
         <VBox spacing="5.0">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="20.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleIndietro" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: white; -fx-background-radius: 50; -fx-border-radius: 50; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 2);" text="←" textFill="#2c3e50">
+                        <!-- Pulsante Indietro Stile Home -->
+                        <Button mnemonicParsing="false" onAction="#handleIndietro" style="-fx-background-color: #8d6e63; -fx-text-fill: #fff8e1; -fx-background-radius: 50; -fx-min-width: 45px; -fx-min-height: 45px; -fx-cursor: hand; -fx-font-family: 'Georgia';" text="←">
                             <font>
-                                <Font name="System Bold" size="18.0" />
+                                <Font name="System Bold" size="20.0" />
                             </font>
+                            <effect>
+                                <DropShadow color="#00000080" height="10.0" radius="4.5" width="10.0" />
+                            </effect>
                         </Button>
 
                         <VBox>
                             <children>
-                                <Label text="GESTIONE PRESTITI" textFill="#2c3e50">
+                                <!-- Titolo in Georgia color Crema -->
+                                <Label text="GESTIONE PRESTITI" textFill="#fff8e1">
                                     <font>
-                                        <Font name="Segoe UI Semibold" size="32.0" />
+                                        <Font name="Georgia" size="32.0" />
                                     </font>
+                                    <effect>
+                                        <DropShadow color="#000000" height="5.0" radius="2.0" width="5.0" />
+                                    </effect>
                                 </Label>
-                                <Label text="Registra uscite, gestisci rientri e visualizza storico" textFill="#7f8c8d">
+                                <!-- Sottotitolo leggermente più scuro -->
+                                <Label text="Registra uscite, gestisci rientri e visualizza storico" textFill="#d7ccc8">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font name="Georgia Italic" size="14.0" />
                                     </font>
                                 </Label>
                             </children>
@@ -54,21 +68,22 @@
             </children>
         </VBox>
 
-        <Separator prefWidth="200.0" />
+        <Separator opacity="0.3" prefWidth="200.0" style="-fx-background-color: #8d6e63;" />
 
-        <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
-            <tabs>
+        <TabPane fx:id="tabPanePrestiti" style="-fx-background-color: transparent;" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">    <tabs>
 
+                <!-- TAB 1: REGISTRAZIONE -->
                 <Tab text="   ➕ REGISTRA PRESTITO   ">
                     <content>
-                        <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 0 0 10 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                        <!-- Contenitore interno color Carta/Crema (#fff8e1) per contrasto con sfondo scuro -->
+                        <VBox spacing="20.0" style="-fx-background-color: #fff8e1; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5);">
                             <padding>
                                 <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                             </padding>
                             <children>
-                                <Label text="Compila i dati per il nuovo prestito" textFill="#34495e">
+                                <Label text="Compila i dati per il nuovo prestito" textFill="#3e2723">
                                     <font>
-                                        <Font name="System Bold" size="16.0" />
+                                        <Font name="Georgia Bold" size="18.0" />
                                     </font>
                                 </Label>
 
@@ -84,25 +99,40 @@
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label text="Matricola Utente:" textFill="#7f8c8d" />
-                                        <TextField fx:id="prestitoMatricolaField" promptText="Chi prende il libro?" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" />
+                                        <Label text="Matricola Utente:" textFill="#5d4037">
+                                            <font><Font name="Georgia" size="14.0" /></font>
+                                        </Label>
 
-                                        <Label text="ISBN Libro:" textFill="#7f8c8d" GridPane.rowIndex="1" />
-                                        <TextField fx:id="prestitoIsbnField" promptText="Quale libro esce?" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <!-- ComboBox Stile "Vecchio Libro" -->
+                                        <ComboBox fx:id="prestitiMatricolaCombo" editable="true" prefHeight="30.0" prefWidth="300.0" promptText="Seleziona la matricola" style="-fx-background-color: white; -fx-border-color: #8d6e63; -fx-border-radius: 3; -fx-background-radius: 3;" GridPane.columnIndex="1" />
 
-                                        <Label text="Data Inizio:" textFill="#7f8c8d" GridPane.rowIndex="2" />
-                                        <DatePicker fx:id="dataInizioPicker" prefWidth="300.0" promptText="Oggi" style="-fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label text="ISBN Libro:" textFill="#5d4037" GridPane.rowIndex="1">
+                                            <font><Font name="Georgia" size="14.0" /></font>
+                                        </Label>
+                                        <ComboBox fx:id="prestitiIsbnCombo" editable="true" prefHeight="30.0" prefWidth="300.0" promptText="Seleziona l'ISBN" style="-fx-background-color: white; -fx-border-color: #8d6e63; -fx-border-radius: 3; -fx-background-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                        <Label text="Data Fine Prevista:" textFill="#7f8c8d" GridPane.rowIndex="3" />
-                                        <DatePicker fx:id="dataFinePicker" prefWidth="300.0" promptText="Data di rientro" style="-fx-border-color: #bdc3c7; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <Label text="Data Inizio:" textFill="#5d4037" GridPane.rowIndex="2">
+                                            <font><Font name="Georgia" size="14.0" /></font>
+                                        </Label>
+                                        <DatePicker fx:id="dataInizioPicker" prefHeight="30.0" prefWidth="300.0" promptText="Oggi" style="-fx-border-color: #8d6e63; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                                        <Label text="Data Fine Prevista:" textFill="#5d4037" GridPane.rowIndex="3">
+                                            <font><Font name="Georgia" size="14.0" /></font>
+                                        </Label>
+                                        <DatePicker fx:id="dataFinePicker" prefHeight="30.0" prefWidth="300.0" promptText="Data di rientro" style="-fx-border-color: #8d6e63; -fx-border-radius: 3;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     </children>
                                 </GridPane>
 
-                                <Separator />
+                                <Separator style="-fx-background-color: #8d6e63;" />
 
                                 <HBox alignment="CENTER_RIGHT">
                                     <children>
-                                        <Button mnemonicParsing="false" onAction="#handleConfermaPrestito" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(39,174,96,0.3), 5, 0, 0, 3);" text="CONFERMA PRESTITO" />
+                                        <!-- Bottone Conferma (Marrone scuro) -->
+                                        <Button mnemonicParsing="false" onAction="#handleConfermaPrestito" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #3e2723; -fx-text-fill: #fff8e1; -fx-background-radius: 5; -fx-font-family: 'Georgia'; -fx-font-size: 14px; -fx-font-weight: bold; -fx-cursor: hand; -fx-border-color: #5d4037; -fx-border-width: 2; -fx-border-radius: 5;" text="CONFERMA PRESTITO">
+                                            <effect>
+                                                <DropShadow color="#00000066" height="10.0" radius="4.5" width="10.0" />
+                                            </effect>
+                                        </Button>
                                     </children>
                                 </HBox>
                             </children>
@@ -110,27 +140,36 @@
                     </content>
                 </Tab>
 
-                <Tab text="   ↩ RESTITUZIONE   ">
+                <!-- TAB 2: RESTITUZIONE / VISUALIZZAZIONE -->
+                <Tab text="   ↩ RESTITUZIONE E VISUALIZZAZIONE ">
                     <content>
-                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 0 0 10 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                        <VBox spacing="15.0" style="-fx-background-color: #fff8e1; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5);">
                             <padding>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </padding>
                             <children>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
                                     <children>
-                                        <Label text="Cerca prestito attivo:" textFill="#34495e" />
-                                        <TextField fx:id="searchPrestitoField" prefHeight="30.0" prefWidth="250.0" promptText="Cerca per Matricola o ISBN..." style="-fx-background-radius: 5; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
-                                        <Button mnemonicParsing="false" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-background-radius: 5; -fx-cursor: hand;" text="Cerca" />
+                                        <Label text="Filtra per:" textFill="#5d4037">
+                                            <font>
+                                                <Font name="Georgia Bold" size="14.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="filtroPrestitiCombo" prefHeight="35.0" prefWidth="145.0" promptText="Seleziona..." style="-fx-background-color: white; -fx-border-color: #8d6e63; -fx-border-radius: 3;" />
+
+                                        <TextField fx:id="searchPrestitoField" prefHeight="35.0" prefWidth="250.0" promptText="Cerca per Matricola o ISBN..." style="-fx-background-radius: 3; -fx-border-color: #8d6e63; -fx-border-radius: 3; -fx-background-color: white;" />
+
+                                        <!-- Bottone Cerca (Marrone Medio) -->
+                                        <Button mnemonicParsing="false" onAction="#handleCerca" style="-fx-background-color: #8d6e63; -fx-text-fill: white; -fx-background-radius: 3; -fx-cursor: hand; -fx-font-family: 'Georgia';" text="CERCA" />
+
+                                        <Button onAction="#handleResetPrestiti" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #5d4037; -fx-font-family: 'Georgia';" text="Reset" underline="true" />
                                     </children>
                                 </HBox>
 
-                                <TableView fx:id="tablePrestitiAttivi" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: #fafafa; -fx-border-color: #ecf0f1;">
+                                <!-- Table View -->
+                                <!-- Nota: Lo stile interno delle celle (righe alternate) andrebbe gestito via CSS esterno per perfezione, ma qui mettiamo basi neutre -->
+                                <TableView fx:id="tablePrestitiAttivi" prefHeight="300.0" prefWidth="200.0" style="-fx-background-color: #fafafa; -fx-border-color: #8d6e63;">
                                     <columns>
-                                        <!-- NUOVA COLONNA PER LA CHECKBOX -->
-                                        <TableColumn fx:id="colSelezione" prefWidth="50.0" text="✔" style="-fx-alignment: CENTER;"/>
-
-                                        <!-- Colonne esistenti con fx:id aggiunti per comodità -->
                                         <TableColumn fx:id="colMatricola" prefWidth="150.0" text="Utente (Matricola)" />
                                         <TableColumn fx:id="colIsbn" prefWidth="150.0" text="Libro (ISBN)" />
                                         <TableColumn fx:id="colDataInizio" prefWidth="120.0" text="Data Inizio" />
@@ -141,53 +180,21 @@
                                     </columnResizePolicy>
                                 </TableView>
 
-                                <HBox alignment="CENTER_RIGHT" spacing="15.0">
-                                    <children>
-                                        <Button mnemonicParsing="false" onAction="#handleRegistraRestituzione" prefHeight="40.0" prefWidth="180.0" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand;" text="REGISTRA RIENTRO" />
-                                    </children>
+                                <HBox alignment="CENTER_LEFT" spacing="15.0">
+                                    <!-- Bottone Modifica -->
+                                    <Button mnemonicParsing="false" onAction="#handleModifica" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #5d4037; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand; -fx-font-family: 'Georgia';" text="MODIFICA" />
+
+                                    <Region HBox.hgrow="ALWAYS" />
+
+                                    <!-- Bottone Rientro (Arancio scuro / Ruggine) -->
+                                    <Button mnemonicParsing="false" onAction="#handleRegistraRestituzione" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #6d4c41; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 2); -fx-font-family: 'Georgia';" text="REGISTRA RIENTRO" />
+
                                 </HBox>
-                            </children>
-                        </VBox>
-                    </content>
-                </Tab>
-
-                <Tab text="   📂 VISUALIZZAZIONE   ">
-                    <content>
-                        <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 0 0 10 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                            <padding>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                            </padding>
-                            <children>
-
-                                <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #f9f9f9; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #ecf0f1; -fx-border-radius: 5;">
-                                    <children>
-                                        <Label text="Filtra per:" textFill="#7f8c8d">
-                                            <font>
-                                                <Font name="System Bold" size="12.0" />
-                                            </font>
-                                        </Label>
-
-                                        <ComboBox fx:id="filtroVisualizzazioneCombo" prefHeight="35.0" prefWidth="150.0" promptText="Seleziona..." style="-fx-background-color: white; -fx-border-color: #bdc3c7; -fx-border-radius: 5;" />
-
-                                        <TextField fx:id="searchVisualizzazioneField" promptText="Cerca nello storico..." HBox.hgrow="ALWAYS" prefHeight="35.0" style="-fx-background-radius: 5; -fx-border-color: #bdc3c7;" />
-
-                                        <Button onAction="#handleCercaVisualizzazione" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-cursor: hand;" text="CERCA" />
-                                        <Button onAction="#handleResetVisualizzazione" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #95a5a6; -fx-cursor: hand;" text="Reset" underline="true" />
-                                    </children>
-                                </HBox>
-
-                                <TableView fx:id="tableVisualizzazione" VBox.vgrow="ALWAYS">
-                                    <columns>
-                                        <TableColumn text="Utente" sortable="true" />
-                                        <TableColumn text="ISBN Libro" sortable="true" />
-                                        <TableColumn text="Data Uscita" sortable="true" />
-                                        <TableColumn text="Data Rientro" sortable="true" />
-                                        <TableColumn text="Costo Penale (€)" sortable="true" />
-                                    </columns>
-                                    <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                    </columnResizePolicy>
-                                </TableView>
+                        <HBox prefHeight="58.0" prefWidth="780.0">
+                           <children>
+                              <Button onAction="#handleModificaPenale" prefHeight="35.0" style="-fx-background-color: transparent; -fx-text-fill: #5d4037; -fx-font-family: 'Georgia';" text="Modifica penale mensile" underline="true" />
+                           </children>
+                        </HBox>
                             </children>
                         </VBox>
                     </content>

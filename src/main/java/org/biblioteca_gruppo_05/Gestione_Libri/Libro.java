@@ -1,6 +1,7 @@
 package org.biblioteca_gruppo_05.Gestione_Libri;
 
 import org.biblioteca_gruppo_05.Eccezioni.ErroreISBNException;
+import org.biblioteca_gruppo_05.Eccezioni.ErroreNumeroCopieLibro;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -41,12 +42,15 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @post Viene creata una nuova istanza valida della classe Libro.
      * @post Tutti gli attributi sono stati inizializzati con i valori passati.
      */
-    public Libro(String titolo,String autore,String ISBN,LocalDate dataPubblicazione){
-        this.titolo=titolo;
-        this.autore=autore;
-        this.ISBN=ISBN;
-        this.numeroCopie=1;
-        this.dataPubblicazione=dataPubblicazione;
+    public Libro(String titolo,String autore,String ISBN,LocalDate dataPubblicazione) throws ErroreISBNException{
+        if(controllaISBN(ISBN)){
+            this.titolo=titolo;
+            this.autore=autore;
+            this.ISBN=ISBN;
+            this.numeroCopie=1;
+            this.dataPubblicazione=dataPubblicazione;
+        }
+
     }
     /**
      * @brief Verifica la validità del formato dell'ISBN.
@@ -157,8 +161,11 @@ public class Libro implements Serializable,Comparable <Libro> {
      * @pre Il parametro numeroCopie deve essere un intero +1, -1.
      * @post L'attributo numeroCopie viene aggiornato con il valore fornito.
      */
-    public void setNumeroCopie(int numeroCopie){
-        this.numeroCopie+=numeroCopie;
+    public void setNumeroCopie(int numeroCopie) throws ErroreNumeroCopieLibro {
+        if(numeroCopie<1){
+            throw new ErroreNumeroCopieLibro("Non puoi inserire un numero negativo o uguale a 0");
+        }
+        this.numeroCopie=numeroCopie;
     }
     /**
      * @brief Aggiorna la data di pubblicazione del libro.
@@ -186,6 +193,15 @@ public class Libro implements Serializable,Comparable <Libro> {
         Libro l=(Libro) obj;
         return this.ISBN.equals(l.getISBN());
     }
+    public void incrementaNumCopie(){
+        this.numeroCopie+=1;
+    }
+
+    public void decrementaNumeroCopie(){
+
+        this.numeroCopie-=1;
+    }
+
     /**
      * @brief Confronta due libri per l'ordinamento.
      * @param l1 Il libro da confrontare con l'istanza corrente.

@@ -1,11 +1,18 @@
 package org.biblioteca_gruppo_05.Gestione_Prestiti;
 
+import org.biblioteca_gruppo_05.Eccezioni.ErroreNumeroCopieLibro;
+import org.biblioteca_gruppo_05.Eccezioni.LibroNonTrovatoException;
+import org.biblioteca_gruppo_05.Eccezioni.UtenteNonTrovatoException;
+import org.biblioteca_gruppo_05.Gestione_Libri.ArchivioLibri;
 import org.biblioteca_gruppo_05.Gestione_Libri.Libro;
+import org.biblioteca_gruppo_05.Gestione_Profili.ArchivioProfili;
 import org.biblioteca_gruppo_05.Gestione_Profili.Profilo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.lang.Comparable;
+import java.time.temporal.ChronoUnit;
+
 /**
  * @class Prestito
  * @brief Rappresenta un prestito del sistema bibliotecario.
@@ -18,7 +25,8 @@ import java.lang.Comparable;
 public class Prestito implements Serializable, Comparable<Prestito> {
     /** Contatore statico per generare ID univoci incrementali. */
     private static int cont = 0;
-
+    /**Penale mensile.*/
+    private static int moltiplicatorePenaleMensile=10;
     /** Identificativo univoco del prestito. */
     private int id;
 
@@ -49,72 +57,97 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      * @pre matricola non deve essere null o vuota, ISBN non deve essere null o vuoto.
      * @post Viene istanziato un nuovo oggetto Prestito con ID univoco e costo penale calcolato in base alle date.
      */
-    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola, String ISBN){
-        this.dataPrestito=dataPrestito;
-        this.dataScadenza=dataScadenza;
-        this.profilo=matricola;
-        this.libro=ISBN;
-        this.id=cont++;
-        this.costoPenale= calcolaPenale();
-    }
+    public Prestito(LocalDate dataPrestito,LocalDate dataScadenza,String matricola,
+                    String ISBN) throws ErroreNumeroCopieLibro, UtenteNonTrovatoException, LibroNonTrovatoException {
+        ArchivioLibri l = new ArchivioLibri("libri.bin");
+        ArchivioProfili pro = new ArchivioProfili("profili.bin");
+                Libro librotrovato = l.ricercaLibroPerISBN(ISBN);
+                Profilo profilotrovato = pro.ricercaProfiloPerMatricola(matricola);
+                if (librotrovato.getNumeroCopie() == 0) {
+                    throw new ErroreNumeroCopieLibro("Impossibile prestare: copie esaurite per ISBN " + ISBN);
+                }
+                if (profilotrovato != null) {
+                    this.dataPrestito = dataPrestito;
+                    this.dataScadenza = dataScadenza;
+                    this.profilo = matricola;
+                    this.libro = ISBN;
+                    this.id = cont++;
+                    this.costoPenale = calcolaPenale();
+                }
+            }
+
 
     /**
      * @brief Restituisce la data di inizio del prestito.
      * @return Oggetto LocalDate rappresentante l'inizio del prestito.
      * @post Restituisce l'attributo richiesto.
      */
-    public LocalDate getDataPrestito(){ return dataPrestito; }
+    public LocalDate getDataPrestito(){
+        return dataPrestito;
+    }
 
     /**
      * @brief Restituisce la data di scadenza del prestito.
      * @return Oggetto LocalDate rappresentante la scadenza.
      * @post Restituisce l'attributo richiesto.
      */
-    public LocalDate getDataScadenza(){ return dataScadenza; }
+    public LocalDate getDataScadenza(){
+        return dataScadenza;
+    }
+    /**
+     * @brief Restituisce il moltiplicatore penale mensile.
+     * @return Tipo int rappresentante la penale mensile.
+     * @post Restituisce l'attributo richiesto.
+     */
+    public static int getMoltiplicatorePenaleMensile(){return moltiplicatorePenaleMensile;}
 
     /**
      * @brief Restituisce la matricola dell'utente associato al prestito.
      * @return Stringa contenente la matricola.
      * @post Restituisce l'attributo richiesto.
      */
-    public String getProfilo(){ return profilo; }
+    public String getProfilo(){
+        return profilo;
+    }
 
     /**
      * @brief Restituisce l'ISBN del libro associato al prestito.
      * @return Intero rappresentante l'ISBN.
      * @post Restituisce l'attributo richiesto.
      */
-    public String getLibro(){ return libro; }
-
-    /**
-     * @brief Verifica la validità formale della matricola associata.
-     * @return true se la matricola rispetta il formato, false altrimenti.
-     *
-     * @pre La matricola deve essere stata inizializzata.
-     * @post Restituisce l'esito della validazione senza modificare lo stato.
-     */
-    public boolean controlloMatricola(){
-        return true;
+    public String getLibro(){
+        return libro;
     }
 
-    /**
-     * @brief Verifica la validità formale dell'ISBN associato.
-     * @return true se l'ISBN rispetta il formato, false altrimenti.
-     *
-     * @pre L'ISBN deve essere stato inizializzato.
-     * @post Restituisce l'esito della validazione senza modificare lo stato.
-     */
-    public boolean controlloISBN(){
-        return true;
-    }
+
 
     /**
      * @brief Restituisce l'ID univoco del prestito.
      * @return Intero rappresentante l'ID.
      * @post Restituisce l'attributo richiesto.
      */
-    public int getId(){ return id; }
+    public int getId(){
+        return id;
+    }
 
+    public int getCostoPenale() {
+        return costoPenale;
+    }
+
+    public void setDataPrestito(LocalDate dataPrestito) {
+        this.dataPrestito = dataPrestito;
+    }
+
+    public void setDataScadenza(LocalDate dataScadenza) {
+        this.dataScadenza = dataScadenza;
+    }
+
+    public static void setMoltiplicatorePenaleMensile(int moltiplicatorePenaleMensile) {
+        if(moltiplicatorePenaleMensile>=0)
+            Prestito.moltiplicatorePenaleMensile = moltiplicatorePenaleMensile;
+    }
+
+    public void setCostoPenale(int penale){this.costoPenale=penale;}
     /**
      * @brief Calcola l'eventuale penale per il prestito.
      *
@@ -124,7 +157,13 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      * @post Restituisce un valore >= 0 calcolato sulla differenza date.
      */
     public int calcolaPenale(){
-        return 0;
+        LocalDate dataConsegna=LocalDate.now();
+        if(dataConsegna.isBefore(this.dataScadenza) || dataConsegna.isEqual(this.dataScadenza))
+            return 0;
+        long mesiDiRitardo= ChronoUnit.MONTHS.between(this.dataScadenza,dataConsegna);
+        int penale= (int) (mesiDiRitardo*moltiplicatorePenaleMensile);
+        this.setCostoPenale(penale);
+        return penale;
     }
 
 
@@ -139,7 +178,11 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      */
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if(obj==null) return false;
+        if(obj==this) return true;
+        if(this.getClass()!=obj.getClass()) return false;
+        Prestito p=(Prestito) obj;
+        return this.id==p.getId();
     }
 
     /**
@@ -152,7 +195,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      */
     @Override
     public int compareTo(Prestito p1){
-        return 0;
+        return Integer.compare(this.id,p1.getId());
     }
 
     /**
@@ -164,7 +207,7 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      */
     @Override
     public int hashCode(){
-        return 0;
+        return Integer.hashCode(this.id);
     }
 
     /**
@@ -175,7 +218,17 @@ public class Prestito implements Serializable, Comparable<Prestito> {
      */
     @Override
     public String toString(){
-        return "";
+            StringBuffer sb=new StringBuffer();
+            sb.append("\nID=");
+            sb.append(id);
+            sb.append("\nProfilo=");
+            sb.append(profilo);
+            sb.append("\nData prestito=");
+            sb.append(dataPrestito);
+            sb.append("\nData di scadenza=");
+            sb.append(dataScadenza);
+            return sb.toString();
+
     }
 
 
