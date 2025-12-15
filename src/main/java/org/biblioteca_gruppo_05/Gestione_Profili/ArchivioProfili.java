@@ -1,6 +1,5 @@
 package org.biblioteca_gruppo_05.Gestione_Profili;
 
-import org.biblioteca_gruppo_05.Gestione_Libri.Libro; // Mantenuto se serve per riferimenti, ma non per i return type
 import org.biblioteca_gruppo_05.Eccezioni.*;
 import org.biblioteca_gruppo_05.Gestione_Prestiti.ArchivioPrestiti;
 import org.biblioteca_gruppo_05.Gestione_Prestiti.Prestito;
@@ -243,4 +242,6 @@ public class ArchivioProfili implements Serializable {
         }
         return str.toString();
     }
+
+
 }
