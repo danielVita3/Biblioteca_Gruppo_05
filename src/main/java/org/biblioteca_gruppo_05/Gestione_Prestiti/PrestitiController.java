@@ -164,7 +164,10 @@ public class PrestitiController implements Initializable {
         if (isInputValido()) {
             LocalDate dataInizio = dataInizioPicker.getValue();
             LocalDate dataFine = dataFinePicker.getValue();
-
+            if (dataInizio.isAfter(LocalDate.now())) {
+                showAlert(Alert.AlertType.ERROR, "Errore di Validazione Data", "Data di inizio prestito non valida.", "La data di inizio prestito non può essere successiva alla data odierna.");
+                return;
+            }
             if (dataFine.isBefore(dataInizio)) {
                 showAlert(Alert.AlertType.ERROR, "Errore di Validazione Data", "Data di scadenza non valida.", "La data di restituzione non può essere precedente alla data di inizio prestito.");
                 return;

@@ -73,7 +73,7 @@
                         <TableColumn fx:id="colonnaNome" prefWidth="150.0" sortable="true" text="Nome" />
                         <TableColumn fx:id="colonnaCognome" prefWidth="150.0" sortable="true" text="Cognome" />
                         <TableColumn fx:id="colonnaEmail" prefWidth="200.0" sortable="true" text="Email" />
-                        <TableColumn fx:id="colonnaCopie" prefWidth="120.0" sortable="true" text="N. prestiti attivi" />
+                        <TableColumn fx:id="colonnaCopie" prefWidth="120.0" sortable="true" text="N. Prestiti attivi" />
                     </columns>
                     <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
                 </TableView>

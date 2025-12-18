@@ -137,7 +137,12 @@ public class LibriController implements Initializable {
         dataPubblicazionePicker.setValue(null);
     }
     @FXML private void handleConfermaAggiunta(ActionEvent event) {
+
         if(isInputValido()){
+            if (dataPubblicazionePicker.getValue().isAfter(LocalDate.now())) {
+                showAlert(Alert.AlertType.ERROR, "Errore di Validazione Data", "Data di pubblicazione non valida.", "La data di pubblicazione non può essere successiva alla data odierna.");
+                return;
+            }
             try{
                 Libro l=new Libro(addTitoloField.getText(),addAutoreField.getText(),addIsbnField.getText(),dataPubblicazionePicker.getValue());
                 archivioLibri.aggiungiLibro(l);
