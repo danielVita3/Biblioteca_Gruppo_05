@@ -1,0 +1,769 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title> Requirement Engineering</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2b27ee0d-d47b-801b-b389-ff1f6d7f4505" class="page sans"><header><h1 class="page-title"> Requirement Engineering</h1><p class="page-description"></p></header><div class="page-body"><ul id="2b57ee0d-d47b-8018-8207-e3f91d8a8ad6" class="toggle"><li><details open=""><summary><strong>INTRODUZIONE</strong></summary><p id="fb8aa81f-597f-466d-9557-ec85d6bc11f8" class="">Il presente documento specifica i requisiti per la realizzazione del sistema software &quot;Biblioteca Online&quot;, con l&#x27;obiettivo primario di digitalizzare e centralizzare le operazioni di gestione di una biblioteca.</p><p id="7e0d1cf6-67ad-46c5-8b21-b939774457f3" class="">La caratteristica fondamentale del sistema è che il controllo e la gestione (inserimento, modifica, cancellazione, visualizzazione) di tutti i dati relativi al catalogo dei libri e agli utenti registrati sono affidati esclusivamente al Bibliotecario. Non è prevista l&#x27;autonomia gestionale diretta per l&#x27;utente finale (Lettore) o la presenza di altri ruoli amministrativi.</p></details></li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2b27ee0d-d47b-802a-b24f-c34b417feacd"><div style="font-size:1.5em"><span class="icon">ℹ️</span></div><div style="width:100%"><ul id="2b27ee0d-d47b-80f5-a57b-f615b185c40b" class="bulleted-list"><li style="list-style-type:disc">In questa sezione vengono definiti e descritti tutti i requisiti del software. La loro priorità è indicata attraverso un apposito numero:<p id="2b27ee0d-d47b-80bf-b0ee-e2fa8d25fd5c" class="">(1) = MUST HAVE  |  (2) = SHOULD HAVE  |  (3) = NICE TO HAVE</p></li></ul><ul id="2b27ee0d-d47b-800f-b674-d9851b09c83d" class="bulleted-list"><li style="list-style-type:disc">Ognuno dei requisiti è stato definito ad un elevato livello di astrazione, evitando dettagli implementativi di sorta</li></ul></div></figure><ul id="2b27ee0d-d47b-8054-93be-f5bd38eec54d" class="toggle"><li><details open=""><summary><strong>REQUISITI FUNZIONALI</strong></summary><ul id="2b27ee0d-d47b-800b-8024-f98debd51011" class="toggle"><li><details open=""><summary><mark class="highlight-red_background"><strong>Funzionalità individuali</strong></mark></summary><ul id="2b27ee0d-d47b-8072-ba9f-e6282d688766" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF1  - Inserimento libro (1)</mark><mark class="highlight-default_background">: l</mark>’utente deve essere in grado di poter aggiungere un  nuovo libro all’interno dell’archivio della biblioteca, se già presente ci reindirizza alla modifica del numero di copie. L’azione di aggiunta prevede l’inserimento del titolo, lista degli autori, dell’anno della pubblicazione, dell’ISBN ossia il codice identificativo univoco del libro e del numero di copie disponibili. Inoltre il libro verrà memorizzato sul un file esterno in modo autonomo.</li></ul><ul id="2b27ee0d-d47b-80e9-a270-da909bc04db1" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF2 - Modifica libro (1)</mark>: l’utente deve essere in grado di poter modificare gli attributi di un libro già presente all’interno del catalogo. L’azione consente di modificare il campo il numero di copie disponibili. Se il libro da modificare non è presente nel catalogo il sistema ci reindirizza all’inserimento di un nuovo libro.  Inoltre il libro selezionato verrà aggiornato autonomamente nel file in cui è memorizzato</li></ul><ul id="2b27ee0d-d47b-8043-9faa-c9c42525e98d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF3  - Eliminazione libro (1):</mark>  l’utente deve essere in grado di eliminare un libro, con i relativi campi, dall’archivio della biblioteca inserendo il proprio ISBN. Se il libro non è presente all’interno del catalogo allora stamperà un messaggio di errore.  Inoltre il medesimo libro dell’archivio  verrà eliminato autonomamente dal file.</li></ul><ul id="2b27ee0d-d47b-80c6-bfb6-d0b002de3f49" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF4 - Visualizzazione lista libri (1)</mark>: l’utente deve essere in grado di poter visualizzare l’intero catalogo della biblioteca, visualizzando i rispettivi campi quali titolo, lista degli autori, dell’anno della pubblicazione, dell’ISBN e numero di copie disponibili.  </li></ul><ul id="2b27ee0d-d47b-80a6-9b1d-e008d2a9a0d7" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF5 - Ordinamento lista libri (1)</mark>: l’utente deve essere in grado di poter visualizzare i libri presenti nell’ archivio della biblioteca ordinati in base al titolo, all’autore, numero copie disponibili e data di pubblicazione.</li></ul><ul id="2b27ee0d-d47b-80d1-afdb-d2b523a80d76" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF6 - Ricerca libri (1)</mark>: l’utente deve essere messo in condizioni di poter cercare un determinato libro in base ai suoi relativi campi, cioè, titolo, autore e codice univoco (ISBN).</li></ul><ul id="2b27ee0d-d47b-8037-ab30-fd98d4d21862" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF7 - Aggiungi profilo(1)</mark>:  Funzione che permette di  aggiungere un determinato utente in base a nome, cognome e matricola. Il profilo verrà memorizzato sul un file esterno in modo autonomo.</li></ul><ul id="2b27ee0d-d47b-8020-85e3-c0e638b89dad" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF8 -Modifica profilo(1)</mark>: funzione che permette di modificare l’utente in base ai propri dati. o per le 13:50 sul un file esterno in modo autonomo.  Il profilo selezionato verrà aggiornato autonomamente nel file in cui è memorizzato.</li></ul><ul id="2b27ee0d-d47b-80f2-b2fd-c6ea2276ad25" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF9 - Eliminazione profilo(1)</mark>: la funzione deve essere in grado di poter eliminare un determinato utente dal catalogo in base alla propria matricola. Il profilo selezionato verrà eliminato autonomamente nel file in cui è memorizzato.</li></ul><ul id="2b27ee0d-d47b-802c-be7d-c2170d57d7e7" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF10 - Visualizza lista profili(1)</mark>: funzione in grado di poter rendere visibile la lista degli utenti presenti nel catalogo della biblioteca.</li></ul><ul id="2b27ee0d-d47b-802f-9ece-dbd4433a3980" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF11 - Ordina lista profili(1) </mark>: la funzione permette ordinare gli utenti in base ai propri campi: nome e cognome.</li></ul><ul id="2b27ee0d-d47b-8017-82a4-dc112c401b04" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF12- Ricerca profilo (1):</mark> l ’utente deve essere messo in condizioni di poter cercare un determinato utente ai suoi relativi campi, cioè, nome, cognome e matricola.</li></ul><ul id="2b57ee0d-d47b-80a2-ae8b-d5dbc0a64e56" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF13 -Prestito Libro (2):</mark>l ’utente deve essere messo in condizioni di poter registrare il prestito di un libro con relativa data del prestito e di scadenza e i dati dell’utente che lo acquisisce . Il prestito verrà memorizzato su un apposito file e verrà automaticamente decrementato il numero delle copie.</li></ul><ul id="2b57ee0d-d47b-80d4-a352-e9899243a708" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF14 -Restituzione Libro (2):</mark>l ’utente deve essere in grado di poter registrare la restituzione del libro e verificare possibile pena. Con la Restituzione verrà aggiornato il file contenente tutti i prestiti e verrà incrementato il numero delle copie.</li></ul><ul id="2b57ee0d-d47b-8083-9755-cfbe613b780f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF15 -Ordinamento lista libri in prestito(3)</mark>:  l’utente deve essere in grado di poter visualizzare i libri presenti nell’ archivio dei libri in prestito della biblioteca ordinati in base al titolo, all’autore, matricola dell’utente, data di scadenza del prestito, data del prestito.</li></ul><ul id="2b57ee0d-d47b-8034-bd13-d505bfc17348" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF16 - Visualizzazione lista libri in prestito(2)</mark>: l’utente deve essere in grado di prendere visione dei libri che sono già stati ceduti in prestito da parte della biblioteca </li></ul><ul id="2b57ee0d-d47b-805e-b3b7-f1af7ffdbddc" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-red_background">IF17 - Ricerca lista libri in prestito (2):</mark>  l’utente deve essere messo in condizioni di poter cercare un libro in prestito in base ai suoi relativi campi, cioè, <mark class="highlight-default_background">titolo del libro, ISBN, o la matricola dell’utente.</mark></li></ul><p id="2b57ee0d-d47b-8058-a354-ccb840f2fa39" class="">
+</p></details></li></ul><ul id="2b27ee0d-d47b-8066-a3dd-d8c9f7069960" class="toggle"><li><details open=""><summary><mark class="highlight-teal_background">Business flow</mark></summary><ul id="2b27ee0d-d47b-8083-87b6-e8997b562ffa" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal_background">BF1 (1)- Gestione dati di ogni profilo(1):</mark><mark class="highlight-default_background"> Serve a gestire la lista di tutte le persone iscritte alla biblioteca. L&#x27;utente (bibliotecario) può aggiungere nuove persone, modificare e visualizzare i loro dati , ed eleminare un account se necessario. Inoltre può visualizzare nell&#x27;ordine che preferisce la lista degli utenti</mark></li></ul><ul id="2b27ee0d-d47b-8072-8ab1-c00204686d3b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal_background">BF2 (1) - Gestione archivio libri (1): </mark><mark class="highlight-default_background">Permette di controllare e aggiornare tutti i libri fisicamente presenti nella biblioteca. L&#x27;utente (bibliotecario) può caricare nuovi libri nel sistema (inserendo titolo, autore, ISBN, anno di pubblicazione), modificare le informazioni sui libri già presenti (ad esempio il numero delle copie).</mark></li></ul><ul id="2b27ee0d-d47b-80c0-8272-f954731ad91f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-teal_background">BF3 (2) - Gestione prestiti libri (2):</mark>È il processo per registrare quando un libro esce e quando torna in biblioteca. L&#x27;utente (il bibliotecario) usa il sistema per registrare il prestito (diminuendo il numero di copie disponibili) ,per registrare la restituzione (aumentando il numero di copie disponibile) quando l&#x27;utente lo riporta indietro e nel caso in cui la restituzione sia avvenuta oltre la data di scadenza stabilita deve gestire l&#x27;applicazione dei costi penali a carico dell&#x27;utente.</li></ul><p id="2b57ee0d-d47b-802f-a06e-e4deeef33034" class="">
+</p></details></li></ul><ul id="2b27ee0d-d47b-8068-9f3b-dbee0e225c92" class="toggle"><li><details open=""><summary><mark class="highlight-blue_background"><strong>Dati e Informazioni</strong></mark></summary><ul id="2b27ee0d-d47b-8040-babd-e766a154005d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue_background">DF1 - Dati Utente:</mark><ul id="2b27ee0d-d47b-802b-8db3-e88f343c0e5b" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF1.1: </mark><em><mark class="highlight-blue_background">Un nome, un cognome, una matricola (1)</mark></em></li></ul><ul id="2b27ee0d-d47b-8067-8fad-ca2b1abb68a7" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF1.2: </mark><em><mark class="highlight-blue_background">Email istituzionale (1)</mark></em></li></ul><ul id="2b27ee0d-d47b-80b9-9061-e52896519e46" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF1.3: </mark><em><mark class="highlight-blue_background">Lista dei libri in prestito attuali(1)</mark></em></li></ul><ul id="2b27ee0d-d47b-8066-be29-e9b83a3f4fa9" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF1.4:</mark><em><mark class="highlight-blue_background"> Storico libri in prestito(2)</mark></em></li></ul></li></ul><ul id="2b27ee0d-d47b-8086-a13c-cb04c0c56f0f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue_background">DF2 - Dati Libro:</mark><ul id="2b27ee0d-d47b-8070-bfca-c57f45e5eb6d" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF2.1: </mark><em><mark class="highlight-blue_background">Titolo (1)</mark></em></li></ul><ul id="2b27ee0d-d47b-80da-9620-ea8b5b451c85" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF2.2: </mark><em><mark class="highlight-blue_background">Lista Autori(1)</mark></em></li></ul><ul id="2b27ee0d-d47b-80b2-a2d5-ccd9f90bf45a" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF2.3: </mark><em><mark class="highlight-blue_background">Anno di pubblicazione(1)</mark></em></li></ul><ul id="2b27ee0d-d47b-8094-b1f9-e80f2c8fbde0" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF2.4: </mark><em><mark class="highlight-blue_background">ISBN(1)</mark></em></li></ul><ul id="2b27ee0d-d47b-80e8-83d5-f927e33cf55e" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF2.5:</mark><em><mark class="highlight-blue_background"> Numero copie disponibili(1)</mark></em></li></ul></li></ul><ul id="2b27ee0d-d47b-80ac-a6bd-cd1f04c2f48d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue_background">DF3 - Dati Gestione Prestiti:</mark><ul id="2b27ee0d-d47b-80fd-a7e1-f4fac37b0579" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF3.1:</mark><em><mark class="highlight-blue_background"> Data prestito libro(2)</mark></em></li></ul><ul id="2b27ee0d-d47b-8090-81aa-ee062cb876d3" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF3.2: </mark><em><mark class="highlight-blue_background">Data scadenza prestito(2)</mark></em></li></ul><ul id="2b27ee0d-d47b-80bd-b504-d219228150f2" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF3.3: </mark><em><mark class="highlight-blue_background">Costo penale(2)</mark></em></li></ul><ul id="2b27ee0d-d47b-80a0-b58b-c85becba9274" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF3.4: </mark><em><mark class="highlight-blue_background">Libro in prestito(1)</mark></em></li></ul><ul id="2b57ee0d-d47b-802a-8ea8-c9e04363effe" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-blue_background">DF3.5: </mark><em><mark class="highlight-blue_background">Utente prestito(1)</mark></em></li></ul></li></ul><p id="2b27ee0d-d47b-8033-85a3-dee80ec5ab8f" class="">
+</p></details></li></ul><ul id="2b27ee0d-d47b-8072-a0d2-dac88467bedc" class="toggle"><li><details open=""><summary><mark class="highlight-yellow_background">Interfaccia Utente</mark></summary><ul id="2b27ee0d-d47b-80b8-837a-cedf3d0e722d" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">UI1 - Pagina Principale:</mark><mark class="highlight-default_background"> è il punto del software, viene visualizzata una label con il nome della biblioteca ed un button che cliccandolo permette l’accesso alla home page.</mark></li></ul><ul id="2b57ee0d-d47b-8051-8cd7-c7901969335f" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">UI2 - Home Page:</mark><mark class="highlight-default_background"> è l’hub principale del software che permette all’operatore di selezionare l’area funzionale desiderata, ci sono tre button che rispettivamente portano alla gestione dell’archivio, alla gestione dei profili utente e alla gestione dei prestiti, inoltre è presente una label che visualizza una citazione presa da un libro</mark></li></ul><ul id="2b57ee0d-d47b-807c-8790-e89b0c044543" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">UI3 - Archivio:</mark> interfaccia che gestisce il catalogo disponibile della biblioteca, con un menù laterale possiamo selezionare le varie operazioni eseguibili (elencate e descritte con maggior dettaglio in UI3.1) quali: aggiungere un libro all’archivio, eliminare un libro dall’archivio, modificare un libro dall’archivio, è inoltre presente un button che ci indirizza in un’ulteriore interfaccia che gestisce la visualizzazione, la ricerca e l’ordinamento. In fondo è presente un button che ritorna alla Home Page.<ul id="2b57ee0d-d47b-80e2-849b-fc663cbdf03c" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow_background">UI3.1 - Funzioni Libri:</mark><ul id="2b57ee0d-d47b-809c-81a3-c5f3627d1e3f" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI3.1.1 - Aggiungi Libro:</mark><mark class="highlight-default_background"> funzione che gestisce l’aggiunta di un nuovo libro. In questa finestra vengono mostrati vari campi di input, ossia delle TextField pari al numero di attributi, che permettono di eseguire le operazioni di inserimento dati fondamentali del libro quali titolo, autore , anno di pubblicazione, codice identificativo ISBN e numero di copie disponibili. Nella parte inferiore è possibile cliccare un pulsante di aggiunta e modificare la tabella (archivio, rappresentato con una TableView).  </mark></li></ul><ul id="2b57ee0d-d47b-8058-b4cc-ecc5a927a827" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI3.1.2 - Elimina Libro: </mark><mark class="highlight-default_background">funzione che permette di eliminare un libro dalla tabella (TableView). L’eliminazione avverrà provvedendo a scrivere il codice univoco ISBN all’interno di una TextField. Qualora esso non fosse presente in archivio verrà generato un messaggio di errore che informerà dell’assenza. Nel caso in cui il libro venga rimosso dalla tabella con successo, attraverso un button, verrà informato l’accaduto con un messaggio in uscita. </mark></li></ul><ul id="2b57ee0d-d47b-8089-bd71-ceb023a00b9d" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI3.1.3- Modifica Libro:</mark><mark class="highlight-default_background"> metodo che gestisce la modifica di un determinato libro in base agli attributi di esso. L’utente  avrà la possibilità di accedere in maniera immediata al catalogo, in corrispondenza della riga che compone il libro, pigiando il button di modifica. I campi, costituiti da TextField, potranno essere riscritti a seconda di ciò che si deve cambiare. una volta superato questo step sarà necessario schiacciare il button di salva modifiche il quale permette di  tornare all’interfaccia dell’archivio. </mark></li></ul></li></ul><ul id="2b57ee0d-d47b-8070-ac1e-effc1faa7f28" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow_background">UI3.2 Ricerca e Visualizzazione:</mark><mark class="highlight-default_background"> interfaccia che permette la visualizzazione dell’intero archivio, inoltre è possibile selezionare, da un menù a tendina, una preferenza di ricerca in base al </mark>titolo, all’autore e al codice univoco (ISBN).<mark class="highlight-default_background"> E’ presente un TextField che prenderà in input delle parole chiavi per eseguire la ricerca personalizzata dei libri presenti in catalogo, il cui esito verrà mostrato in una tabella, realizzata con un TableView, sottostante. Saranno presenti degli ulteriori button che permetteranno l’ordinamento della tabella secondo vari attributi quali: </mark>titolo, autore, numero copie disponibili e data di pubblicazione. In fondo è presente un button che ritorna alla pagina Archivio.</li></ul></li></ul><ul id="2b57ee0d-d47b-8043-b1b5-fc9241f41103" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">UI4 - Profilo: </mark> interfaccia che gestisce coloro che usufruiscono del servizio della biblioteca, con un menù laterale possiamo selezionare le varie operazioni che eseguibili (elencate e descritte con maggior dettaglio in UI4.1) quali: aggiungere un utente, eliminare un utente, modificare gli attributi di un utente, è inoltre presente un button che ci indirizza in un’ulteriore interfaccia che gestisce la visualizzazione e la ricerca e l’ordinamento. In fondo è presente un button che ritorna alla Home Page.<ul id="2b57ee0d-d47b-80aa-9e77-cc0c37f97d62" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow_background">UI4.1: Funzioni Utente:</mark><ul id="2b57ee0d-d47b-80ac-9d1e-f6ed3e6fb4f1" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI4.1.1 - Aggiungi Utente:</mark><mark class="highlight-default_background"> funzione che rende possibile l’aggiunta di un nuovo utente alla TableView (Tabella degli utenti). Selezionando questa opzione verrà visualizzata una schermata dedicata alla quale è possibile inserire all’interno di appositi campi di input gli attributi che compongono l’utente, quali nome, cognome e matricola. Una volta eseguito il primo passo è possibile cliccare un apposito button per riempire una nuova riga della tabella con i dati pocanzi immessi. Qualora, nel catalogo, ci sia una corrispondenza con il campo di identificazione (matricola) dovrà essere generato un messaggio il quale informerà che l’utente è un duplicato, altrimenti l’aggiunta avverrà con successo. </mark></li></ul><ul id="2b57ee0d-d47b-80c1-828d-c5fea1d31d59" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI4.1.2 - Elimina Utente:</mark><mark class="highlight-default_background"> metodo che permette di eliminare un utente dal rispettivo archivio. L’eliminazione verrà eseguita inserendo in un TextField la matricola dell’utente, con un button verrà confermata l’operazione. Qualora l’utente non esista verrà visualizzato un messaggio di errore, altrimenti l’operazione sarà completata con successo.</mark></li></ul><ul id="2b57ee0d-d47b-809d-b87c-c270af996ffb" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI4.1.3- Modifica utente: </mark><mark class="highlight-default_background"> metodo che gestisce la modifica di un determinato utente in base agli attributi di esso. Sarà possibile accedere in maniera immediata alla tabella utenti e in corrispondenza della riga  pigiando il button di modifica. I campi, costituiti da TextField, potranno essere riscritti a seconda di ciò che si deve cambiare. Una volta superato questo step sarà necessario schiacciare il button di salva modifiche il quale permette di  tornare alla dashboard. </mark></li></ul></li></ul><ul id="2b57ee0d-d47b-803c-bd92-cf4c287a49fb" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow_background">UI4.2 - Ricerca e visualizzazione:</mark><mark class="highlight-default_background"> interfaccia che permette la visualizzazione di tutti gli utenti già registrati, inoltre è possibile selezionare, da un menù a tendina, una preferenza di ricerca in base al </mark>nome, cognome e matricola univoca.<mark class="highlight-default_background"> E’ presente un TextField che prenderà in input delle parole chiavi per eseguire la ricerca personalizzata dei profili, il cui esito verrà mostrato in una tabella, realizzata con un TableView, sottostante. Saranno presenti degli ulteriori button che permetteranno l’ordinamento della tabella secondo vari attributi quali: </mark>nome e cognome. In fondo è presente un button che ritorna alla pagina Profilo.</li></ul></li></ul><ul id="2b57ee0d-d47b-806c-b1e8-f894aa8c4625" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-yellow_background">UI5 - Prestiti:</mark> interfaccia che gestisce il tracciamento dei prestiti della biblioteca, con un menù laterale possiamo selezionare le varie operazioni eseguibili (elencate e descritte con maggior dettaglio in UI5.1) quali: registra prestito e restituzione, è inoltre presente un button che ci indirizza in un’ulteriore interfaccia che gestisce la visualizzazione, la ricerca e l’ordinamento. In fondo è presente un button che ritorna alla Home Page.<ul id="2b57ee0d-d47b-806e-bf0e-c9b6346b3c87" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow_background">UI5.1: Gestione Prestiti:</mark><ul id="2b57ee0d-d47b-8075-8a5c-ea12172edfd2" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI5.1.1 - Registra Prestito:</mark></li></ul><ul id="2b57ee0d-d47b-80ec-95c3-f79e9dc2f2bf" class="bulleted-list"><li style="list-style-type:square"><mark class="highlight-yellow_background">UI5.1.2 - Restituzione:</mark></li></ul></li></ul><ul id="2b57ee0d-d47b-8083-88c1-d9aa29b19d47" class="bulleted-list"><li style="list-style-type:circle"><mark class="highlight-yellow_background">UI5.2: Ricerca e Visualizzazione:</mark><mark class="highlight-default_background"> interfaccia che permette la visualizzazione di tutti i prestiti, inoltre è possibile selezionare, da un menù a tendina, una preferenza di ricerca in base al titolo del libro, ISBN, o la matricola dell’utente</mark>.<mark class="highlight-default_background"> E’ presente un TextField che prenderà in input delle parole chiavi per eseguire la ricerca personalizzata dei prestiti, il cui esito verrà mostrato in una tabella, realizzata con un TableView, sottostante. Saranno presenti degli ulteriori button che permetteranno l’ordinamento della tabella secondo vari attributi quali: </mark>titolo, autore, matricola dell’utente, data di scadenza del prestito, data del prestito. In fondo è presente un button che ritorna alla pagina Prestito.</li></ul></li></ul></details></li></ul><ul id="2b57ee0d-d47b-802d-b3cc-f896e9f2995e" class="toggle"><li><details open=""><summary><mark class="highlight-purple_background">Altre Interfacce Esterne</mark></summary><ul id="2b57ee0d-d47b-80b9-ac2c-cb2868505f1f" class="bulleted-list"><li style="list-style-type:disc">Non è prevista l’implementazione con interfacce esterne</li></ul></details></li></ul></details></li></ul><ul id="2b27ee0d-d47b-804e-a1cd-ed8f16f28286" class="toggle"><li><details open=""><summary><strong>REQUISITI NON FUNZIONALI</strong></summary><ul id="2b57ee0d-d47b-8067-a2af-e7958ead3a8d" class="toggle"><li><details open=""><summary><mark class="highlight-default"><mark class="highlight-default_background">Prestazioni</mark></mark></summary><ul id="2b57ee0d-d47b-8082-8063-e19069ec4ead" class="bulleted-list"><li style="list-style-type:disc">L&#x27;applicazione ha un tempo di risposta medio inferiore a 2 secondi per tutte le operazioni principali (1).</li></ul></details></li></ul><ul id="2b57ee0d-d47b-8053-8dd6-e7e275640a53" class="toggle"><li><details open=""><summary><mark class="highlight-default_background">Usabilità</mark></summary><ul id="2b57ee0d-d47b-8008-8dfa-fe5d637e5d50" class="bulleted-list"><li style="list-style-type:disc">L&#x27;interfaccia utente deve essere intuitiva e facile da usare, con un design reattivo (2).</li></ul></details></li></ul><ul id="2b57ee0d-d47b-80cc-b5a0-c736965755c4" class="toggle"><li><details open=""><summary><mark class="highlight-default_background">Scalabilità</mark></summary><ul id="2b57ee0d-d47b-8055-9962-e824cdfad11b" class="bulleted-list"><li style="list-style-type:disc">L&#x27;applicazione deve essere in grado di gestire fino a 40.000 libri e 40.000 utenti simultanei (1)</li></ul></details></li></ul><ul id="2b57ee0d-d47b-80fe-9309-fb9f9e92b247" class="toggle"><li><details open=""><summary>Disponibilità </summary><ul id="2b57ee0d-d47b-80d3-82cf-c3f22b02d74b" class="bulleted-list"><li style="list-style-type:disc">Il sistema deve essere disponibile negli orari di apertura e chiusura della biblioteca </li></ul></details></li></ul><p id="2b57ee0d-d47b-80e6-a263-f18c45449034" class="">
+</p></details></li></ul><h1 id="2b57ee0d-d47b-8032-9857-e5919182cf1b" class="">CASI D’USO - DIAGRAMMI E DESCRIZIONI</h1><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2b57ee0d-d47b-8077-b507-c26795b22d73"><div style="font-size:1.5em"><span class="icon">ℹ️</span></div><div style="width:100%"><ul id="2b57ee0d-d47b-802e-a380-c43717f676a1" class="bulleted-list"><li style="list-style-type:disc">In questa sezione vengono definiti e descritti i casi d’uso del software, evidenziandone attori partecipanti, pre-condizioni, post-condizioni, flusso normale degli eventi e flusso alternativo degli eventi. Viene inoltre fornito il diagramma dei casi d’uso.</li></ul><ul id="2b57ee0d-d47b-80de-9200-f2744662108a" class="bulleted-list"><li style="list-style-type:disc">Ognuno dei casi d’uso è stato definito ad un elevato livello di astrazione, evitando dettagli implementativi di sorta</li></ul></div></figure><ul id="2b57ee0d-d47b-8049-96f3-c261a6c27d85" class="toggle"><li><details open=""><summary><strong><span style="border-bottom:0.05em solid">DESCRIZIONE CASI D’USO</span></strong></summary><div id="2b57ee0d-d47b-8182-ad17-c55e56dbfdb3" class="collection-content"><h4 class="collection-title">Descrizione casi d’uso</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/rename_gray.svg" style="width:14px;height:14px;display:block"/></span>Nome</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/user_gray.svg" style="width:14px;height:14px;display:block"/></span>Attori partecipanti</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-left-basic_gray.svg" style="width:14px;height:14px;display:block"/></span>Pre-condizioni</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-right-basic_gray.svg" style="width:14px;height:14px;display:block"/></span>Post-condizioni</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/subtask_gray.svg" style="width:14px;height:14px;display:block"/></span>Flusso normale</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/subtask_gray.svg" style="width:14px;height:14px;display:block"/></span>Flusso alternativo</th></tr></thead><tbody><tr id="2b57ee0d-d47b-812b-83f0-f8c14b0636c1"><td class="cell-title"><a href="https://www.notion.so/Aggiunta-Libro-2b57ee0dd47b812b83f0f8c14b0636c1?pvs=21">Aggiunta Libro </a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente avvia il software </strong></td><td class="cell-&gt;?v&gt;">Libro aggiunto all’archivio </td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Archivio<strong><br/>2. </strong>L’utente seleziona la funzione Aggiungi Libro<strong><br/>3. </strong>L’utente compila i campi (autore, titolo, data di pubblicazione, ISBN)<strong><br/>4. L’utente conferma l’operazione</strong></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<strong><br/><br/>3a </strong>Se il valore dell’ISBN non è corretto, viene visualizzato un messaggio di errore.<br/><strong>3a.1</strong> L’esecuzione riprende dal passo 2.<br/><br/>3b Se il libro è già presente, viene visualizzato un  messaggio di errore  <strong>3b.1</strong> L’esecuzione riprende dal passo 2.</td></tr><tr id="2b57ee0d-d47b-813b-82fe-ef2ce186a863"><td class="cell-title"><a href="https://www.notion.so/Modifica-Libro-2b57ee0dd47b813b82feef2ce186a863?pvs=21">Modifica Libro</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Numero di copie del libro aggiornato correttamente</td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Archivio<br/><strong>2.</strong> L’utente seleziona la funzione Modifica Libro.<br/><strong>3.</strong> L’utente seleziona il libro da modificare <br/><strong>4. L’utente aggiorna il numero di copie disponibili</strong><br/><strong>5. </strong>Il sistema carica le modifiche .</td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro<br/><strong>2a.1 </strong>Ritorno al passo 1<strong><br/><br/>3a </strong>Se il valore dell’ISBN non è corretto, viene visualizzato un messaggio di errore.<br/><strong>3a.1</strong> L’esecuzione riprende dal passo 2.<br/><br/>3b Se il libro non è presente, viene visualizzato un  messaggio di errore  <strong>3b.1</strong> L’esecuzione riprende dal passo 2.</td></tr><tr id="2b57ee0d-d47b-818a-aa22-e0fd7787ebf6"><td class="cell-title"><a href="https://www.notion.so/Eliminazione-libro-2b57ee0dd47b818aaa22e0fd7787ebf6?pvs=21">Eliminazione libro</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Rimozione del libro dall’archivio</td><td class="cell-sreA"><strong>1.  </strong>L’utente apre l’interfaccia Archivio<strong><br/>2. </strong>L’utente seleziona la funzionalità Eliminazione libro<br/>3<strong>. </strong>L’utente selezione il contatto da eliminare.<strong><br/>4. </strong>L’utente conferma l’operazione.<br/>5<strong>. </strong>Il contatto viene eliminato.</td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1      <br/><br/>                                                                                        <strong>3a </strong>Se il valore dell’ISBN non è corretto, viene visualizzato un messaggio di errore.<br/><strong>3a.1</strong> L’esecuzione riprende dal passo 2.<br/><br/>3b Se il libro non è  presente, viene visualizzato un  messaggio di errore  <strong>3b.1</strong> L’esecuzione riprende dal passo 2.</td></tr><tr id="2b57ee0d-d47b-81f9-87d6-d73443b69eae"><td class="cell-title"><a href="https://www.notion.so/Visualizzazione-lista-libri-2b57ee0dd47b81f987d6d73443b69eae?pvs=21">Visualizzazione lista libri</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione lista libri in ordine di inserimento</td><td class="cell-sreA"><strong>1. L’utente accede all’interfaccia Archivio <br/>2. </strong>L’utente seleziona la funzionalità Ricerca e Visualizza.<br/></td><td class="cell-pjPX"><strong>1a </strong>L’utente seleziona il pulsante Indietro. <br/>1<strong>a.1 </strong>Ritorno all’interfaccia Libri<strong><br/><br/></strong></td></tr><tr id="2b57ee0d-d47b-815f-9afd-dc6381a16c24"><td class="cell-title"><a href="https://www.notion.so/Ordinamento-lista-libri-2b57ee0dd47b815f9afddc6381a16c24?pvs=21">Ordinamento lista libri </a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione lista libri secondo l’ordine selezionato</td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Archivio<strong><br/>2. </strong>L’utente seleziona la funzionalità Ricerca e Visualizza.<br/>3<strong>. </strong>L’utente selezione l’ordine di visualizzazione.<strong><br/></strong></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1                                       <br/><strong><br/>2b L’utente cambia l’ordine di visualizzazione<br/>2b.1 Visualizzazione aggiornata secondo il nuovo ordine</strong></td></tr><tr id="2b57ee0d-d47b-81d8-a486-d140a3248623"><td class="cell-title"><a href="https://www.notion.so/Ricerca-Libri-2b57ee0dd47b81d8a486d140a3248623?pvs=21">Ricerca Libri</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione libro richiesto</td><td class="cell-sreA"><strong>1.  </strong>L’utente apre l’interfaccia Archivio<strong><br/>2. </strong>L’utente seleziona la funzionalità Ricerca e Visualizza.<br/>3<strong>. </strong>L’utente digita nella barra di ricerca il libro richiesto (inserendo il titolo, il nome dell’autore, l’anno di pubblicazione oppure l’ISBN).<br/></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<br/><br/>2b Se il libro richiesto non è presente viene visualizzato un messaggio d’errore<br/>2b.1 L’esecuzione riprende dal passo 2<br/><br/>2c Se la barra di ricerca torna pulita, viene visualizzata nuovamente tutta la lista dei libri secondo l’ordine impostato<br/>2c.1 L’esecuzione riprende dal passo 2 <br/>  </td></tr><tr id="2b57ee0d-d47b-81a8-8b8c-e7144041ea63"><td class="cell-title"><a href="https://www.notion.so/Aggiunta-profilo-2b57ee0dd47b81a88b8ce7144041ea63?pvs=21">Aggiunta profilo</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Profilo aggiunto correttamente alla lista</td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Profili<br/>2.<strong> </strong>L’utente seleziona la funzionalità Aggiungi Profilo<br/>3<strong>. </strong>L’utente compila i campi (nome, cognome e matricola).<strong><br/>4. </strong>L’utente conferma l’operazione.<br/></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<strong><br/><br/>2b Se la matricola inserita è scorretta o già esistente, viene stampato un messaggio d’errore<br/>2b.1 L’esecuzione riprende dal passo 2</strong></td></tr><tr id="2b57ee0d-d47b-815b-b784-fffb2da6780b"><td class="cell-title"><a href="https://www.notion.so/Modifica-profilo-2b57ee0dd47b815bb784fffb2da6780b?pvs=21">Modifica profilo</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Profilo modificato </td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Profili<strong><br/>2.  </strong>L’utente seleziona la funzione modifica profilo <br/>2. L’utente inserisce la matricola per selezionare il profilo<strong><br/>3. </strong>L’utente modifica i campi voluti.<br/>4. Utente conferma operazione<br/></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1    <br/><br/>                                                                                                                                                         <strong>3a </strong>Se la matricola, inserita per la selezione del profilo non è associata a nessun profilo viene visualizzato un messaggio di errore.<br/><strong>3a.1</strong> L’esecuzione riprende dal passo 2.<br/><br/></td></tr><tr id="2b57ee0d-d47b-81c8-a110-ed1bb6a27284"><td class="cell-title"><a href="https://www.notion.so/Eliminazione-profilo-2b57ee0dd47b81c8a110ed1bb6a27284?pvs=21">Eliminazione profilo</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Profilo eliminato</td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Profili<strong><br/>2. </strong>L’utente seleziona la funzione elimina profilo <br/>3. L’utente inserisce la matricola per selezionare il profilo<strong><br/>4. </strong>L’utente elimina il profilo.<br/>5. Utente conferma operazione<br/></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<br/><br/>      <strong>3a </strong>Se la matricola, inserita per la selezione del profilo non è associata a nessun profilo viene visualizzato un messaggio di errore.<br/><strong>3a.1</strong> L’esecuzione riprende dal passo 2.</td></tr><tr id="2b57ee0d-d47b-8121-9000-cee57162fe17"><td class="cell-title"><a href="https://www.notion.so/Visualizzazione-lista-profili-2b57ee0dd47b81219000cee57162fe17?pvs=21">Visualizzazione lista profili</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione contatti</td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Profili<strong><br/>2. </strong>L’utente seleziona la funzionalità per la visualizzazione dei contatti</td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1</td></tr><tr id="2b57ee0d-d47b-80a8-9516-f1e530e390a8"><td class="cell-title"><a href="https://www.notion.so/Ordinamento-lista-Profili-2b57ee0dd47b80a89516f1e530e390a8?pvs=21">Ordinamento lista Profili</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione lista profili secondo l’ordine selezionato</td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Profili<strong><br/>2.  </strong>L’utente seleziona la funzionalità Ricerca e Visualizza.<br/>3<strong>. </strong>L’utente selezione l’ordine di visualizzazione.<strong><br/></strong></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1                                       <br/><strong><br/>2b L’utente cambia l’ordine di visualizzazione<br/>2b.1 Visualizzazione aggiornata secondo il nuovo ordine</strong></td></tr><tr id="2b57ee0d-d47b-80d7-973c-e5d5982ddc67"><td class="cell-title"><a href="https://www.notion.so/Ricerca-Profilo-2b57ee0dd47b80d7973ce5d5982ddc67?pvs=21">Ricerca Profilo</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione profilo richiesto</td><td class="cell-sreA"><strong>1. </strong>L’utente apre l’interfaccia Profili<strong><br/>2. </strong>L’utente seleziona la funzionalità Ricerca e Visualizza.<br/>3<strong>. </strong>L’utente digita nella barra di ricerca il profilo richiesto (inserendo matricola o cognome).<br/></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<br/><br/>2b Se il profilo richiesto non è presente viene visualizzato un messaggio d’errore<br/>2b.1 L’esecuzione riprende dal passo 2<br/><br/>2c Se la barra di ricerca torna pulita, viene visualizzata nuovamente tutta la lista dei profili secondo l’ordine impostato<br/>2c.1 L’esecuzione riprende dal passo 2 <br/>  </td></tr><tr id="2b57ee0d-d47b-80af-9e4f-e3349fea62e6"><td class="cell-title"><a href="https://www.notion.so/Prestito-Libro-2b57ee0dd47b80af9e4fe3349fea62e6?pvs=21">Prestito Libro</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Prestito libro registrato</td><td class="cell-sreA">1.L’utente apre l’interfaccia Prestiti<br/>2. L’utente seleziona la funzionalità Registra Prestito (in Gestione Prestiti)<br/>3. L’utente compila i campi per la registrazione del prestito (sia per il libro da prestare che per l’utente al cui nome il prestito deve essere registrato)<br/>4. L’utente aggiorna il numero di copie disponibili del libro<br/>5. L’utente conferma l’operazione</td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<br/><br/>3a. Se durante la registrazione del prestito, non ci sono copie disponibili del libro oppure il profilo non è ancora registrato, viene visualizzato un messaggio di errore</td></tr><tr id="2b57ee0d-d47b-8041-b16e-f40480375552"><td class="cell-title"><a href="https://www.notion.so/Ricerca-libro-prestito-2b57ee0dd47b8041b16ef40480375552?pvs=21">Ricerca libro prestito</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione del libro ricercato con annessa data di scadenza del prestito</td><td class="cell-sreA"><strong>1.  </strong>L’utente apre l’interfaccia Prestiti<strong><br/>2. </strong>L’utente seleziona la funzionalità Ricerca e Visualizza.<br/>3<strong>. </strong>L’utente digita nella barra di ricerca il libro  (inserendo il titolo, il nome dell’autore, l’anno di pubblicazione oppure l’ISBN).<br/></td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<br/><br/>2b Se il libro cercato non è presente viene visualizzato un messaggio d’errore<br/>2b.1 L’esecuzione riprende dal passo 2<br/><br/>2c Se la barra di ricerca torna pulita, viene visualizzata nuovamente tutta la lista dei libri in prestito secondo l’ordine impostato<br/>2c.1 L’esecuzione riprende dal passo 3<br/>  </td></tr><tr id="2b57ee0d-d47b-8006-b1a8-d5992eee3edb"><td class="cell-title"><a href="https://www.notion.so/Restituzione-libro-2b57ee0dd47b8006b1a8d5992eee3edb?pvs=21">Restituzione libro</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Restituzione confermata e numero di copie aggiornato</td><td class="cell-sreA"><strong>1. </strong>L’utente accede all’interfaccia Prestiti.<br/>2. L’utente seleziona la funzione Restituzione (in Gestione Prestiti)<br/>3. L’utente seleziona il libro da restituire e aggiorna il numero di copie disponibili<br/>4. L’utente conferma l’operazione</td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<br/><br/>3a Se la sostituzione è avvenuta oltre la data di scadenza prestabilita calcola il costo da pagare da parte del cliente</td></tr><tr id="2b57ee0d-d47b-80e9-be0b-dd317fbb5997"><td class="cell-title"><a href="https://www.notion.so/Ordinamento-lista-libri-in-prestito-2b57ee0dd47b80e9be0bdd317fbb5997?pvs=21">Ordinamento lista libri in prestito</a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione lista libri in prestito secondo l’ordine stabilito</td><td class="cell-sreA"><strong>1. </strong>L’utente accede all’interfaccia Prestiti.<br/>2. L’utente seleziona la funzione Visualizza e Ricerca<br/>3. L’utente seleziona l’ordine di visualizzazione</td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1<br/><br/><strong>2b L’utente cambia l’ordine di visualizzazione<br/>2b.1 Visualizzazione aggiornata secondo il nuovo ordine</strong></td></tr><tr id="2b57ee0d-d47b-8065-a50b-c14eb29700ae"><td class="cell-title"><a href="https://www.notion.so/Visualizzazione-lista-libri-in-prestito-2b57ee0dd47b8065a50bc14eb29700ae?pvs=21">Visualizzazione lista libri in prestito </a></td><td class="cell-eT=N"><span class="selected-value select-value-color-pink">Utente</span></td><td class="cell-;`Z`"><strong>• L’utente accede alla home page</strong></td><td class="cell-&gt;?v&gt;">Visualizzazione lista libri in prestito </td><td class="cell-sreA"><strong>1. </strong>L’utente accede all’interfaccia Prestiti.<br/>2. L’utente seleziona la funzione Visualizza e Ricerca</td><td class="cell-pjPX"><strong>2a </strong>L’utente seleziona il pulsante Indietro. <br/><strong>2a.1 </strong>Ritorno al passo 1</td></tr></tbody></table><br/><br/></div></details></li></ul><ul id="2b57ee0d-d47b-80a6-a18b-e061c7e54a34" class="toggle"><li><details open=""><summary><strong><span style="border-bottom:0.05em solid">DIAGRAMMA DEI CASI D’USO</span></strong></summary><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2b67ee0d-d47b-80c9-a3e3-e38d3808c9c6"><div style="font-size:1.5em"><span class="icon">ℹ️</span></div><div style="width:100%"><p id="2b67ee0d-d47b-8039-8bfe-d29a991d62fe" class="">Per alleggerire la visualizzazione del diagramma si è scelto di sotto-intendere che “Selezione profilo utente” è incluso in tutti gli altri casi d’uso (eccetto per “importazione profilo utente” e “creazione profilo utente” che invece lo estendono)</p></div></figure><figure id="2b67ee0d-d47b-8032-a479-fb4658d077e3" class="image"><a href="image.png"><img style="width:720px" src="image.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2b67ee0d-d47b-809c-b8b9-e8a0f1c8dc81" class="code code-wrap"><code class="language-Arduino" style="white-space:pre-wrap;word-break:break-all">@startuml
+actor Utente
+
+
+usecase &quot;Aggiunta Libro&quot; as UC1
+usecase &quot;Eliminazione Libro&quot; as UC2
+usecase &quot;Ricerca Libri&quot; as UC3
+usecase &quot;Modifica Libro&quot; as UC4
+usecase &quot;Visualizza Lista Libri&quot; as UC5
+usecase &quot;Ordinamento Lista Libri&quot; as UC6
+usecase &quot;Aggiungi profilo&quot; as UC7
+usecase &quot;Modifica profilo&quot; as UC8
+usecase &quot;Eliminazione profilo&quot; as UC9
+usecase &quot;Ricerca profilo&quot; as UC10
+usecase &quot;Visualizzazione lista profili&quot; as UC11
+usecase &quot;Ordinamento lista profili&quot; as UC12
+usecase &quot;Prestito Libro&quot; as UC13
+usecase &quot;Ricerca libro prestito&quot; as UC14
+usecase &quot;Restituzione libro&quot; as UC15
+usecase &quot;Ordinamento lista libri in prestito&quot; as UC16
+usecase &quot;Visualizzazione lista libri in prestito&quot; as UC17
+
+
+Utente -- UC1
+Utente -- UC2
+Utente -- UC3
+Utente -- UC4
+Utente -- UC5
+Utente -- UC6
+Utente -- UC7
+Utente -- UC8
+Utente -- UC9
+Utente -- UC10
+Utente -- UC11
+Utente -- UC12
+Utente -- UC13
+Utente -- UC14
+Utente -- UC15
+Utente -- UC16
+Utente -- UC17
+
+
+UC3 ..&gt; UC5 : &lt;&lt;include&gt;&gt;
+UC6 ..&gt; UC5 : &lt;&lt;include&gt;&gt;
+UC6 ..&gt; UC3 : &lt;&lt;extends&gt;&gt;
+
+
+UC10 ..&gt; UC11 : &lt;&lt;include&gt;&gt;
+UC12 ..&gt; UC10 : &lt;&lt;extends&gt;&gt;
+UC12 ..&gt; UC11 : &lt;&lt;include&gt;&gt;
+
+
+UC13 ..&gt; UC8 : &lt;&lt;include&gt;&gt;
+UC15 ..&gt; UC8 : &lt;&lt;include&gt;&gt;
+UC16 ..&gt; UC17 : &lt;&lt;include&gt;&gt;
+UC14 ..&gt; UC17 : &lt;&lt;include&gt;&gt;
+UC16 ..&gt; UC14 : &lt;&lt;extends&gt;&gt;
+
+@enduml</code></pre></details></li></ul><p id="2b67ee0d-d47b-80be-aeaa-dfb81f940e52" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

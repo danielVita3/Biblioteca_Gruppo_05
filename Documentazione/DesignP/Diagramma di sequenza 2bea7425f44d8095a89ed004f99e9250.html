@@ -1,0 +1,714 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Diagramma di sequenza</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2bea7425-f44d-8095-a89e-d004f99e9250" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔄</span></div><h1 class="page-title" dir="auto">Diagramma di sequenza</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80ad-a928-d7095def6ee1" class="toggle"><li><details open=""><summary><em>Inserimento Libro</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-806a-a84c-d791cd97e4e8" class="image"><a href="image%205.png"><img style="width:681.984375px" src="image%205.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-807e-adeb-d459d2f333c6" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8003-a8e7-e42478e6dd74" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8019-91a4-f9f4e556ce51" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente interagisce inizialmente con l&#x27;HomeController per accedere alla sezione, e successivamente con il LibriController per l&#x27;inserimento dei dati del nuovo libro.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-808b-b1d9-d2d22c08adaa" class="bulleted-list"><li style="list-style-type:disc">Il LibriController gestisce il flusso: valida i dati inseriti e, in caso di successo, istanzia un nuovo oggetto Libro.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80c2-8fe0-f318fc2fb968" class="bulleted-list"><li style="list-style-type:disc">Successivamente, il controller delega all&#x27;ArchivioLibri l&#x27;inserimento e il salvataggio persistente nel file dei libri, per poi aggiornare la tabella nella vista e notificare l&#x27;utente.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80db-b3a9-edf308f0cd67" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-805c-b705-e50e3f308457" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il processo descritto è focalizzato esclusivamente sulla funzionalità di &quot;Aggiunta Libro&quot;. Il controller coordina tutte le fasi necessarie (input, validazione, creazione entità, persistenza e feedback) senza deviare su altre responsabilità.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8027-ba79-f99013e2d029" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8012-913d-e23f4bc40439" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il LibriController dipende dalla classe Libro per la creazione dell&#x27;oggetto e dall&#x27;ArchivioLibri per la logica di gestione e persistenza. Tuttavia, i dettagli di basso livello (come la scrittura fisica sul file) sono incapsulati nell&#x27;Archivio, mantenendo il controller separato dalla gestione diretta del file system.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-800e-8841-f1df9167bb27" class="toggle"><li><details open=""><summary><em>Eliminazione Libro</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-80df-8a20-e898f34050fe" class="image"><a href="image%206.png"><img style="width:681.984375px" src="image%206.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-80a6-a27e-c1813d52a0e5" class=""><br/>Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-809d-88aa-e6fffe2d155a" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-808c-806e-cc80f0dcec13" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente naviga tramite l&#x27;HomeController e utilizza il LibriController per cercare un libro tramite ISBN ed eliminarlo.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8064-bac6-c5320b3b7bb2" class="bulleted-list"><li style="list-style-type:disc">Il controller gestisce la validazione, identifica l&#x27;oggetto Libro specifico e, dopo la conferma dell&#x27;utente, ordina all&#x27;ArchivioLibri di rimuovere il libro e aggiornare il file.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8041-b7cf-cb9bdd16de1a" class="bulleted-list"><li style="list-style-type:disc">L&#x27;interfaccia viene aggiornata per riflettere l&#x27;avvenuta eliminazione.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8050-8cce-df48bf47d31c" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8038-b2e3-e3db6b788437" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso operativo è strettamente focalizzato sulla gestione dell&#x27;eliminazione (ricerca, validazione, conferma e rimozione), coordinando le fasi necessarie senza deviare su responsabilità non pertinenti.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-804e-b324-d466dfb4ed5a" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80cb-93fb-ce15a86d86f5" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il LibriController interagisce necessariamente con l&#x27;entità Libro e dipende dall&#x27;ArchivioLibri per eseguire la rimozione, ma i dettagli tecnici della riscrittura del file rimangono incapsulati all&#x27;interno dell&#x27;Archivio.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8097-80a3-cc3b2b67719f" class="toggle"><li><details open=""><summary><em>Modifica Libro</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-80b9-8618-fea3c3d274ba" class="image"><a href="image%207.png"><img style="width:681.984375px" src="image%207.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-8081-9c12-c781fc01f90b" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-802a-ad2b-dd72fa3e2636" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80e9-9803-c806482da6d7" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente interagisce con l&#x27;HomeController per accedere alla sezione e con il LibriController per ricercare un libro tramite ISBN.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8096-a1bd-e8fb3d38877c" class="bulleted-list"><li style="list-style-type:disc">L&#x27;ArchivioLibri recupera i dati dal file per la visualizzazione.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8051-8712-fe72e822e27d" class="bulleted-list"><li style="list-style-type:disc">Dopo la modifica dei campi da parte dell&#x27;utente, il controller aggiorna lo stato dell&#x27;oggetto Libro e richiede all&#x27;ArchivioLibri di salvare le modifiche nel file, aggiornando infine l&#x27;interfaccia.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8075-86a0-e8f393ce83fb" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8008-b5a1-c06a0915dcbd" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il metodo gestisce l&#x27;intero ciclo di vita della modifica (ricerca, visualizzazione, editing e persistenza) in un unico flusso logico e coerente, senza disperdere funzionalità.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8034-b6f9-e20ea363999f" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8004-b8b8-c6cb249f0139" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il LibriController deve conoscere la struttura dell&#x27;oggetto Libro per applicare le modifiche e dipende dall&#x27;ArchivioLibri per il recupero e il salvataggio dei dati, mantenendo però separata la logica di gestione fisica dei file.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8001-a685-f00d3229b4d2" class="toggle"><li><details open=""><summary><em>Ricerca Libro</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-809a-89f3-c7041c56a488" class="image"><a href="image%208.png"><img style="width:681.984375px" src="image%208.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-8088-a3aa-e6c35d0988a1" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80cc-90c2-ece41c1fa086" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80c6-8f41-e289b586ce6a" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente accede tramite l&#x27;HomeController e interagisce con il LibriController, che inizialmente richiede all&#x27;ArchivioLibri di caricare l&#x27;intero catalogo dal file per popolare la tabella.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-801d-a8a1-ff130c4de9ad" class="bulleted-list"><li style="list-style-type:disc">Successivamente, l&#x27;utente esegue una ricerca specifica: il controller valida i criteri inseriti e interroga nuovamente l&#x27;ArchivioLibri per ottenere solo i risultati corrispondenti, aggiornando la vista.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-802a-ae39-e58a913baef7" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8094-82f3-eefe1319656c" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso è concentrato esclusivamente sulla consultazione dei dati (lettura completa e filtrata), separando nettamente la logica di visualizzazione da quella di recupero delle informazioni.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80c7-a489-e2d70ab2e7ec" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-802b-93aa-cf807ec5d4ca" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il LibriController comunica con l&#x27;ArchivioLibri per ottenere i dati necessari alla vista, ma rimane completamente agnostico rispetto alla struttura del &quot;File di Libri&quot; e alle operazioni di I/O, che sono incapsulate nell&#x27;Archivio.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-802d-9098-df50bbb064bb" class="toggle"><li><details open=""><summary><em>Ordinamento Libri</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-805a-b540-ff9af3d8ead3" class="image"><a href="image%209.png"><img style="width:681.96875px" src="image%209.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-80c1-987d-c55f92aacf4d" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-805f-96de-d967f0f6a187" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8087-abce-df3b8991826d" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente accede al catalogo tramite l&#x27;HomeController e il LibriController. Quest&#x27;ultimo delega all&#x27;ArchivioLibri il recupero dell&#x27;intera collezione dal file per il popolamento iniziale della tabella.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8067-bc3a-c4d2ad5a5ef7" class="bulleted-list"><li style="list-style-type:disc">Successivamente, l&#x27;utente interagisce con le intestazioni delle colonne (Titolo, Autore, ecc.): il LibriController richiede all&#x27;ArchivioLibri di riordinare la lista in base al criterio scelto e aggiorna la vista con il catalogo riorganizzato.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8035-be34-cd724e3c2231" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-805e-92ce-c5d84dc69454" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso è focalizzato sulla presentazione dei dati. Il Controller si occupa esclusivamente della gestione dell&#x27;evento interfaccia (il click per ordinare) e dell&#x27;aggiornamento grafico, mentre delega la logica di elaborazione (il recupero e l&#x27;algoritmo di ordinamento) all&#x27;Archivio.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80a9-b1ef-f566b40998f3" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80d6-8587-f9b8c0f9282a" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il LibriController dipende dall&#x27;ArchivioLibri per ottenere i dati e per le operazioni di ordinamento, ma rimane agnostico rispetto alle modalità di persistenza su file e all&#x27;implementazione specifica degli algoritmi di ordinamento.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80fa-8c4e-c757621752db" class="toggle"><li><details open=""><summary><em>Inserimento Profilo</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-8033-b1e9-c3b6a7f6d9c0" class="image"><a href="image%2010.png"><img style="width:681.984375px" src="image%2010.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-8044-ac50-cd2b3b529d00" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8071-922a-cfbdfb1d4e71" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80bd-9f76-eca7b1753647" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente interagisce inizialmente con l&#x27;HomeController per navigare nella sezione, e successivamente con il ProfiliController per inserire i dati anagrafici del nuovo utente.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8006-8ceb-fea7a8469343" class="bulleted-list"><li style="list-style-type:disc">Il controller esegue la validazione dei dati; in caso di esito positivo, istanzia un nuovo oggetto Profilo.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80af-9d0c-e011faa54527" class="bulleted-list"><li style="list-style-type:disc">Il controller delega poi all&#x27;ArchivioProfili l&#x27;aggiunta logica e il salvataggio persistente sul file, concludendo con l&#x27;aggiornamento della tabella e il feedback all&#x27;utente.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80a7-aaff-fcf1c4ae1028" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8015-bb5e-c99f1dd1cb7a" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il metodo analizzato gestisce un unico compito ben definito: la registrazione di un nuovo utente. Tutte le operazioni (validazione, creazione istanza, persistenza e feedback) concorrono esclusivamente a questo obiettivo.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8016-9a99-e15b36f3da1c" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8090-af5c-dacc4c6214ef" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il ProfiliController ha una dipendenza diretta dalla classe Profilo (per la creazione dell&#x27;oggetto) e dall&#x27;ArchivioProfili (per la gestione dei dati), ma rimane separato dai dettagli di implementazione della scrittura su file, che sono incapsulati nell&#x27;Archivio.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8039-9cc1-c22f2f79d0a5" class="toggle"><li><details open=""><summary><em>Eliminazione Profilo</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-808d-aedd-cc4cc495b55c" class="image"><a href="image%2011.png"><img style="width:681.984375px" src="image%2011.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-8043-860a-d5ec03cae8c2" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-800c-80e2-e4afb4d2f981" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80dd-bca7-df102b3fc5f3" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente accede alla sezione tramite l&#x27;HomeController e utilizza il ProfiliController per ricercare un profilo specifico tramite matricola.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8068-b0e1-c3a520506a5e" class="bulleted-list"><li style="list-style-type:disc">Il controller valida l&#x27;input e, tramite l&#x27;ArchivioProfili, recupera i dati dal file per mostrare l&#x27;utente da eliminare.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8026-8986-f000c42fc4fa" class="bulleted-list"><li style="list-style-type:disc">A seguito della conferma dell&#x27;utente, il controller comanda all&#x27;ArchivioProfili di rimuovere l&#x27;oggetto Profilo e di aggiornare il file di persistenza, notificando infine il successo dell&#x27;operazione.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80a2-9a00-d816bf6bd780" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8027-982c-c30ebd53d1bc" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso è focalizzato esclusivamente sulla funzionalità di eliminazione (ricerca, visualizzazione preventiva, cancellazione e aggiornamento), con una chiara attribuzione di responsabilità per ogni fase del processo.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-802a-996d-def34875f9cd" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8041-9d2a-f077a7566d94" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il ProfiliController interagisce con l&#x27;entità Profilo e l&#x27;ArchivioProfili per orchestrare l&#x27;operazione, ma rimane disaccoppiato dalla gestione fisica dei dati (File dei Profili), che è interamente incapsulata nell&#x27;Archivio.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8061-a95b-fe9ab037c4b5" class="toggle"><li><details open=""><summary><em>Modifica Profilo</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-80c7-a6b8-ec64edc6a74d" class="image"><a href="image%2012.png"><img style="width:681.984375px" src="image%2012.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-80e9-b54f-e35a242dfc77" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80fe-a560-c327416250da" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80d2-9c04-f3a15459320e" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente accede alla sezione tramite l&#x27;HomeController e interagisce con il ProfiliController per ricercare un profilo da modificare tramite matricola.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80a8-9be8-cbbc795032f7" class="bulleted-list"><li style="list-style-type:disc">L&#x27;ArchivioProfili recupera i dati dal file per consentire la visualizzazione dei dati attuali.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80d4-9256-f3184b88337d" class="bulleted-list"><li style="list-style-type:disc">Dopo la modifica dei campi da parte dell&#x27;utente, il controller aggiorna lo stato dell&#x27;oggetto Profilo e delega all&#x27;ArchivioProfili il salvataggio persistente delle modifiche sul file, aggiornando infine l&#x27;interfaccia.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-802f-adb1-fc89ce6d0954" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80aa-b64c-c6b892102dbd" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso operativo è focalizzato interamente sulla gestione della modifica di un profilo esistente. Il controller coordina le fasi di ricerca, editing e salvataggio in un processo logico unitario senza deviare su altre responsabilità.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8068-a760-f5be577fc117" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80fc-b391-d653913134b9" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il ProfiliController interagisce direttamente con l&#x27;entità Profilo per aggiornarne i campi e dipende dall&#x27;ArchivioProfili per il recupero e il salvataggio dei dati. Tuttavia, la logica di basso livello relativa alla scrittura sul &quot;File di Profili&quot; rimane incapsulata all&#x27;interno dell&#x27;Archivio.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80af-bac5-f80535b24a5b" class="toggle"><li><details open=""><summary><em>Ricerca Profilo</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-80e5-8a6a-f2c9dba1e192" class="image"><a href="image%2013.png"><img style="width:681.96875px" src="image%2013.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-80fb-b9b3-e17b420e8155" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80cd-9e97-dad7fa829ceb" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80e4-b152-fb33c13717b8" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente accede tramite l&#x27;HomeController e interagisce con il ProfiliController. Quest&#x27;ultimo richiede inizialmente all&#x27;ArchivioProfili di caricare l&#x27;intera collezione dal file per popolare la tabella principale.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80a0-80aa-d073f28ebe8e" class="bulleted-list"><li style="list-style-type:disc">Successivamente, l&#x27;utente esegue una ricerca mirata (per nome, cognome, matricola o email): il controller valida i dati e interroga nuovamente l&#x27;ArchivioProfili per filtrare i risultati, aggiornando la vista con i soli profili corrispondenti.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80e0-af25-c5c66fef2b87" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80c8-8a17-cbea04f87242" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso è concentrato esclusivamente sulla consultazione dell&#x27;anagrafica (visualizzazione completa e ricerca filtrata), mantenendo separata la logica di presentazione da quella di recupero e filtraggio dei dati.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80e5-bc5a-c5e6540a5f47" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-803d-830b-edaac07d6da3" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il ProfiliController dipende dall&#x27;ArchivioProfili per l&#x27;accesso ai dati, ma rimane completamente isolato dai dettagli di persistenza fisica e dalle operazioni di I/O sul &quot;File di Profili&quot;, che sono gestite internamente dall&#x27;Archivio.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80f4-ab92-c339bf2326db" class="toggle"><li><details open=""><summary><em>Ordinamento Profili</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-80f8-a692-e0031d911878" class="image"><a href="image%2014.png"><img style="width:682px" src="image%2014.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-80de-a37c-d83a2f867359" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8052-8685-c2c93c1a9942" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8094-8258-d5b6695dd5b3" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente accede alla gestione profili tramite l&#x27;HomeController e il ProfiliController. Quest&#x27;ultimo richiede all&#x27;ArchivioProfili il recupero dell&#x27;intera collezione dal file per il popolamento iniziale della tabella.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8022-8e34-dfafc030287e" class="bulleted-list"><li style="list-style-type:disc">Successivamente, l&#x27;utente interagisce con le intestazioni delle colonne (Nome, Cognome, Matricola): il ProfiliController delega all&#x27;ArchivioProfili il riordinamento della lista in base al criterio selezionato e aggiorna l&#x27;interfaccia con la collezione riorganizzata.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-802b-a2b0-e9f09c85f1bf" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80e1-b6d6-eb08292dd460" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso è strettamente focalizzato sulla presentazione dei dati. Il Controller gestisce esclusivamente gli eventi dell&#x27;interfaccia (navigazione e richiesta di ordinamento) e l&#x27;aggiornamento della vista, delegando la logica di recupero dati e l&#x27;algoritmo di ordinamento all&#x27;Archivio.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-803f-8ce5-cc969b867297" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8097-b34c-e9ec872c203e" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il ProfiliController dipende dall&#x27;ArchivioProfili per ottenere i dati e per le operazioni di ordinamento, ma rimane disaccoppiato dai dettagli di persistenza su file e dall&#x27;implementazione tecnica degli algoritmi di ordinamento, garantendo una buona separazione delle responsabilità.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8086-8e69-e9874070d6cb" class="toggle"><li><details open=""><summary><em>Registrazione Prestito</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-80e1-a54d-cf14f32bb500" class="image"><a href="image%2015.png"><img style="width:2821px" src="image%2015.png"/></a></figure></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8053-ac35-f104f74b2cbb" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-80f8-bfd3-d9f2ee2df1d3" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80de-9fdb-ebd0e03e8cba" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8063-9723-f27fb9f80720" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente avvia la procedura tramite il PrestitiController. Dopo la validazione, il controller assume il ruolo di coordinatore centrale interagendo con tre diversi sottosistemi: crea il nuovo Prestito, aggiorna il numero di copie disponibili nell&#x27;ArchivioLibri e incrementa i prestiti attivi dell&#x27;utente nell&#x27;ArchivioProfili, garantendo infine il salvataggio sincronizzato su tutti i file coinvolti.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8086-9cbb-d127b72ef4f7" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80fe-bb60-c36f7ea3754e" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Nonostante la complessità, il flusso è logicamente unitario. Tutte le operazioni eseguite (creazione prestito, decremento copie, aggiornamento stato utente) sono strettamente necessarie per completare la singola transazione di &quot;prestito&quot; mantenendo la consistenza del database.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8067-9b10-f6cc65274306" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8022-9d4a-ffd62ecc298c" class="bulleted-list"><li style="list-style-type:disc">Alto accoppiamento: Questo è il punto del sistema con la maggiore interdipendenza. Il PrestitiController deve necessariamente conoscere e manipolare gli oggetti e gli archivi di Libri e Profili, oltre a quello dei Prestiti, per garantire l&#x27;integrità dei dati (es. non prestare un libro esaurito).</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80a3-8cc0-f36cbac8fe2d" class="toggle"><li><details open=""><summary><em>Restituzione Prestito</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-8097-8bd7-e3eabe73d5c9" class="image"><a href="image%2016.png"><img style="width:2678px" src="image%2016.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bfa7425-f44d-80cd-93d9-fee10a1f2233" class="">Commento al diagramma<br/></h3></div><div style="display:contents" dir="auto"><p id="fd3a3b7e-97f0-47b6-a98b-768d8203e2b3" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="c43fa885-75e7-490e-a647-c1eeab9e1521" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente interagisce con il PrestitiController per avviare la procedura di restituzione inserendo ISBN o Matricola.</li></ul></div><div style="display:contents" dir="auto"><ul id="18025421-1ea5-4e3f-af89-d8feff7ceb96" class="bulleted-list"><li style="list-style-type:disc">Dopo la validazione, il controller delega le operazioni all&#x27;ArchivioPrestiti.</li></ul></div><div style="display:contents" dir="auto"><ul id="1a1ab1ee-625f-4c71-bc18-48322adf0634" class="bulleted-list"><li style="list-style-type:disc">Avviene una reazione a catena per mantenere la consistenza dei dati: viene eliminato il prestito, aggiornato il numero di copie disponibili in ArchivioLibri e aggiornato il conteggio dei prestiti attivi in ArchivioProfili.</li></ul></div><div style="display:contents" dir="auto"><ul id="1fb12388-abf2-4beb-a3d9-03f2927c6c51" class="bulleted-list"><li style="list-style-type:disc">Tutte le modifiche vengono persistite scrivendo sui rispettivi file (File di Prestiti, File di Libri, File di Profili).</li></ul></div><div style="display:contents" dir="auto"><p id="2eed6c19-69e4-47d6-a01a-c85815c20bf5" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="b5774a6a-0d10-4ad5-bd17-d00b7822c8ce" class="bulleted-list"><li style="list-style-type:disc"><strong>Alta coesione:</strong> Sebbene l&#x27;operazione sia complessa, il metodo è focalizzato su un singolo obiettivo logico: processare la restituzione di un libro e ripristinare lo stato del sistema.</li></ul></div><div style="display:contents" dir="auto"><p id="d4959363-5fbf-4a57-a02e-c87b5f2b34e1" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="c84facaa-9629-4b98-b4a8-3b0472f9ccbc" class="bulleted-list"><li style="list-style-type:disc"><strong>Alto accoppiamento:</strong> Questo flusso mostra un accoppiamento elevato tra gli archivi. L&#x27;ArchivioPrestiti sembra orchestrare le modifiche sugli altri archivi (ArchivioLibri e ArchivioProfili) e sui file system. Una modifica alla struttura di uno degli altri archivi potrebbe richiedere modifiche a questa logica di orchestrazione.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80e3-903d-f93dc919d77d" class="toggle"><li><details open=""><summary><em>Ricerca Prestito</em></summary><div style="display:contents" dir="ltr"><figure id="2bfa7425-f44d-80ee-872a-dbca88edfb54" class="image"><a href="image%2017.png"><img style="width:681.984375px" src="image%2017.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bfa7425-f44d-8039-b027-e3643a4352a6" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2725fd76-775d-4481-9c2f-ad98adc1948d" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="f8df8ad8-cf45-47b5-87b9-0ee7c6bb93c4" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente naviga dal HomeController al PrestitiController per accedere alla sezione di visualizzazione.</li></ul></div><div style="display:contents" dir="auto"><ul id="77c8af7d-a200-445c-b15c-5265c5080e54" class="bulleted-list"><li style="list-style-type:disc">All&#x27;apertura della visualizzazione, il PrestitiController richiede il catalogo all&#x27; ArchivioPrestiti, che legge i dati dal File dei Prestiti per popolare la tabella iniziale.</li></ul></div><div style="display:contents" dir="auto"><ul id="43b67fd0-0f5a-41d4-8135-f7d32af9ebbb" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente effettua una ricerca (tramite ISBN o matricola); il controller gestisce il flusso mostrando errori in caso di dati mancanti oppure interrogando l&#x27;ArchivioPrestiti per filtrare e visualizzare solo i prestiti corrispondenti.</li></ul></div><div style="display:contents" dir="auto"><p id="fcb1fa4b-8d36-41fe-b73d-f63e94d00f8f" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="b1e85a34-d912-4415-a355-0c0534e90d6d" class="bulleted-list"><li style="list-style-type:disc"><strong>Alta coesione:</strong> Il flusso è strettamente focalizzato sulla funzionalità di &quot;Ricerca e Visualizzazione Prestiti&quot;. Ogni componente ha un ruolo ben definito: il controller gestisce l&#x27;interazione utente, l&#x27;archivio gestisce la logica dei dati e il file la persistenza.</li></ul></div><div style="display:contents" dir="auto"><p id="8bf41394-9a46-4ceb-8f5e-0b6e51d53747" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="61e51bf4-2e0b-49e4-92ff-3e5f88202231" class="bulleted-list"><li style="list-style-type:disc"><strong>Moderato accoppiamento:</strong> Il PrestitiController deve conoscere l&#x27;ArchivioPrestiti per recuperare i dati, creando una dipendenza diretta, ma mantiene separata la logica di visualizzazione da quella di lettura fisica del file (incapsulata nell&#x27;Archivio).</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80ca-bf91-d06033344dbe" class="toggle"><li><details open=""><summary><em>Ordinamento Prestiti</em></summary><div style="display:contents" dir="ltr"><figure id="2bea7425-f44d-801a-b030-ff83e50a5ccd" class="image"><a href="image%2018.png"><img style="width:710px" src="image%2018.png"/></a></figure></div><div style="display:contents" dir="auto"><h3 id="2bea7425-f44d-8040-9121-da432ef1e331" class="">Commento al diagramma</h3></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80ea-a9a2-f6e08810d640" class=""><strong>Interazioni:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-800a-8f3d-d84b791ea5fe" class="bulleted-list"><li style="list-style-type:disc">L&#x27;utente accede alla sezione tramite l&#x27;HomeController e interagisce con il PrestitiController per visualizzare l&#x27;elenco dei prestiti.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8024-a94f-fb32df340d17" class="bulleted-list"><li style="list-style-type:disc">Il controller richiede all&#x27;ArchivioPrestiti il recupero della collezione completa dal file per popolare la tabella iniziale.</li></ul></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80ac-b553-cc35cfa37be1" class="bulleted-list"><li style="list-style-type:disc">Successivamente, l&#x27;utente interagisce con le intestazioni delle colonne (Titolo, Autore, Matricola, Date): il PrestitiController gestisce l&#x27;evento di ordinamento riorganizzando la visualizzazione della tabella in base al criterio selezionato.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-80b8-aae2-c48b4c0b134e" class=""><strong>Coesione:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-80d7-9010-ded9fbd4cfc3" class="bulleted-list"><li style="list-style-type:disc">Alta coesione: Il flusso è focalizzato esclusivamente sulla consultazione e presentazione dei dati. Il controller si occupa di gestire l&#x27;interfaccia e la logica di visualizzazione (ordinamento), separandola dalla logica di recupero dei dati gestita dall&#x27;archivio.</li></ul></div><div style="display:contents" dir="auto"><p id="2bea7425-f44d-8040-ae0b-ffd67ac45501" class=""><strong>Accoppiamento:</strong></p></div><div style="display:contents" dir="auto"><ul id="2bea7425-f44d-8043-86b5-dcb0dec504ca" class="bulleted-list"><li style="list-style-type:disc">Moderato accoppiamento: Il PrestitiController dipende dall&#x27;ArchivioPrestiti per ottenere la lista dei prestiti, ma rimane disaccoppiato dai dettagli di basso livello riguardanti la lettura fisica del file, garantendo una corretta separazione tra logica di presentazione e persistenza dei dati.</li></ul></div></details></li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
